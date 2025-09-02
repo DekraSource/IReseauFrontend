@@ -1,0 +1,70 @@
+<div class="card surface-card border-round-xl shadow-3 p-3">
+  <!-- Toolbar -->
+  <p-toolbar class="mb-3 border-round-md surface-100 p-2">
+    <div class="p-toolbar-group-start">
+      <h5 class="m-0 text-primary">Etalonnages</h5>
+    </div>
+    <div class="p-toolbar-group-end" *ngIf="!isCC">
+      <button pButton pRipple icon="pi pi-plus" label="New"
+              class="p-button-success p-button-sm"
+              (click)="openNew()"></button>
+    </div>
+  </p-toolbar>
+
+  <!-- Data Table -->
+  <p-table [value]="etalonnages" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+           styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines p-datatable-hover">
+
+    <!-- Table Header -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Type Intervention</th>
+        <th>Date Intervention</th>
+        <th>Constats</th>
+        <th>Rapport Intervention</th>
+        <th style="width: 120px">Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-etalonnage>
+      <tr>
+        <td>{{ etalonnage.interventionType }}</td>
+        <td>{{ etalonnage.dateIntervention | date:'dd/MM/yyyy' }}</td>
+        <td>{{ etalonnage.constats }}</td>
+        <td>
+          <ng-container *ngIf="etalonnage.rapportIntervention; else uploadTemplate">
+            <button pButton pRipple icon="pi pi-download" label="Download"
+                    class="p-button-rounded p-button-text p-button-sm"
+                    (click)="downloadFile(etalonnage.id, etalonnage.rapportIntervention)">
+            </button>
+          </ng-container>
+          <ng-template #uploadTemplate>
+            <input type="file" #fileInput style="display: none"
+                   (change)="uploadFile($event, etalonnage)" accept=".pdf">
+            <button pButton pRipple icon="pi pi-upload" label="Upload"
+                    class="p-button-rounded p-button-text p-button-sm"
+                    (click)="fileInput.click()">
+            </button>
+          </ng-template>
+        </td>
+        <td>
+          <button *ngIf="isCC" pButton pRipple icon="pi pi-trash"
+                  class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                  (click)="deleteEtalonnage(etalonnage.id)">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Empty Message -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="text-center py-5 text-500">
+          No etalonnages found
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

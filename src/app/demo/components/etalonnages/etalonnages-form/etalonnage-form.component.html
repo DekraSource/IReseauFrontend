@@ -1,0 +1,72 @@
+<!-- etalonnage-form.component.html -->
+<div class="p-fluid">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="p-field">
+          <label for="interventionTypeId">Intervention Type</label>
+          <p-dropdown id="interventionTypeId" [options]="interventionTypes" formControlName="interventionTypeId" 
+            optionLabel="values" optionValue="key" [disabled]="isEdit && etalonnage.interventionTypeId === 1"
+            placeholder="Select Intervention Type">
+          </p-dropdown>
+          <small *ngIf="form.get('interventionTypeId')?.invalid && form.get('interventionTypeId')?.touched" class="p-error">
+            Intervention Type is required
+          </small>
+        </div>
+      </div>
+
+      <div class="p-col-12">
+        <div class="p-field">
+          <label for="dateIntervention">{{isEtalonnage ? 'Date Etalonnage' : 'Date Intervention'}}</label>
+          <p-calendar id="dateIntervention" formControlName="dateIntervention" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+          <small *ngIf="form.get('dateIntervention')?.invalid && form.get('dateIntervention')?.touched" class="p-error">
+            Date is required
+          </small>
+        </div>
+      </div>
+
+      <div class="p-col-12" *ngIf="isEtalonnage">
+        <div class="p-field">
+          <label for="moisExpiration">Expire après</label>
+          <p-dropdown id="moisExpiration" [options]="[6, 24]" formControlName="moisExpiration" 
+            placeholder="Select Months">
+            <ng-template let-item pTemplate="item">
+              {{item}} Mois
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-col-12" *ngIf="isEtalonnage && expirationDate">
+        <div class="p-field">
+          <label>Date Expiration Etalonnage</label>
+                <input pInputText [value]="expirationDate" readonly />
+        </div>
+      </div>
+
+      <div class="p-col-12">
+        <div class="p-field">
+          <label for="constats">Constats</label>
+          <textarea id="constats" pInputTextarea formControlName="constats" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="p-col-12">
+        <div class="p-field">
+          <label for="file">Rapport Intervention (.pdf)</label>
+          <p-fileUpload id="file" mode="basic" chooseLabel="Browse" [showUploadButton]="false" [showCancelButton]="false"
+            accept=".pdf" (onSelect)="onFileSelect($event)" [maxFileSize]="2000000">
+          </p-fileUpload>
+          <small *ngIf="!isEdit && files.length===0" class="p-error">
+            Please attach a file
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-dialog-footer">
+      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text" (click)="onCancel()"></button>
+      <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-text" [disabled]="loading"></button>
+    </div>
+  </form>
+</div>

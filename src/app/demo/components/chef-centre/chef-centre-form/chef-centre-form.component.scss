@@ -1,0 +1,81 @@
+/* agent-visiteur-form.component.scss */
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+.form-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-section {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  h4 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+}
+
+.field {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #495057;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 960px) {
+  .form-section {
+    padding: 1rem;
+  }
+  
+  .p-grid {
+    margin: 0;
+  }
+  
+  .p-col-12 {
+    padding: 0.5rem;
+  }
+}
+
+/* Dark mode support */
+:host ::ng-deep {
+  .p-inputtext:disabled,
+  .p-calendar:disabled,
+  .p-inputnumber:disabled {
+    opacity: 1;
+    background-color: #f8f9fa;
+  }
+  
+  .p-dropdown, .p-calendar, .p-inputnumber, .p-inputtext {
+    width: 100%;
+  }
+  
+  .p-inputswitch {
+    margin-top: 0.5rem;
+  }
+}

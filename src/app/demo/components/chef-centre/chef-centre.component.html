@@ -1,0 +1,115 @@
+<!-- chef-centres.component.html -->
+<div class="card">
+  <p-toast></p-toast>
+              <p-confirmDialog></p-confirmDialog>
+
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h5>Chef Centres</h5>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button *ngIf="generalService.canActivate('C-CC')" pButton pRipple icon="pi pi-plus" class="p-button-success mr-2" 
+              (click)="openNewForm()" label="New"></button>
+      <button *ngIf="generalService.canActivate('R-CC')" pButton pRipple icon="pi pi-download" class="p-button-help" 
+              (click)="exportData()" label="Export"></button>
+    </div>
+  </p-toolbar>
+
+  <p-table *ngIf="generalService.canActivate('R-CC')" #dt [value]="chefCentres" [loading]="loading" [paginator]="true" [rows]="10"
+           [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+<ng-template pTemplate="header">
+  <tr>
+    <!-- Nom -->
+    <th pSortableColumn="nom">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="nom"></p-sortIcon>
+        <span>Nom</span>
+        <p-columnFilter type="text" field="nom" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Prenom -->
+    <th pSortableColumn="prenom">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="prenom"></p-sortIcon>
+        <span>Prenom</span>
+        <p-columnFilter type="text" field="prenom" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- CIN -->
+    <th pSortableColumn="cin">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="cin"></p-sortIcon>
+        <span>CIN</span>
+        <p-columnFilter type="text" field="cin" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Tel -->
+    <th pSortableColumn="tel">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="tel"></p-sortIcon>
+        <span>Tel</span>
+        <p-columnFilter type="text" field="tel" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Date Affectation -->
+    <th pSortableColumn="dateAffectation">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="dateAffectation"></p-sortIcon>
+        <span>Date Affectation</span>
+        <p-columnFilter type="date" field="dateAffectation" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Centre -->
+    <th pSortableColumn="centre">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="centre"></p-sortIcon>
+        <span>Centre</span>
+        <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Status -->
+    <th>
+      <div class="flex align-items-center">
+        <span>Status</span>
+      </div>
+    </th>
+
+    <!-- Actions -->
+    <th>Actions</th>
+  </tr>
+</ng-template>
+
+    <ng-template pTemplate="body" let-chef>
+      <tr>
+        <td>{{chef.nom}}</td>
+        <td>{{chef.prenom}}</td>
+        <td>{{chef.cin}}</td>
+        <td>{{chef.tel}}</td>
+        <td>{{chef.dateAffectaion | date:'dd/MM/yyyy'}}</td>
+        <td>{{chef.centre}}</td>
+        <td>
+          <p-tag [severity]="chef.dateEnvoiCneh ? 'success' : 'danger'" 
+                 [value]="chef.dateEnvoiCneh ? 'Synchronized' : 'Sync Error'">
+            <span *ngIf="!chef.dateEnvoiCneh" pTooltip="{{chef.errorCneh}}" tooltipPosition="bottom"></span>
+          </p-tag>
+        </td>
+        <td>
+          <button *ngIf="generalService.canActivate('U-CC')" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text" 
+                  (click)="editChef(chef)"></button>
+          <button *ngIf="generalService.canActivate('D-CC')"   pButton pRipple icon="pi pi-trash" 
+                  class="p-button-rounded p-button-text p-button-danger" 
+                  (click)="confirmDelete(chef.id)"></button>
+        </td>
+      </tr>
+    </ng-template>  
+</p-table>
+
+  
+</div>

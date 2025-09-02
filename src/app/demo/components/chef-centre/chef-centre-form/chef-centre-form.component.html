@@ -1,0 +1,88 @@
+  <!-- chef-centre-form.component.html -->
+<div class="p-fluid">
+  <!-- Main Chef Centre Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+    <div class="form-section">
+      <h4>Chef Centre Information</h4>
+      <div class="p-grid">
+        <!-- Row 1 -->
+        <div class="p-col-12 p-md-6 field">
+          <label for="nom">Nom*</label>
+          <input id="nom" type="text" pInputText formControlName="nom" class="w-full">
+          <small *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched" 
+                class="p-error">Nom is required</small>
+        </div>
+
+        <div class="p-col-12 p-md-6 field">
+          <label for="prenom">Prénom</label>
+          <input id="prenom" type="text" pInputText formControlName="prenom" class="w-full">
+        </div>
+
+        <!-- Row 2 -->
+        <div class="p-col-12 p-md-6 field">
+          <label for="email">Email</label>
+          <input id="email" type="email" pInputText formControlName="email" class="w-full">
+          <small *ngIf="form.get('email')?.invalid && form.get('email')?.touched" 
+                class="p-error">Valid email is required</small>
+        </div>
+
+        <div class="p-col-12 p-md-6 field">
+          <label for="tel">Téléphone</label>
+          <input id="tel" type="text" pInputText formControlName="tel" class="w-full">
+        </div>
+
+        <!-- Row 3 -->
+        <div class="p-col-12 p-md-6 field">
+          <label for="cin">CIN</label>
+          <input id="cin" type="text" pInputText formControlName="cin" class="w-full">
+        </div>
+
+        <div class="p-col-12 p-md-6 field">
+          <label for="cnss">CNSS</label>
+          <input id="cnss" type="text" pInputText formControlName="cnss" class="w-full">
+        </div>
+
+        <!-- Row 4 -->
+        <div class="p-col-12 p-md-6 field">
+          <label for="niveauFormationTypeId">Niveau Formation</label>
+          <p-dropdown id="niveauFormationTypeId" [options]="niveauFormationTypes" appendTo="body" [filter]="true"
+                     formControlName="niveauFormationTypeId" optionLabel="libelle" 
+                     optionValue="id" [showClear]="true" placeholder="Select level" class="w-full">
+          </p-dropdown>
+        </div>
+
+        <div class="p-col-12 p-md-6 field">
+          <label for="centreId">Centre*</label>
+          <p-dropdown id="centreId" [options]="centres" formControlName="centreId" appendTo="body" [filter]="true"
+                     optionLabel="values" optionValue="key" placeholder="Select Centre" class="w-full"
+                     [disabled]="centres.length === 1">
+          </p-dropdown>
+          <small *ngIf="form.get('centreId')?.invalid && form.get('centreId')?.touched" 
+                class="p-error">Centre is required</small>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="p-col-12 p-md-6 field">
+          <label for="sexe">Sexe</label>
+          <p-dropdown id="sexe" [options]="sexeOptions" formControlName="sexe" 
+                     placeholder="Select gender" class="w-full"></p-dropdown>
+        </div>
+
+          <div class="p-col-12 p-md-6 field">
+          <label for="dateAffectaion">Date Affectation*</label>
+          <p-calendar id="dateAffectaion" formControlName="dateAffectaion" 
+                      [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+          <small *ngIf="form.get('dateAffectaion')?.invalid && form.get('dateAffectaion')?.touched" 
+                class="p-error">Date Affectation is required</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text" 
+              (click)="onCancel()"></button>
+      <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-primary" 
+              [disabled]="form.invalid || loading"></button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+::ng-deep .p-tabmenu .tab-active .p-menuitem-link {
+  background: #22c55e !important; /* Green 500 */
+  color: white !important;
+  border-radius: 0.5rem;
+}
+/* Active tab style */
+::ng-deep .p-tabmenu .p-menuitem-link.p-highlight {
+  background-color: #2563eb !important; /* Blue 600 */
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 0.75rem; /* Rounded look */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Hover effect */
+::ng-deep .p-tabmenu .p-menuitem-link:hover {
+  background-color: #e0e7ff !important; /* Light indigo */
+  border-radius: 0.75rem;
+}
+
+/* Icon spacing */
+::ng-deep .p-tabmenu .p-menuitem-link .pi {
+  margin-right: 0.5rem;
+}

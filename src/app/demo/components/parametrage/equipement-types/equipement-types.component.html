@@ -1,0 +1,58 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar>
+        <div class="p-toolbar-group-start">
+            <h5>Types d'Équipements</h5>
+        </div>
+    </p-toolbar>
+
+    <p-table #dt [value]="equipementTypes" [loading]="loading" [paginator]="true" [rows]="10"
+             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+             [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- Code Column -->
+                <th pSortableColumn="code">
+                    <div class="p-d-flex p-ai-center">
+                        <p-sortIcon field="code"></p-sortIcon>
+                        <span>Code</span>
+                        <p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+
+                <!-- Libellé Column -->
+                <th pSortableColumn="libelle">
+                    <div class="p-d-flex p-ai-center">
+                        <p-sortIcon field="libelle"></p-sortIcon>
+                        <span>Libellé</span>
+                        <p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+
+                <!-- Étalonnable Column -->
+                <th pSortableColumn="etalonnable">
+                    <div class="p-d-flex p-ai-center">
+                        <p-sortIcon field="etalonnable"></p-sortIcon>
+                        <span>Étalonnable</span>
+                        <p-columnFilter type="boolean" field="etalonnable" display="menu" class="ml-auto"
+                                        [trueValue]="'True'" [falseValue]="'False'"
+                                        trueLabel="Oui" falseLabel="Non">
+                        </p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-equipementType>
+            <tr>
+                <td>{{equipementType.code}}</td>
+                <td>{{equipementType.libelle}}</td>
+                <td>
+                    <p-tag [severity]="equipementType.etalonnable === 'True' ? 'success' : 'danger'"
+                           [value]="equipementType.etalonnable === 'True' ? 'Oui' : 'Non'"></p-tag>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

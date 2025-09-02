@@ -1,0 +1,38 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/layout/images/{{
+                layoutService.config().colorScheme === 'light'
+                    ? 'logo-white'
+                    : 'logo-dark'
+            }}.png" alt="logo" />
+        <span>IReseau</span>
+    </a>
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+        (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+    <div #topbarmenu class="layout-topbar-menu"
+        [ngClass]="{'layout-topbar-menu-mobile-active':layoutService.state.profileSidebarVisible}">
+        <i class="pi pi-bell p-text-secondary" 
+            style="font-size: 1.5rem;color: white;cursor: pointer; margin-top: 0.8rem;"></i>
+
+      
+      
+        <button (click)="menu.toggle($event)" class="p-link layout-topbar-button">
+            <i class="pi pi-chevron-down"></i>
+            <span>Compte</span>
+        </button>
+        <p-menu #menu [model]="itemsprofiles" [popup]="true" appendTo="body"></p-menu>
+    </div>
+</div>
+
+<p-confirmDialog header="Confirmation" key="confirm1" icon="pi pi-exclamation-triangle"
+    message="Êtes-vous sûrs de vouloir déconnecté ?" [style]="{ width: '350px' }" acceptButtonStyleClass="p-button-text"
+    rejectButtonStyleClass="p-button-text" acceptLabel="Oui" rejectLabel="Non">
+</p-confirmDialog>
+
+
+<p-toast key="tst"></p-toast>

@@ -1,0 +1,102 @@
+::ng-deep .row-yellow {
+  background-color: #ffef31 !important;
+  font-style: italic;
+}
+
+::ng-deep .row-red {
+  background-color: #de3123 !important;
+  font-style: italic;
+  color: white;
+}
+  body {
+            font-family: var(--font-family);
+            background-color: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #3B82F6;
+            margin-bottom: 1.5rem;
+        }
+        
+        p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .p-button {
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+        }
+        
+        /* Custom styles for the dialog */
+        .custom-dialog .p-dialog {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .custom-dialog .p-dialog-header {
+            background: #3B82F6;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            padding: 1.2rem;
+        }
+        
+        .custom-dialog .p-dialog-content {
+            padding: 1.5rem;
+        }
+        
+        .custom-dialog .p-dialog-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .custom-dialog .p-field {
+            margin-bottom: 1.5rem;
+        }
+        
+        .custom-dialog label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .custom-dialog .p-inputtext {
+            width: 100%;
+        }
+        
+        .custom-dialog .p-dropdown {
+            width: 100%;
+        }
+        
+        .custom-dialog .p-button-text {
+            color: #6c757d;
+        }
+        
+        .custom-dialog .p-button-primary {
+            background: #3B82F6;
+            border: 1px solid #3B82F6;
+        }
+        
+        .custom-dialog .p-button-primary:hover {
+            background: #2563EB;
+            border-color: #2563EB;
+        }

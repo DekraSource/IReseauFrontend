@@ -1,0 +1,193 @@
+<div class="equipement-form-container p-4 surface-card shadow-2 border-round">
+  <!-- Main Equipement Form -->
+  <form [formGroup]="form" #equipementForm="ngForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    <h2 class="text-2xl font-medium mb-4 text-900">
+      <i class="pi pi-cog mr-2"></i>
+      {{ isEdit ? 'Edit Equipment' : 'Add New Equipment' }}
+    </h2>
+
+    <div class="grid form-grid">
+      <!-- Identifiant -->
+      <div class="col-12 md:col-6 field">
+        <label for="identifiant" class="block mb-2 font-medium text-900">Identifiant*</label>
+        <input id="identifiant" type="text" pInputText formControlName="identifiant"
+               [disabled]="isEdit && !isCC" class="w-full">
+        <small *ngIf="form.get('identifiant')?.invalid && form.get('identifiant')?.touched"
+               class="p-error block mt-1">Identifiant is required</small>
+      </div>
+
+      <!-- Type -->
+      <div class="col-12 md:col-6 field">
+        <label class="block mb-2 font-medium text-900">Type*</label>
+        <div class="flex align-items-center gap-3 pt-2">
+          <p-radioButton name="isRemplacent" inputId="principal" formControlName="isRemplacent" 
+                         [value]="false" label="Principal"></p-radioButton>
+          <p-radioButton name="isRemplacent" inputId="remplacement" formControlName="isRemplacent" 
+                         [value]="true" label="Remplacement"></p-radioButton>
+        </div>
+      </div>
+
+      <!-- Marque -->
+      <div class="col-12 md:col-6 field">
+        <label for="marque" class="block mb-2 font-medium text-900">Marque</label>
+        <input id="marque" type="text" pInputText formControlName="marque" class="w-full">
+      </div>
+
+      <!-- Modele -->
+      <div class="col-12 md:col-6 field">
+        <label for="modele" class="block mb-2 font-medium text-900">Modele</label>
+        <input id="modele" type="text" pInputText formControlName="modele" class="w-full">
+      </div>
+
+      <!-- Protocole -->
+      <div class="col-12 md:col-6 field">
+        <label for="protocole" class="block mb-2 font-medium text-900">Protocole</label>
+        <input id="protocole" type="text" pInputText formControlName="protocole" class="w-full">
+      </div>
+
+      <!-- Reference Homologation -->
+      <div class="col-12 md:col-6 field">
+        <label for="referenceHomologation" class="block mb-2 font-medium text-900">Reference Homologation</label>
+        <input id="referenceHomologation" type="text" pInputText formControlName="referenceHomologation" class="w-full">
+      </div>
+
+      <!-- Centre -->
+      <div class="col-12 md:col-6 field">
+        <label for="ligneCentreId" class="block mb-2 font-medium text-900">Centre*</label>
+        <p-dropdown id="ligneCentreId" [options]="centres" formControlName="ligneCentreId"
+                    optionLabel="values" optionValue="key"
+                    (onChange)="onCentreChange()" [filter]="true"
+                    filterBy="values" placeholder="Select Centre" class="w-full">
+          <ng-template pTemplate="dropdownicon">
+            <i class="pi pi-building"></i>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- Ligne -->
+     <div class="col-12 md:col-6 field">
+  <label for="ligneId" class="block mb-2 font-medium text-900">Ligne*</label>
+  <p-dropdown id="ligneId" 
+  appendTo="body"
+  [filter]="true"
+              [options]="filteredLignes" 
+              formControlName="ligneId"
+              optionLabel="displayName" 
+              optionValue="id"
+              placeholder="Select Ligne" 
+              [showClear]="true"
+              [disabled]="!form.get('ligneCentreId')?.value"
+              class="w-full">
+    <ng-template pTemplate="dropdownicon">
+      <i class="pi pi-map-marker"></i>
+    </ng-template>
+    <ng-template let-ligne pTemplate="item">
+      <div class="flex align-items-center">
+        <i class="pi pi-map-marker mr-2"></i>
+        <div>
+          <div>{{ ligne.type }}{{ ligne.numLigne }}</div>
+          <small class="text-500">{{ getCentreName(ligne.centreId) }}</small>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="empty">
+      <div class="p-2">
+        {{
+          form.get('ligneCentreId')?.value 
+            ? 'No lines found' 
+            : 'Please select a centre first'
+        }}
+      </div>
+    </ng-template>
+  </p-dropdown>
+  <small *ngIf="form.get('ligneId')?.invalid && form.get('ligneId')?.touched" 
+         class="p-error">
+    Line selection is required
+  </small>
+</div>
+
+      <!-- Equipement Type -->
+      <div class="col-12 md:col-6 field">
+        <label for="equipementTypeId" class="block mb-2 font-medium text-900">Type*</label>
+        <p-dropdown id="equipementTypeId" [options]="types" formControlName="equipementTypeId"
+                    optionLabel="values" optionValue="key" [filter]="true"
+                    filterBy="values" placeholder="Select Type" class="w-full">
+          <ng-template pTemplate="dropdownicon">
+            <i class="pi pi-tags"></i>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- Date Etalonnage -->
+      <div class="col-12 md:col-6 field" *ngIf="!isEdit">
+        <label for="dateEtalonnage" class="block mb-2 font-medium text-900">Date Etalonnage</label>
+        <p-calendar id="dateEtalonnage" formControlName="dateEtalonnage"
+                    [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"
+                    icon="pi pi-calendar"></p-calendar>
+      </div>
+
+      <!-- Date Expiration Etalonnage -->
+      <div class="col-12 md:col-6 field" *ngIf="!isEdit">
+        <label for="dateExpirationEtalonnage" class="block mb-2 font-medium text-900">Date Expiration Etalonnage</label>
+        <p-calendar id="dateExpirationEtalonnage" formControlName="dateExpirationEtalonnage"
+                    [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"
+                    icon="pi pi-calendar"></p-calendar>
+      </div>
+
+      <!-- Date Homologation -->
+      <div class="col-12 md:col-6 field">
+        <label for="dateHomologation" class="block mb-2 font-medium text-900">Date Homologation</label>
+        <p-calendar id="dateHomologation" formControlName="dateHomologation"
+                    [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"
+                    icon="pi pi-calendar"></p-calendar>
+      </div>
+
+      <!-- Date Mise Service -->
+      <div class="col-12 md:col-6 field">
+        <label for="dateMiseService" class="block mb-2 font-medium text-900">Date Mise Service</label>
+        <p-calendar id="dateMiseService" formControlName="dateMiseService"
+                    [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"
+                    icon="pi pi-calendar"></p-calendar>
+      </div>
+
+      <!-- Societe Etalonnage -->
+      <div class="col-12 md:col-6 field">
+        <label for="societeEtalonnage" class="block mb-2 font-medium text-900">Societe Etalonnage</label>
+        <input id="societeEtalonnage" type="text" pInputText formControlName="societeEtalonnage" class="w-full">
+      </div>
+
+      <!-- Adresse Societe Etalonnage -->
+      <div class="col-12 md:col-6 field">
+        <label for="adresseSocieteEtalonnage" class="block mb-2 font-medium text-900">Adresse Societe Etalonnage</label>
+        <input id="adresseSocieteEtalonnage" type="text" pInputText formControlName="adresseSocieteEtalonnage" class="w-full">
+      </div>
+
+      <!-- Tel Societe Etalonnage -->
+      <div class="col-12 md:col-6 field">
+        <label for="telSocieteEtalonnage" class="block mb-2 font-medium text-900">Tel Societe Etalonnage</label>
+        <input id="telSocieteEtalonnage" type="text" pInputText formControlName="telSocieteEtalonnage" class="w-full">
+      </div>
+    </div>
+
+
+      <!-- Save / Cancel Buttons - Now with smaller size -->
+    <div class="flex justify-content-end gap-3 mt-5 pt-4 border-top-1 surface-border">
+      <button pButton type="button" label="Cancel" icon="pi pi-times"
+              class="p-button-sm p-button-outlined p-button-secondary" (click)="onCancel()"></button>
+      <button pButton type="button" label="Save" icon="pi pi-check"
+              class="p-button-sm p-button-success" [disabled]="loading || form.invalid"
+              (click)="equipementForm.ngSubmit.emit()">
+        <span *ngIf="loading" class="pi pi-spinner pi-spin mr-2"></span>
+        Save
+      </button>
+    </div>
+  </form>
+  <!-- Etalonnages section OUTSIDE the form -->
+  <div class="mt-6" *ngIf="isEdit">
+    <h3 class="text-xl font-medium mb-3 text-900 flex align-items-center">
+      <i class="pi pi-calendar-plus mr-2"></i>
+      Etalonnages History
+    </h3>
+    <app-etalonnages [equipementId]="equipement.id"></app-etalonnages>
+  </div>
+</div>

@@ -1,0 +1,159 @@
+<!-- genre-vehicule.component.html -->
+<div class="card">
+  <p-toast></p-toast>
+          <p-confirmDialog></p-confirmDialog>
+
+  <p-dialog header="Genre : {{model.libelle}}" [(visible)]="visible" [modal]="true" [style]="{width: '90vw'}" [maximizable]="true">
+    <p-table [value]="filteredMesureRequises" [editMode]="'cell'" dataKey="id">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Vehicule Type</th>
+          <th>Energie</th>
+          <th>Freinage</th>
+          <th>Suspension</th>
+          <th>Gaz</th>
+          <th>Reglophare</th>
+          <th>Ripage</th>
+          <th>Opacimetre</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+        <tr>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown [options]="vehiculeTypes" [(ngModel)]="rowData.vehiculeType" [disabled]="true" optionLabel="values" optionValue="key"></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{getVehiculeTypeName(rowData.vehiculeType)}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown [options]="energies" [(ngModel)]="rowData.energieId" [disabled]="true" optionLabel="values" optionValue="key"></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{getEnergieName(rowData.energieId)}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.freinage" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.freinage ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.suspension" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.suspension ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.gaz" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.gaz ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.reglophare" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.reglophare ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.ripage" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.ripage ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td pEditableColumn>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-checkbox [(ngModel)]="rowData.opacimetre" [binary]="true"></p-checkbox>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.opacimetre ? 'Oui' : 'Non'}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-times" label="Annuler" (click)="cancel()" styleClass="p-button-text"></p-button>
+      <p-button icon="pi pi-check" label="Enregistrer" (click)="submit()"></p-button>
+    </ng-template>
+  </p-dialog>
+
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <h4>Genre Vehicules</h4>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <p-button icon="pi pi-download" label="Export" (click)="exportData()" styleClass="p-button-success"></p-button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="genreVehicules" [rowStyleClass]="rowStyleFunc" [paginator]="true"  [rows]="10"
+  [rowsPerPageOptions]="[5,10,25,50]"
+ styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+    <ng-template pTemplate="header" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+      <tr>
+        <th>Code</th>
+        <th>Libelle</th>
+        <th>Date Modification</th>
+        <th>Crée</th>
+        <th>Uniquement Freinage</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr [ngStyle]="rowStyleFunc(item)">
+        <td [ngStyle]="cellStyleFunc(item)">{{item.code}}</td>
+        <td [ngStyle]="cellStyleFunc(item)">{{item.libelle}}</td>
+        <td>
+          <p-chip [label]="item.dateModification | date:'dd/MM/yyyy'" styleClass="mr-2"></p-chip>
+        </td>
+        <td>
+          <p-avatar *ngIf="item.codeEos" icon="pi pi-check-circle" styleClass="p-mr-2" size="small" styleClass="p-avatar-success"></p-avatar>
+          <p-avatar *ngIf="!item.codeEos" icon="pi pi-times-circle" styleClass="p-mr-2" size="small" styleClass="p-avatar-danger"></p-avatar>
+        </td>
+        <td>
+          <p-avatar *ngIf="item.sansMesure" icon="pi pi-check-circle" styleClass="p-mr-2" size="small" styleClass="p-avatar-success"></p-avatar>
+          <p-avatar *ngIf="!item.sansMesure" icon="pi pi-times-circle" styleClass="p-mr-2" size="small" styleClass="p-avatar-danger"></p-avatar>
+        </td>
+        <td>
+          <div class="p-d-flex p-jc-end">
+            <p-button icon="pi pi-refresh" label="Mesure" (click)="edit(item)" styleClass="p-button-rounded p-button-primary p-mr-2"></p-button>
+            <p-button *ngIf="!item.sansMesure && item.codeEos" icon="pi pi-update" label="Uniquement F" (click)="exoneration(+item.codeEos)" styleClass="p-button-rounded p-button-secondary"></p-button>
+ 
+        </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

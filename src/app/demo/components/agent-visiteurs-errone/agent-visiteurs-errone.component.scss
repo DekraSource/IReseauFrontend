@@ -1,0 +1,24 @@
+/* agent-visiteurs-errone.component.scss */
+:host ::ng-deep {
+  .p-datatable {
+    font-size: 1.2rem;
+
+    .p-button-sm {
+      width: 2rem;
+      height: 2rem;
+
+      .p-button-icon {
+        font-size: 1.2rem;
+      }
+    }
+
+    .p-fileupload-choose {
+      width: auto;
+      padding: 0.5rem 1rem;
+    }
+
+    .p-inputswitch {
+      transform: scale(0.8);
+    }
+  }
+}

@@ -1,0 +1,126 @@
+<div class="card surface-card border-round-xl shadow-3 p-3">
+  <p-toast></p-toast>
+            <p-confirmDialog></p-confirmDialog>
+
+  <!-- Toolbar -->
+  <p-toolbar class="mb-3 border-round-md surface-100 p-2">
+    <div class="p-toolbar-group-start">
+      <h5 class="m-0 text-primary">Formations</h5>
+    </div>
+    <div class="p-toolbar-group-end flex align-items-center gap-3">
+         <p-tabMenu [model]="tabItems" [(activeItem)]="activeItem"></p-tabMenu>
+
+
+      <!-- Action Buttons -->
+      <div class="flex align-items-center gap-2">
+        <button *ngIf="generalService.canActivate('I-Frm')" pButton pRipple icon="pi pi-upload" label="Import"
+                class="p-button-help p-button-sm"
+                (click)="openImportDialog()"></button>
+        <!-- <button *ngIf="canEdit()" pButton pRipple icon="pi pi-plus" label="New"
+                class="p-button-primary p-button-sm"
+                (click)="openNewForm()"></button> -->
+      </div>
+    </div>
+  </p-toolbar>
+
+  <!-- Data Table -->
+  <p-table *ngIf="generalService.canActivate('R-Frm')" [value]="formations" [loading]="loading"
+           [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+           [globalFilterFields]="['numValidation','chefCentre','agentVisiteur','formationType']"
+          styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+
+    <!-- Table Header -->
+<!-- Table Header -->
+<ng-template pTemplate="header">
+  <tr>
+    <th pSortableColumn="name">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="name"></p-sortIcon>
+        <span>Name</span>
+        <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th pSortableColumn="dateDebut">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="dateDebut"></p-sortIcon>
+        <span>Date Debut</span>
+        <p-columnFilter type="date" field="dateDebut" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th pSortableColumn="dateFin">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="dateFin"></p-sortIcon>
+        <span>Date Fin</span>
+        <p-columnFilter type="date" field="dateFin" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th pSortableColumn="formationType">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="formationType"></p-sortIcon>
+        <span>Formation Type</span>
+        <p-columnFilter type="text" field="formationType" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th>
+      <div class="flex align-items-center">
+        <span>Status</span>
+      </div>
+    </th>
+
+    <th pSortableColumn="resultat">
+      <div class="flex align-items-center gap-2">
+        <p-sortIcon field="resultat"></p-sortIcon>
+        <span>Result</span>
+      </div>
+    </th>
+
+    <th style="width: 120px">Actions</th>
+  </tr>
+</ng-template>
+
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-formation>
+      <tr>
+        <td>{{ formation.chefCentre || formation.agentVisiteur }}</td>
+        <td>{{ formation.dateDebut | date:'dd/MM/yyyy' }}</td>
+        <td>{{ formation.dateFin | date:'dd/MM/yyyy' }}</td>
+        <td>{{ formation.formationType }}</td>
+        <td>
+          <p-tag [severity]="formation.dateEnvoiCneh ? 'success' : 'danger'"
+                 [value]="formation.dateEnvoiCneh ? 'Synchronized' : 'Sync Error'">
+          </p-tag>
+          <i *ngIf="!formation.dateEnvoiCneh"
+             class="pi pi-info-circle text-red-400 ml-1"
+             pTooltip="{{formation.errorCneh}}" tooltipPosition="bottom"></i>
+        </td>
+        <td>
+          <p-avatar *ngIf="formation.resultat" icon="pi pi-check" size="small"
+                    shape="circle" [style]="{'background-color':'#22c55e'}"></p-avatar>
+          <p-avatar *ngIf="!formation.resultat" icon="pi pi-times" size="small"
+                    shape="circle" [style]="{'background-color':'#ef4444'}"></p-avatar>
+        </td>
+        <td class="flex gap-1">
+          <button *ngIf="generalService.canActivate('U-Frm')" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                  (click)="editFormation(formation)"></button>
+          <button *ngIf="generalService.canActivate('D-Frm')" pButton pRipple icon="pi pi-trash"
+                  class="p-button-rounded p-button-text p-button-danger"
+                  (click)="confirmDelete(formation.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Empty Table Message -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="text-center py-5 text-500">
+          No formations found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

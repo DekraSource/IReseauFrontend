@@ -1,0 +1,175 @@
+<div class="dashboard-container">
+  <p-toast></p-toast>
+
+  <!-- Carousel -->
+  <p-carousel 
+    [value]="[1, 2, 3]" 
+    [numVisible]="1" 
+    [numScroll]="1" 
+    [circular]="true" 
+    [autoplayInterval]="5000"
+    styleClass="custom-carousel"
+  >
+    <ng-template let-item pTemplate="item">
+      <div class="grid text-center p-3">
+
+        <!-- Slide 1 -->
+        <div *ngIf="item === 1" class="col-12 grid">
+          <div class="col-12 md:col-3" *ngFor="let data of [
+              {title: 'Centres', value: tableauBords.totalCentre},
+              {title: 'Agents visiteurs', value: tableauBords.totalAgentVisiteur},
+              {title: 'Chefs de centre', value: tableauBords.totalChefCentre},
+              {title: 'Lignes', value: tableauBords.totalLigne}
+            ]">
+            <p-card class="stat-card shadow-2 border-round-lg">
+              <ng-template pTemplate="header">
+                <div class="stat-card-header text-info font-bold">{{data.title}}</div>
+              </ng-template>
+              <div class="stat-card-value text-2xl">
+                <p-tag severity="info">{{data.value}}</p-tag>
+              </div>
+            </p-card>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div *ngIf="item === 2" class="col-12 grid">
+          <div class="col-12 md:col-3" *ngFor="let data of [
+              {title: 'Équipements', value: tableauBords.totalEquipement},
+              {title: 'Équipements étalonnés', value: tableauBords.totalEquipementEtalonner},
+              {title: 'Équipements non étalonnés', value: tableauBords.totalEquipementNonEtalonner},
+              {title: 'Équipements à valider', value: tableauBords.totalEquipementNonValide}
+            ]">
+            <p-card class="stat-card shadow-2 border-round-lg">
+              <ng-template pTemplate="header">
+                <div class="stat-card-header text-info-600 font-bold">{{data.title}}</div>
+              </ng-template>
+              <div class="stat-card-value text-2xl">
+                <p-tag severity="warning">{{data.value}}</p-tag>
+              </div>
+            </p-card>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div *ngIf="item === 3" class="col-12 grid">
+          <div class="col-12 md:col-3" *ngFor="let data of [
+              {title: 'Formation agents visiteurs', value: tableauBords.totalFormationAgent},
+              {title: 'Formation agents visiteurs validée', value: tableauBords.totalFormationAgentValide},
+              {title: 'Formation chefs de centre', value: tableauBords.totalFormationChef},
+              {title: 'Formation chefs de centre validée', value: tableauBords.totalFormationChefValide}
+            ]">
+            <p-card class="stat-card shadow-2 border-round-lg">
+              <ng-template pTemplate="header">
+                <div class="stat-card-header text-info-700 font-bold">{{data.title}}</div>
+              </ng-template>
+              <div class="stat-card-value text-2xl">
+                <p-tag severity="success">{{data.value}}</p-tag>
+              </div>
+            </p-card>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </p-carousel>
+
+  <!-- Table Équipements -->
+  <div class="mt-4">
+    <p-table 
+      [value]="equipements" 
+      [loading]="loadingEquipements"
+      [paginator]="true" 
+      [rows]="10"
+      styleClass="p-datatable-sm modern-table shadow-2 border-round-lg"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Centre</th>
+          <th>Ligne</th>
+          <th>Type d'équipement</th>
+          <th>Date étalonnage</th>
+          <th>Date d’expiration</th>
+          <th>Statut</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-equipment>
+        <tr>
+          <td>{{equipment.centre}}</td>
+          <td>{{equipment.ligne}}</td>
+          <td>{{equipment.equipementType}}</td>
+          <td>{{equipment.dateEtalonnage | date:'dd/MM/yyyy'}}</td>
+          <td>
+            <p-tag 
+              [severity]="getExpirationStatus(equipment.dateExpirationEtalonnage)" 
+              [value]="equipment.dateExpirationEtalonnage | date:'dd/MM/yyyy'">
+            </p-tag>
+          </td>
+          <td>{{getEquipmentStatus(equipment)}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Table Contrôles -->
+  <div class="mt-4">
+    <p-table 
+      [value]="equipementControles" 
+      [loading]="loadingControls"
+      [scrollable]="true" 
+      scrollHeight="400px"
+      styleClass="p-datatable-sm modern-table shadow-2 border-round-lg"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th rowspan="2">Centre</th>
+          <th colspan="7" class="text-center">Véhicules légers</th>
+          <th colspan="5" class="text-center">Poids lourds</th>
+        </tr>
+        <tr>
+          <th>Ligne VL</th>
+          <th>Opacimétre</th>
+          <th>Réglophare</th>
+          <th>Banc de frein</th>
+          <th>Suspension</th>
+          <th>Ripage</th>
+          <th>Analyseur gaz</th>
+          <th>Ligne PL</th>
+          <th>Opacimétre</th>
+          <th>Réglophare</th>
+          <th>Frein</th>
+          <th>Ripage</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-control>
+        <tr>
+          <td>{{control.centre}}</td>
+          <td>{{control.ligneNombreVL}}</td>
+          <td>{{control.opacvl}}</td>
+          <td>{{control.reglovl}}</td>
+          <td>{{control.bfrvl}}</td>
+          <td>{{control.bsupvl}}</td>
+          <td>{{control.pripvl}}</td>
+          <td>{{control.anagvl}}</td>
+          <td>{{control.ligneNombrePL}}</td>
+          <td>{{control.opacpl}}</td>
+          <td>{{control.reglopl}}</td>
+          <td>{{control.bfrpl}}</td>
+          <td>{{control.prippl}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="13" class="text-right">
+            <p-button 
+              icon="pi pi-download" 
+              label="Exporter" 
+              (click)="exportData()"
+              styleClass="p-button-success"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

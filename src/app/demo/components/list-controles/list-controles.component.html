@@ -1,0 +1,223 @@
+<div class="card">
+  <p-toast></p-toast>
+
+<div class="header-container flex flex-column md:flex-row justify-content-between align-items-center gap-3 p-3 surface-50 border-round mb-4">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-list text-2xl text-primary"></i>
+    <h2 class="m-0 text-900">Liste des Contrôles</h2>
+  </div>
+
+  <div class="flex flex-column sm:flex-row gap-3 w-full md:w-auto">
+    <p-dropdown
+      [options]="centres"
+      [(ngModel)]="centre"
+      optionLabel="values"
+      [filter]="true"
+      filterBy="values"
+      [showClear]="true"
+      placeholder="Sélectionner un centre"
+      appendTo="body"
+      styleClass="w-full min-w-[250px]">
+      <ng-template pTemplate="dropdownicon">
+        <i class="pi pi-building"></i>
+      </ng-template>
+      <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-building text-color-secondary"></i>
+          <span>{{centre?.values || 'Sélectionner un centre'}}</span>
+        </div>
+      </ng-template>
+      <ng-template let-centre pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-building text-color-secondary"></i>
+          <span>{{centre.values}}</span>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <p-button
+      label="Afficher"
+      icon="pi pi-filter"
+      (click)="loadControls()"
+      styleClass="p-button-sm md:p-button"
+      [disabled]="!centre">
+    </p-button>
+  </div>
+</div>
+  <!-- Table -->
+   <p-table *ngIf="listControle"
+      [value]="listControle.data"
+      [loading]="loading"
+      [paginator]="true"
+            [lazy]="true"
+            (onLazyLoad)="loadControle($event)"
+
+            [totalRecords]="listControle.totalItems"
+      [rows]="10"
+      [rowsPerPageOptions]="[10,25,50]"
+      styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows"
+      currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} contrôles"
+      [showCurrentPageReport]="true">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="capAgent" style="width:120px">CAP <p-sortIcon field="capAgent"></p-sortIcon></th>
+          <th pSortableColumn="matSerial" style="min-width:180px">Immatriculation <p-sortIcon field="matSerial"></p-sortIcon></th>
+          <th pSortableColumn="lineNumber" style="width:100px">Ligne <p-sortIcon field="lineNumber"></p-sortIcon></th>
+          <th style="width:120px">Mode</th>
+          <th pSortableColumn="dataOfCreation" style="width:160px">Date <p-sortIcon field="dataOfCreation"></p-sortIcon></th>
+          <th style="width:140px">Statut</th>
+          <th style="width:120px">Actions</th>
+        </tr>
+        <tr>
+          <th colspan="7">
+            <p-inputText
+              [(ngModel)]="globalFilter"
+              (input)="filterTable()"
+              placeholder="Rechercher..."
+              styleClass="w-full">
+              <ng-template pTemplate="prefix">
+                <i class="pi pi-search"></i>
+              </ng-template>
+            </p-inputText>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-control>
+        <tr>
+          <td class="font-mono lowercase">{{control.capAgent}}</td>
+          <td>
+            <span class="font-medium">{{control.matSerial}}</span>
+            <span class="text-color-secondary ml-2">{{control.matZone}} - {{control.matLettre}}</span>
+          </td>
+          <td>{{control.lineNumber}}</td>
+          <td>
+            <p-tag
+              [severity]="control.isdegraded ? 'danger' : 'success'"
+              [value]="control.isdegraded ? 'Dégradé' : 'Connecté'"
+              styleClass="text-lg font-medium">
+            </p-tag>
+          </td>
+          <td>{{control.dataOfCreation | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td>
+            <p-tag
+              [severity]="getStatusChip(control).color"
+              [value]="getStatusChip(control).label"
+              [styleClass]="'status-tag ' + getStatusChip(control).color">
+              <i [class]="'mr-2 ' + getStatusIcon(control)"></i>
+            </p-tag>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <p-button
+                icon="pi pi-eye"
+                severity="info"
+                (click)="showControlDetail(control)"
+                styleClass="p-button-sm p-button-rounded"
+                pTooltip="Détails">
+              </p-button>
+              <p-button
+                icon="pi pi-file-export"
+                severity="help"
+                (click)="exportControl(control)"
+                styleClass="p-button-sm p-button-rounded"
+                pTooltip="Exporter">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="text-center py-5">
+            <div class="flex flex-column align-items-center gap-3">
+              <i class="pi pi-search text-4xl text-color-secondary"></i>
+              <span class="text-color-secondary">Aucun contrôle trouvé</span>
+              <p-button
+                label="Réinitialiser les filtres"
+                icon="pi pi-refresh"
+                (click)="resetFilters()"
+                styleClass="p-button-text">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  <!-- Détails -->
+  <p-dialog
+    [(visible)]="displayDialog"
+    [modal]="true"
+    [style]="{width: '75vw'}"
+    header="Détails du contrôle"
+    [draggable]="false"
+    [resizable]="false">
+
+    <div class="grid p-fluid">
+      <div class="col-6 field">
+        <label>Numéro de châssis</label>
+        <p>{{currentControl?.chassisNumber || '-'}}</p>
+      </div>
+      <div class="col-6 field">
+        <label>Marque</label>
+        <p>{{currentControl?.brand || '-'}}</p> <!-- changed to brand -->
+      </div>
+      <div class="col-6 field">
+        <label>Genre</label>
+        <p>{{currentControl?.genre || '-'}}</p>
+      </div>
+      <div class="col-6 field">
+        <label>Carburant</label>
+        <p>{{currentControl?.fuel || '-'}}</p>
+      </div>
+      <div class="col-6 field">
+        <label>Type de véhicule</label>
+        <p>{{currentControl?.typeVehicule || '-'}}</p>
+      </div>
+      <div class="col-6 field">
+        <label>Jeton 1</label>
+        <p>{{currentControl?.tokenId || '-'}}</p>
+      </div>
+    </div>
+
+    <!-- Table des jetons -->
+    <p-table
+      *ngIf="listTokens.length > 0"
+      [value]="listTokens"
+      styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Numéro de liasse</th>
+          <th>Jeton</th>
+          <th>Statut</th>
+          <th>Date de création</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-token>
+        <tr>
+          <td>{{token.numLiasse}}</td>
+          <td>{{token.token}}</td>
+          <td>
+            <p-tag
+              [severity]="token.isdegraded ? 'danger' : 'success'"
+              [value]="token.isdegraded ? 'Dégradé' : 'Connecté'">
+            </p-tag>
+          </td>
+          <td>{{token.dateCreation | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-between w-full">
+        <p-button
+          label="Fermer"
+          icon="pi pi-times"
+          (click)="displayDialog=false">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>

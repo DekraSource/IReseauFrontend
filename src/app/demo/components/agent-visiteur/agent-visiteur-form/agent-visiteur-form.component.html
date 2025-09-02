@@ -1,0 +1,156 @@
+<div class="p-fluid">
+    <form *ngIf="showAffecterForm" [formGroup]="affecterForm" (ngSubmit)="onAffecter()" class="affectation-form">
+        <div class="form-grid">
+            <!-- Première ligne - Numéro CAP -->
+            <div class="field-col">
+                <div class="form-item">
+                    <label for="numeroCap">Numéro CAP*</label>
+                    <input id="numeroCap" type="text" pInputText formControlName="numeroCap">
+                    <small *ngIf="affecterForm.get('numeroCap')?.invalid && affecterForm.get('numeroCap')?.touched"
+                           class="error-text">Champ obligatoire</small>
+                </div>
+            </div>
+            <br>
+
+            <!-- Première ligne - CIN -->
+            <div class="field-col">
+                <div class="form-item">
+                    <label for="cin">CIN*</label>
+                    <input id="cin" type="text" pInputText formControlName="cin">
+                    <small *ngIf="affecterForm.get('cin')?.invalid && affecterForm.get('cin')?.touched"
+                           class="error-text">Champ obligatoire</small>
+                </div>
+            </div>
+            <br>
+
+            <!-- Deuxième ligne - Centre -->
+            <div class="field-col">
+                <div class="form-item">
+                    <label for="centreId">Centre*</label>
+                    <p-dropdown appendTo="body" id="centreId" [options]="centres" [filter]="true"
+                                filterBy="values" [showClear]="true" formControlName="centreId"
+                                optionLabel="values" optionValue="key" placeholder="Sélectionner un centre">
+                    </p-dropdown>
+                    <small *ngIf="affecterForm.get('centreId')?.invalid && affecterForm.get('centreId')?.touched"
+                           class="error-text">Sélection obligatoire</small>
+                </div>
+            </div>
+            <br>
+
+            <!-- Deuxième ligne - Bouton -->
+            <div class="field-col submit-col">
+                <button pButton type="submit" label="Affecter" class="submit-btn"
+                        [disabled]="affecterForm.invalid || loading"></button>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- Main Agent Form -->
+    <form *ngIf="!showAffecterForm" [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+        <div class="form-section">
+            <h4>Agent Visiteur Information</h4>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="nom">Nom*</label>
+                    <input id="nom" type="text" pInputText formControlName="nom">
+                    <small *ngIf="form.get('nom')?.invalid && form.get('nom')?.touched"
+                           class="p-error">Nom is required</small>
+                </div>
+
+                <div class="form-field">
+                    <label for="prenom">Prenom*</label>
+                    <input id="prenom" type="text" pInputText formControlName="prenom">
+                    <small *ngIf="form.get('prenom')?.invalid && form.get('prenom')?.touched"
+                           class="p-error">Prenom is required</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="mail">Email*</label>
+                    <input id="mail" type="email" pInputText formControlName="mail">
+                    <small *ngIf="form.get('mail')?.invalid && form.get('mail')?.touched"
+                           class="p-error">Valid email is required</small>
+                </div>
+
+                <div class="form-field">
+                    <label for="tel">Tel*</label>
+                    <input id="tel" type="text" pInputText formControlName="tel">
+                    <small *ngIf="form.get('tel')?.invalid && form.get('tel')?.touched"
+                           class="p-error">Tel is required</small>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="cin">Cin*</label>
+                    <input id="cin" type="text" pInputText formControlName="cin" [disabled]="!isNew">
+                    <small *ngIf="form.get('cin')?.invalid && form.get('cin')?.touched"
+                           class="p-error">Cin is required</small>
+                </div>
+
+                <div class="form-field">
+                    <label for="cnss">Cnss</label>
+                    <input id="cnss" type="text" pInputText formControlName="cnss">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="statutAdministratif">Statut Administratif</label>
+                    <input id="statutAdministratif" type="text" pInputText formControlName="statutAdministratif">
+                </div>
+
+                <div class="form-field">
+                    <label for="anneeAutorisation">Annee Autorisation</label>
+                    <input id="anneeAutorisation" type="number" pInputText formControlName="anneeAutorisation">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="dateAffectation">Date Affectation*</label>
+                    <p-calendar id="dateAffectation" formControlName="dateAffectation"
+                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    <small *ngIf="form.get('dateAffectation')?.invalid && form.get('dateAffectation')?.touched"
+                           class="p-error">Date Affectation is required</small>
+                </div>
+
+                <div class="form-field">
+                    <label for="dateCap">Date Cap</label>
+                    <p-calendar id="dateCap" formControlName="dateCap" [disabled]="true"
+                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="dateExpirationCap">Date Expiration Cap</label>
+                    <p-calendar id="dateExpirationCap" formControlName="dateExpirationCap" [disabled]="true"
+                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+
+                <div class="form-field">
+                    <label for="categorieCap">Categorie Cap</label>
+                    <input id="categorieCap" type="text" pInputText formControlName="categorieCap">
+                </div>
+            </div>
+
+            <div class="form-row"align="center"  >
+                <div class="form-field">
+                    <label for="isActif">Actif</label>
+                    <p-inputSwitch id="isActif" formControlName="isActif"></p-inputSwitch>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text"
+                    (click)="onCancel()"></button>
+            <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-primary"
+                    [disabled]="form.invalid || loading"></button>
+        </div>
+    </form>
+</div>

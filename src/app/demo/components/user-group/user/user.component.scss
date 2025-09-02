@@ -1,0 +1,39 @@
+::ng-deep full-calendar {
+    // max-width: 1000px;
+    margin: 40px auto;
+}
+
+::ng-deep .fc-event{
+    cursor: pointer;
+    background-color: #008000; /* Example background color */
+    border: 1px solid #008000; /* Example border */
+}
+
+::ng-deep .fc-event-title{
+    color: white; /* Example text color */
+}
+
+.buttonResetPassword {
+    background: #ce00ff;
+    border-color: #ce00ff;
+}
+
+.newPassword {
+    font-size: large;
+    font-weight: 600;
+}
+
+.newPasswordLabel {
+    font-size: large;
+}
+
+.card-flex{
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.error-message {
+    color: #ed0000; 
+    margin-top: 0.5em;
+}

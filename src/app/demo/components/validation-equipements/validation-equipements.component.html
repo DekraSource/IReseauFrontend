@@ -1,0 +1,119 @@
+<!-- equipement-validation.component.html -->
+<div class="card" >
+  <p-toast></p-toast>
+  <p-toolbar>
+    <div class="p-toolbar-group-start" >
+      <h5>Validation des équipements</h5>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button *ngIf="generalService.canActivate('C-VEqp')" pButton pRipple icon="pi pi-check" label="Valider"
+              (click)="validateSelected()" class="p-button-secondary"
+              [disabled]="selectedEquipements.length === 0"></button>
+    </div>
+  </p-toolbar>
+
+  <p-table [value]="equipements" [loading]="loading"
+           selectionMode="multiple" [(selection)]="selectedEquipements" dataKey="id"
+              [globalFilterFields]="['centre','ligne','identifiant','equipementType']"
+      [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+ styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+   <ng-template pTemplate="header">
+  <tr>
+    <!-- Checkbox column -->
+    <th style="width: 3rem">
+      <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+    </th>
+
+    <!-- Centre -->
+    <th pSortableColumn="centre">
+      <div class="flex align-items-center">
+        <p-sortIcon field="centre"></p-sortIcon>
+        <span class="ml-2">Centre</span>
+        <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Ligne / Ligne Eos -->
+    <th pSortableColumn="ligne">
+      <div class="flex align-items-center">
+        <p-sortIcon field="ligne"></p-sortIcon>
+        <span class="ml-2">Ligne / Ligne Eos</span>
+        <p-columnFilter type="text" field="ligne" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Identifiant -->
+    <th pSortableColumn="identifiant">
+      <div class="flex align-items-center">
+        <p-sortIcon field="identifiant"></p-sortIcon>
+        <span class="ml-2">Identifiant</span>
+        <p-columnFilter type="text" field="identifiant" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Type -->
+    <th pSortableColumn="equipementType">
+      <div class="flex align-items-center">
+        <p-sortIcon field="equipementType"></p-sortIcon>
+        <span class="ml-2">Type</span>
+        <p-columnFilter type="text" field="equipementType" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Date Expiration -->
+    <th pSortableColumn="dateExpirationEtalonnage">
+      <div class="flex align-items-center">
+        <p-sortIcon field="dateExpirationEtalonnage"></p-sortIcon>
+        <span class="ml-2">Date Expiration</span>
+        <p-columnFilter type="date" field="dateExpirationEtalonnage" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Etat -->
+    <th pSortableColumn="isRemplacent">
+      <div class="flex align-items-center">
+        <p-sortIcon field="isRemplacent"></p-sortIcon>
+        <span class="ml-2">Etat</span>
+        <p-columnFilter type="boolean" field="isRemplacent" display="menu"
+                        [trueValue]="true" [falseValue]="false"
+                        trueLabel="Remplaçant" falseLabel="Non Remplaçant"
+                        class="ml-auto">
+        </p-columnFilter>
+      </div>
+    </th>
+
+    <!-- Actions -->
+    <th style="width: 12rem">
+      <span>Actions</span>
+    </th>
+  </tr>
+</ng-template>
+
+    <ng-template pTemplate="body" let-equipement>
+      <tr [ngClass]="{'deleted-row': equipement.dateSuppression}">
+        <td>
+          <p-tableCheckbox [value]="equipement"></p-tableCheckbox>
+        </td>
+        <td>{{equipement.centre}}</td>
+        <td>{{equipement.ligne}} / {{equipement.ligneEos}}</td>
+        <td>{{equipement.identifiant}}</td>
+        <td>{{equipement.equipementType}}</td>
+        <td>
+          <p-tag [severity]="getExpirationStatus(equipement.dateExpirationEtalonnage)"
+                [value]="equipement.dateExpirationEtalonnage | date:'dd/MM/yyyy'"></p-tag>
+        </td>
+        <td>
+          <p-tag [severity]="equipement.isRemplacent ? 'info' : 'success'"
+                [value]="equipement.isRemplacent ? 'Remplacement' : 'Principal'"></p-tag>
+        </td>
+        <td>
+          <button *ngIf="generalService.canActivate('U-VEqp')" pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-secondary p-button-text"
+                  (click)="editEquipement(equipement)" pTooltip="Détail" tooltipPosition="top"></button>
+          <button *ngIf="generalService.canActivate('C-VEqp')" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-text p-ml-1"
+                  (click)="validateEquipement(equipement)" pTooltip="Valider" tooltipPosition="top"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

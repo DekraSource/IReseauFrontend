@@ -1,0 +1,33 @@
+// components/reaffectation-agent-visiteur-list.component.scss
+:host ::ng-deep {
+  .p-datatable {
+    .p-datatable-header {
+      background: #f8f9fa;
+      border: none;
+    }
+    
+    .p-datatable-tbody > tr {
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: #f8f9fa;
+      }
+    }
+  }
+  
+  .p-dialog {
+    .p-dialog-content {
+      padding: 2rem;
+    }
+    
+    .field {
+      margin-bottom: 1.5rem;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+    }
+  }
+}

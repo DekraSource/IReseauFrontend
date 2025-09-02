@@ -1,0 +1,31 @@
+.dashboard-container {
+  padding: 1rem;
+}
+
+.custom-carousel .p-carousel-content {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.stat-card {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.stat-card-header {
+  background-color: #008143;
+  color: white;
+  padding: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.stat-card-value {
+  padding: 1rem;
+}
+
+.modern-table .p-datatable-tbody > tr:hover {
+  background-color: #f3f4f6 !important;
+}

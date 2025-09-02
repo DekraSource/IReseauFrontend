@@ -1,0 +1,118 @@
+<div class="card surface-card border-round-xl shadow-3 p-3">
+  <p-toast></p-toast>
+            <p-confirmDialog></p-confirmDialog>
+
+  <!-- Toolbar -->
+  <p-toolbar class="mb-3 border-round-md surface-100 p-2">
+    <div class="p-toolbar-group-start">
+      <h5 class="m-0 text-primary">Equipements</h5>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button *ngIf="generalService.canActivate('C-Eqp')"  pButton pRipple icon="pi pi-plus" label="New"
+              class="p-button-success p-button-sm mr-2"
+              (click)="openNew()"></button>
+      <button *ngIf="generalService.canActivate('R-Eqp')"  pButton pRipple icon="pi pi-download" label="Export"
+              class="p-button-help p-button-sm"
+              (click)="exportData()"></button>
+    </div>
+  </p-toolbar>
+
+  <!-- Data Table -->
+  <p-table *ngIf="generalService.canActivate('R-Eqp')" #dt [value]="equipements" [loading]="loading"
+           [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+
+    <!-- Header -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="centre">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="centre"></p-sortIcon>
+            <span>Centre</span>
+            <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="ligne">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="ligne"></p-sortIcon>
+            <span>Ligne / Ligne Eos</span>
+            <p-columnFilter type="text" field="ligne" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="identifiant">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="identifiant"></p-sortIcon>
+            <span>Identifiant</span>
+            <p-columnFilter type="text" field="identifiant" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="equipementType">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="equipementType"></p-sortIcon>
+            <span>Type</span>
+            <p-columnFilter type="text" field="equipementType" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="dateExpirationEtalonnage">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="dateExpirationEtalonnage"></p-sortIcon>
+            <span>Date Expiration</span>
+            <p-columnFilter type="date" field="dateExpirationEtalonnage" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="isRemplacent">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="isRemplacent"></p-sortIcon>
+            <span>Etat</span>
+            <p-columnFilter type="boolean" field="isRemplacent" display="menu"
+                            [trueValue]="true" [falseValue]="false"
+                            trueLabel="Remplacement" falseLabel="Principal"
+                            class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th>Statut</th>
+        <th style="width: 120px">Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- Body -->
+    <ng-template pTemplate="body" let-equipement>
+      <tr>
+        <td>{{ equipement.centre }}</td>
+        <td>{{ equipement.ligne }} / {{ equipement.ligneEos }}</td>
+        <td>{{ equipement.identifiant }}</td>
+        <td>{{ equipement.equipementType }}</td>
+        <td>
+          <p-tag [severity]="getStatusSeverity(equipement.dateExpirationEtalonnage)"
+                 [value]="equipement.dateExpirationEtalonnage | date:'dd/MM/yyyy'"></p-tag>
+        </td>
+        <td>
+          <p-tag [severity]="getStatusSeverityForLabel(equipement.isRemplacent)"
+                 [value]="getStatusLabel(equipement.isRemplacent)"></p-tag>
+        </td>
+        <td>
+          <p-tag [severity]="getSyncStatus(equipement).severity"
+                 [value]="getSyncStatus(equipement).label"></p-tag>
+        </td>
+        <td>
+          <button *ngIf="generalService.canActivate('U-Eqp')" pButton pRipple icon="pi pi-pencil"
+                  class="p-button-rounded p-button-text p-button-sm"
+                  (click)="editEquipement(equipement)"></button>
+          <button *ngIf="generalService.canActivate('D-Eqp')" pButton pRipple icon="pi pi-trash"
+                  class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                  (click)="deleteEquipement(equipement.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Empty State -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center py-5 text-500">
+          No equipements found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

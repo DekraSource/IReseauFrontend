@@ -1,0 +1,25 @@
+.equipement-form-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--surface-card);
+}
+
+.form-grid {
+  row-gap: 1.5rem;
+}
+
+.field {
+  margin-bottom: 0.5rem;
+}
+
+h2, h3 {
+  color: var(--text-color);
+}
+/* Add to your component's CSS */
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.p-dropdown {
+  width: 100%;
+}

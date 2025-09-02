@@ -1,0 +1,311 @@
+<div class="grid">
+    <div class="col-12">
+        <p-panel header="Recherche" [toggleable]="true">
+            <div class="my-2">
+                <div class="formgrid grid">
+                    <div class="field col-12 lg:col-12 xl:col-4">
+                        <label htmlFor="label">Libellé</label>
+                        <input
+                            pInputText
+                            id="label"
+                            type="text"
+                            placeholder="Libellé"
+                            [(ngModel)]="filter.label"
+                            [style]="{ width: '100%' }"
+                        />
+                    </div>
+                    <div
+                        class="field col-12 lg:col-12 xl:col-4"
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-end;
+                        "
+                    >
+                        <div>
+                            <div>
+                                <label for="isEnabled" class="mr-2">Actif</label>
+                                <p-selectButton
+                                    id="isEnabled"
+                                    [options]="isEnableOptions"
+                                    [(ngModel)]="filter.isEnabled"
+                                    [multiple]="true"
+                                    optionLabel="name"
+                                ></p-selectButton>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="field col-12 lg:col-12 xl:col-4" style="display: flex; align-items: flex-end; justify-content: flex-end;">
+                        <button
+                        pButton
+                        label="Recherche"
+                        icon="pi pi-search" class="p-button p-button-success"
+                        type="button"
+                        (click)="onSearch()"
+                    ></button>
+                <button pButton pRipple label="Réinitialiser" icon="pi pi-refresh" class="p-button-outlined ml-2" (click)="onReset()"></button>
+                    </div>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div class="col-12">
+        <div class="card px-0 py-0">
+            <p-table
+                #dt
+                [value]="PaginatedList.Items"
+                [rows]="10"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 50, 100]"
+                [showCurrentPageReport]="true"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+                    >
+                        <h3 class="m-0 mb-2"><i class="pi pi-fw pi-list text-2xl text-color-primary"></i> Liste des profils</h3>
+                        <div>
+                            <button
+                                pButton
+                                pRipple
+                                label="Ajouter"
+                                icon="pi pi-plus"
+                                class="p-button-success mr-2"
+                                (click)="onPost(1, null)"
+                            ></button>
+                        </div>
+
+                        <!-- <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                placeholder="Recherche..."
+                                class="w-full sm:w-auto"
+                            />
+                        </span> -->
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width: 12rem">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                Code
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                Libellé
+                            </div>
+                        </th>
+                        <th>
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                Actif
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Item>
+                    <tr>
+                        <td>
+                            <span class="p-column-title">Code</span>
+                            {{ Item.Code }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Libellé</span>
+                            {{ Item.Label }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Actif</span>
+                            {{ Item.Enabled ? "Oui" : "Non" }}
+                        </td>
+                        <td style="width: 14%; min-width: 8rem">
+                            <div class="flex">
+                                <button
+                                    pButton
+                                    pRipple
+                                    pTooltip="Modifier"
+                                    tooltipPosition="top" 
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-warning mr-2"
+                                    (click)="onPost(2, Item)"
+                                ></button>
+                                <button
+                                    *ngIf="!Item.Enabled"
+                                    pButton
+                                    pRipple
+                                    pTooltip="Activer"
+                                    tooltipPosition="top" 
+                                    icon="pi pi-lock-open"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="onEnableDesableItem(1, Item)"
+                                ></button>
+                                <button
+                                    *ngIf="Item.Enabled"
+                                    pButton
+                                    pRipple
+                                    pTooltip="Désactiver"
+                                    tooltipPosition="top" 
+                                    icon="pi pi-lock"
+                                    class="p-button-rounded p-button-danger mr-2"
+                                    (click)="onEnableDesableItem(2, Item)"
+                                ></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [attr.colspan]="12">
+                            <div class="text-center">
+                                <div class="center_media">
+                                    <img src="./assets/layout/images/no_data.svg" width="120px" alt="image no_data" />
+                                </div>
+                                <p *ngIf="!_loadingService.isLoading" class="font-weight-bold mt-2">
+                                    Aucun enregistrement trouvé
+                                </p>
+                                <p *ngIf="_loadingService.isLoading" class="font-weight-bold mt-2">
+                                    Chargement ...
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="flex align-items-center justify-content-end">
+                <span class="mx-1 text-color">Éléments par page: </span>
+                <p-dropdown
+                    [options]="options"
+                    optionLabel="label"
+                    (onChange)="onChangeSelect()"
+                    optionValue="value"
+                    [(ngModel)]="filter.pageSize"
+                    (ngModelChange)="filter.first = 0"
+                />
+                <p-paginator
+                    [first]="filter.first"
+                    [rows]="filter.pageSize"
+                    [totalRecords]="PaginatedList.totalPages"
+                    (onPageChange)="handlePagination($event)"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="{first} - {last} of {totalRecords}"
+                    [showPageLinks]="false"
+                    [showFirstLastIcon]="false"
+                ></p-paginator>
+            </div>
+        </div>
+    </div>
+
+    <p-confirmDialog
+        header="Confirmation"
+        key="confirm1"
+        icon="pi pi-exclamation-triangle"
+        message="Voulez vous mettre ce titre de propriété en rebut ?"
+        [style]="{ width: '350px' }"
+        acceptButtonStyleClass="p-button-text"
+        rejectButtonStyleClass="p-button-text"
+        acceptLabel="Oui"
+        rejectLabel="Non"
+    >
+    </p-confirmDialog>
+
+    <p-confirmDialog
+        header="Confirmation"
+        key="confirm2"
+        icon="pi pi-exclamation-triangle"
+        message="Voulez vous passer ce titre de propriété en gratuité ?"
+        [style]="{ width: '350px' }"
+        acceptButtonStyleClass="p-button-text"
+        rejectButtonStyleClass="p-button-text"
+        acceptLabel="Oui"
+        rejectLabel="Non"
+    >
+    </p-confirmDialog>
+
+    <p-toast key="tst"></p-toast>
+
+    <p-dialog
+        header="Nouveau profil"
+        [(visible)]="display"
+        [dismissableMask]="true"
+        [modal]="true"
+        showEffect="fade"
+        [style]="{ width: '50vw' }"
+        [breakpoints]="{ '960px': '75vw' }"
+        [closable]="false"
+    >
+        <div class="col-12 md:col-12">
+            <div class="card p-fluid">
+                <div class="field">
+                    <label for="label">Code</label>
+                    <input
+                        pInputText
+                        id="code"
+                        type="text"
+                        [(ngModel)]="AddObj.Code"
+                        required
+                        name="code"
+                        #codeField="ngModel"
+                    />
+                </div>
+                <div class="field">
+                    <label for="label">Libellé</label>
+                    <input
+                        pInputText
+                        id="label"
+                        type="text"
+                        [(ngModel)]="AddObj.Label"
+                        required
+                        name="label"
+                        #labelField="ngModel"
+                    />
+                </div>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                (click)="onSubmit()"
+                label="Enregistrer"
+                icon="pi pi-check"
+                class="p-button-success"
+                [disabled]="!labelField.valid || !codeField.valid"
+            ></button>
+            <button
+                pButton
+                (click)="onCloseDialig()"
+                label="Fermer"
+                icon="pi pi-times"
+                class="p-button-outlined"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+</div>
+
+<style>
+    .custom-fileupload-buttonbar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .validation-list li {
+        margin-bottom: 3px;
+    }
+
+    element.style {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+</style>

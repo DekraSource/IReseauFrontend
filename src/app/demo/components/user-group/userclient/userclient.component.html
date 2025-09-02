@@ -1,0 +1,136 @@
+<div class="grid">
+    <div class="col-12">
+        <p-panel header="Recherche" [toggleable]="true">
+            <div class="my-2">
+                <div class="formgrid grid">
+                    <div class="field col-12 lg:col-12 xl:col-4">
+                        <label htmlFor="idUser">Utilisateur</label>
+                        <p-dropdown [options]="users" [(ngModel)]="filter.idUser" optionLabel="Value" optionValue="Key" 
+                            placeholder="Sélectionner un utilisateur" [showClear]="true"></p-dropdown>
+                    </div>
+                    <div class="field col-12 lg:col-12 xl:col-4">
+                        <label htmlFor="idClient">Client</label>
+                        <p-dropdown [options]="clients" [(ngModel)]="filter.idClient" optionLabel="Value" optionValue="Key" 
+                            placeholder="Sélectionner un client" [showClear]="true"></p-dropdown>
+                    </div>
+                    <div class="field col-12 lg:col-12 xl:col-4" style="display: flex; align-items: flex-end; justify-content: flex-end;">
+                        <button pButton label="Recherche" icon="pi pi-search" class="p-button p-button-success" 
+                            type="button" (click)="onSearch()"></button>
+                        <button pButton pRipple label="Réinitialiser" icon="pi pi-refresh" class="p-button-outlined ml-2" 
+                            (click)="onReset()"></button>
+                    </div>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div class="col-12">
+        <div class="card px-0 py-0">
+            <p-table #dt [value]="PaginatedList.Items" [rows]="10" [rowsPerPageOptions]="[10, 50, 100]" 
+                [showCurrentPageReport]="true" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h3 class="m-0 mb-2">
+                            <i class="pi pi-fw pi-users text-2xl text-color-primary"></i> 
+                            Associations Utilisateur-Client
+                        </h3>
+                        <div>
+                            <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2" 
+                                (click)="onPost(1, null)"></button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width: 12rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Utilisateur
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem">
+                            <div class="flex justify-content-between align-items-center">
+                                Client
+                            </div>
+                        </th>
+                        <th style="min-width: 12rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Item>
+                    <tr>
+                        <td>
+                            <span class="p-column-title">Utilisateur</span>
+                            {{ Item.UserName }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Client</span>
+                            {{ Item.ClientName }}
+                        </td>
+                        <td style="width: 14%; min-width: 8rem">
+                            <div class="flex">
+                                <button pButton pRipple pTooltip="Supprimer" tooltipPosition="top" icon="pi pi-trash"
+                                    class="p-button-rounded p-button-danger mr-2" (click)="onDelete(Item.Id)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [attr.colspan]="12">
+                            <div class="text-center">
+                                <div class="center_media">
+                                    <img src="./assets/layout/images/no_data.svg" width="120px" alt="image no_data" />
+                                </div>
+                                <p *ngIf="!_loadingService.isLoading" class="font-weight-bold mt-2">
+                                    Aucun enregistrement trouvé
+                                </p>
+                                <p *ngIf="_loadingService.isLoading" class="font-weight-bold mt-2">
+                                    Chargement ...
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="flex align-items-center justify-content-end">
+                <span class="mx-1 text-color">Éléments par page: </span>
+                <p-dropdown [options]="options" optionLabel="label" (onChange)="onChangeSelect()" optionValue="value"
+                    [(ngModel)]="filter.pageSize" (ngModelChange)="filter.first = 0" />
+                <p-paginator [first]="filter.first" [rows]="filter.pageSize" [totalRecords]="PaginatedList.TotalPages"
+                    (onPageChange)="handlePagination($event)" [showCurrentPageReport]="true"
+                    currentPageReportTemplate="{first} - {last} of {totalRecords}" [showPageLinks]="false"
+                    [showFirstLastIcon]="false"></p-paginator>
+            </div>
+        </div>
+    </div>
+
+    <p-confirmDialog header="Confirmation" key="confirm1" icon="pi pi-exclamation-triangle"
+        [style]="{ width: '350px' }" acceptButtonStyleClass="p-button-text" rejectButtonStyleClass="p-button-text"
+        acceptLabel="Oui" rejectLabel="Non">
+    </p-confirmDialog>
+
+    <p-toast key="tst"></p-toast>
+
+    <p-dialog header="Association Utilisateur-Client" [style]="{ width: '50vw', 'min-height': '300px', overflow: 'visible' }" [(visible)]="display" [dismissableMask]="true" [modal]="true"
+        showEffect="fade" [style]="{ width: '50vw' }" [breakpoints]="{ '960px': '75vw' }" [closable]="false">
+        <div class="col-12 md:col-12">
+            <div class="card p-fluid">
+                <div class="field">
+                    <label for="idUser">Utilisateur</label>
+                    <p-dropdown [options]="users"     [appendTo]="'body'"
+ [(ngModel)]="AddObj.IdUser" optionLabel="Value" optionValue="Key" 
+                        placeholder="Sélectionner un utilisateur" required></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="idClient">Client</label>
+                    <p-dropdown [options]="clients"     [appendTo]="'body'"
+ [(ngModel)]="AddObj.IdClient" optionLabel="Value" optionValue="Key" 
+                        placeholder="Sélectionner un client" required></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <button pButton (click)="onSubmit()" label="Enregistrer" icon="pi pi-check" class="p-button-success"
+                [disabled]="!AddObj.IdUser || !AddObj.IdClient"></button>
+            <button pButton (click)="onCloseDialig()" label="Fermer" icon="pi pi-times" class="p-button-outlined"></button>
+        </ng-template>
+    </p-dialog>
+</div>

@@ -1,0 +1,75 @@
+:host ::ng-deep .pi-eye,
+        :host ::ng-deep .pi-eye-slash {
+            transform:scale(1.6);
+            margin-right: 1rem;
+            color: var(--primary-color) !important;
+        }
+       /* app.component.css */
+
+       .p-menu .p-menuitem:focus {
+        outline: none; /* Prevent focus styles */
+      }
+
+
+    
+    /* Custom styling for the notification overlay */
+.custom-fixed-overlay {
+    max-width: 600px !important;       /* Set a fixed width */
+    max-height: 400px !important;  /* Set max height */
+    padding: 0 !important;         /* Remove padding */
+    left: 0;
+}
+
+/* Ensure that the content within the overlay panel can scroll */
+.notification-list-wrapper {
+    max-width: 600px !important;       /* Set a fixed width */
+    max-height: 350px;            /* Set max height for the list wrapper */
+    overflow-y: auto;             /* Enable vertical scrolling */
+}
+.notification-content {
+    width: 100%;
+    word-wrap: break-word;        /* Ensure long text wraps */
+}
+/* Optional: Customize the list items */
+.notification-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.notification-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notification-item:hover {
+    background-color: #f5f5f5;
+}
+
+.error-message {
+    color: #ed0000; 
+    margin-top: 0.5em;
+}
+
+
+.change-password-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-password-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.change-password-content input[type="password"] {
+    padding: 8px;
+    width: 100%;
+}
+
+.change-password-content button {
+    width: 100%;
+}

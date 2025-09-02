@@ -1,0 +1,68 @@
+<p-toast></p-toast>
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '400px' }" header="Formulaire">
+  <form [formGroup]="carburantForm">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="libelle">Libelle</label>
+        <input id="libelle" type="text" pInputText formControlName="Libelle" disabled />
+      </div>
+      <div class="p-field">
+        <label for="eosCode">New Lille</label>
+        <p-dropdown
+          optionLabel="EosLibelle"
+          optionValue="EosCode"
+          placeholder="Fait votre choix"
+          formControlName="EosCode"  [appendTo]="'body'">
+        </p-dropdown>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Annuler" icon="pi pi-times" (click)="onCancel()" class="p-button-text"></button>
+    <button pButton label="Enregistrer" icon="pi pi-check" [disabled]="!carburantForm.get('EosCode')?.value" (click)="onSubmit()" class="p-button-primary"></button>
+  </ng-template>
+</p-dialog>
+
+<p-table #table
+         [value]="carburantVehicules"
+         [paginator]="true"
+         [rows]="10"
+         [rowsPerPageOptions]="[5, 10, 20]"
+         [globalFilterFields]="['libelle', 'eosLibelle', 'code', 'eosCode']"
+         [dataKey]="'id'" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows"
+       >
+         
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="libelle">Libelle <p-sortIcon field="libelle"></p-sortIcon></th>
+      <th pSortableColumn="eosLibelle">EosLibelle <p-sortIcon field="eosLibelle"></p-sortIcon></th>
+      <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+      <th pSortableColumn="eosCode">EosCode <p-sortIcon field="eosCode"></p-sortIcon></th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData>
+    <tr  [ngStyle]="getRowStyle(rowData)">
+      <td >{{ rowData.libelle }}</td>
+      <td >{{ rowData.eosLibelle }}</td>
+      <td >{{ rowData.code }}</td>
+      <td >{{ rowData.eosCode }}</td>
+      <td>
+        <button *ngIf="rowData.code && !rowData.eosCode"
+                pButton type="button" icon="pi pi-pencil" label="Modifier"
+                class="p-button-sm p-button-primary"
+                (click)="edit(rowData)">
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5" class="text-center">Aucun carburant trouvé</td>
+    </tr>
+  </ng-template>
+</p-table>

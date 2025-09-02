@@ -1,0 +1,203 @@
+<!-- components/reaffectation-agent-visiteur-list.component.html -->
+<div class="card">
+  <p-toast></p-toast>
+  
+  <div class="flex justify-content-between align-items-center mb-4">
+    <h2>Gestion des Réaffectations Agent Visiteur</h2>
+    <p-button *ngIf="generalService.canActivate('C-RAV')"
+      icon="pi pi-plus" 
+      label="Nouvelle Réaffectation" 
+      (onClick)="showDialog()">
+    </p-button>
+  </div>
+
+  <p-table 
+    [value]="reaffectations" 
+    [loading]="loading" 
+    [paginator]="true" 
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]" 
+    styleClass="p-datatable-gridlines">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Agent Visiteur</th>
+        <th>Centre Source</th>
+        <th>Centre Destination</th>
+        <th>Type</th>
+        <th>Date Affectation</th>
+        <th>Date Retour</th>
+        <th>Date Execution</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-reaffectation>
+      <tr>
+        <td>{{reaffectation.id}}</td>
+        <td>{{reaffectation.agentVisiteur.nom }} {{reaffectation.agentVisiteur.prenom}}</td>
+        <td>{{getCentreName(reaffectation.sourceCentreId)}}</td>
+        <td>{{getCentreName(reaffectation.destinationCentreId)}}</td>
+        <td>
+          <span class="p-tag" [ngClass]="reaffectation.dateAffectation ? 'p-tag-info' : 'p-tag-success'">
+            {{reaffectation.dateAffectation ? 'Planifiée' : 'Immédiate'}}
+          </span>
+        </td>
+        <td>{{reaffectation.dateAffectation | date:'dd/MM/yyyy'}}</td>
+        <td>{{reaffectation.dateRetour | date:'dd/MM/yyyy'}}</td>
+        <td>{{reaffectation.dateExecution | date:'dd/MM/yyyy'}}</td>
+        <td>
+          <div class="flex gap-2">
+            <p-button *ngIf="generalService.canActivate('U-RAV')"
+              icon="pi pi-pencil" 
+              styleClass="p-button-rounded p-button-success p-button-text"
+              (onClick)="showDialog(reaffectation)">
+            </p-button>
+            <p-button 
+              icon="pi pi-trash" *ngIf="generalService.canActivate('D-RAV')"
+              styleClass="p-button-rounded p-button-danger p-button-text"
+              (onClick)="deleteReaffectation(reaffectation.id)">
+            </p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9">Aucune réaffectation trouvée</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [style]="{width: '700px'}" 
+  header="Réaffectation Agent Visiteur"
+  [modal]="true" 
+  styleClass="p-fluid">
+  
+  <form [formGroup]="reaffectationForm" (ngSubmit)="save()">
+    <div class="field">
+      <label for="sourceCentreId">Centre Source *</label>
+      <p-dropdown 
+        formControlName="sourceCentreId"
+        [options]="centres" 
+        optionLabel="values" 
+        optionValue="key"
+        appendTo="body" [filter]="true"
+        placeholder="Sélectionner un centre source"
+        [showClear]="true"
+        [class]="isFieldInvalid('sourceCentreId') ? 'p-invalid' : ''">
+      </p-dropdown>
+      <small *ngIf="isFieldInvalid('sourceCentreId')" class="p-error">
+        {{getFieldError('sourceCentreId')}}
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="agentId">Agent visiteur *</label>
+      <p-dropdown 
+        formControlName="agentVisiteurId"
+        [options]="filteredAgents" 
+        optionLabel="values" 
+        optionValue="key"
+        appendTo="body" [filter]="true"
+        placeholder="Sélectionner un agent"
+        [showClear]="true"
+        [disabled]="!reaffectationForm.get('sourceCentreId')?.value || loadingAgents"
+        [class]="isFieldInvalid('agentId') ? 'p-invalid' : ''">
+        <ng-template pTemplate="header" *ngIf="loadingAgents">
+          <div class="p-2">Chargement des agents...</div>
+        </ng-template>
+        <ng-template pTemplate="empty">
+          <div class="p-2">Aucun agent trouvé pour ce centre</div>
+        </ng-template>
+      </p-dropdown>
+      <small *ngIf="isFieldInvalid('agentId')" class="p-error">
+        {{getFieldError('agentId')}}
+      </small>
+      <small *ngIf="reaffectationForm.get('sourceCentreId')?.value && !loadingAgents" class="p-text-secondary">
+        {{filteredAgents.length}} agent(s) disponible(s) dans ce centre
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="destinationCentreId">Centre Destination *</label>
+      <p-dropdown 
+        formControlName="destinationCentreId"
+        [options]="centres" 
+        optionLabel="values" 
+        optionValue="key"
+        appendTo="body" [filter]="true"
+        placeholder="Sélectionner un centre destination"
+        [showClear]="true"
+        [class]="isFieldInvalid('destinationCentreId') ? 'p-invalid' : ''">
+      </p-dropdown>
+      <small *ngIf="isFieldInvalid('destinationCentreId')" class="p-error">
+        {{getFieldError('destinationCentreId')}}
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="isImmediate">Type de transfert</label>
+      <p-selectButton 
+        formControlName="isImmediate"
+        [options]="[
+          { label: 'Planifié', value: false, icon: 'pi pi-calendar' },
+          { label: 'Immédiat', value: true, icon: 'pi pi-bolt' }
+        ]"
+        optionLabel="label"
+        optionValue="value">
+      </p-selectButton>
+    </div>
+
+    <div class="field" *ngIf="!reaffectationForm.get('isImmediate')?.value">
+      <label for="dateAffectation">Date Affectation</label>
+      <p-calendar 
+        formControlName="dateAffectation"
+        [showIcon]="true" 
+        dateFormat="dd/mm/yy"
+        [showButtonBar]="true"
+          appendTo="body"
+        [class]="isFieldInvalid('dateAffectation') ? 'p-invalid' : ''">
+      </p-calendar>
+      <small *ngIf="isFieldInvalid('dateAffectation')" class="p-error">
+        {{getFieldError('dateAffectation')}}
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="dateRetour">Date Retour</label>
+      <p-calendar 
+        formControlName="dateRetour"
+        [showIcon]="true" 
+          appendTo="body"
+        dateFormat="dd/mm/yy"
+        [showButtonBar]="true">
+      </p-calendar>
+    </div>
+
+   
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Annuler" 
+      icon="pi pi-times" 
+      (onClick)="displayDialog = false" 
+      styleClass="p-button-text">
+    </p-button>
+    <p-button 
+      label="Enregistrer" 
+      icon="pi pi-check" 
+      (onClick)="save()" 
+      styleClass="p-button-success"
+      [disabled]="reaffectationForm.invalid">
+    </p-button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
