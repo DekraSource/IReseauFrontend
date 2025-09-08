@@ -39,6 +39,7 @@ import { AgentVisiteursErroneComponent } from './demo/components/agent-visiteurs
                     { path: 'list-controles', loadChildren: () => import('./demo/components/list-controles/list-controles.module').then(m => m.ListControlesModule)  },
 
 //section routing parametrage
+                    { path: 'parametrage-notifications', data: { role: 'R-PAR' }, loadChildren: () => import('./demo/components/parametrage/parametrage-notifications/parametrage-notifications.module').then(m => m.ParametrageNotificationsModule)  },
                     { path: 'equipement-types', data: { role: 'R-PAR' }, loadChildren: () => import('./demo/components/parametrage/equipement-types/equipement-types.module').then(m => m.EquipementTypesModule)  },
                     { path: 'carburant-vehicule',data: { role: 'R-PAR' }, loadChildren: () => import('./demo/components/parametrage/carburant-vehicule/carburant-vehicule.module').then(m => m.CarburantVehiculeModule)  },
                     { path: 'genre-vehicule',data: { role: 'R-PAR' }, loadChildren: () => import('./demo/components/parametrage/genre-vehicule/genre-vehicule.module').then(m => m.GenreVehiculeModule)  },

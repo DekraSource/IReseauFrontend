@@ -52,7 +52,8 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Genre Véhicule', icon: 'pi pi-fw pi-car', routerLink: ['/genre-vehicule'] },
                     { label: 'Marque Véhicule', icon: 'pi pi-fw pi-tags', routerLink: ['/marque-vehicule'] },
                     { label: 'Utilisation Véhicule', icon: 'pi pi-fw pi-briefcase', routerLink: ['/utilisation-vehicule'] },
-                    { label: 'Formation Type', icon: 'pi pi-fw pi-book', routerLink: ['/formation-type'] }
+                    { label: 'Formation Type', icon: 'pi pi-fw pi-book', routerLink: ['/formation-type'] },
+                    { label: 'Parametrage Notifications', icon: 'pi pi-fw pi-list', routerLink: ['/parametrage-notifications'] }
                 ]
             }
         );
