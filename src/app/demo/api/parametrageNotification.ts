@@ -4,7 +4,7 @@ delai: number;
 notificationDeclencherId: number;
 notificationDeclencher?: NotificationDeclencher;
 emailTo?: string;
-dateCreation?: string;
+dateCreation?: Date;
 object?: string;
 body?: string;
 }

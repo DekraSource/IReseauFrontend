@@ -1,3 +1,99 @@
-:host { display: block; }
-.card { padding: 1rem; }
-.p-dialog .p-fluid { gap: 0.5rem; }
+:host ::ng-deep {
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    .header-icon {
+      font-size: 24px;
+      margin-right: 10px;
+      color: #3B82F6;
+    }
+    
+    h2 {
+      margin: 0;
+      color: #374151;
+    }
+  }
+  
+  .chip-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .custom-chip {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: grab;
+    user-select: none;
+    font-weight: 500;
+    color: white;
+    
+    &.chip-primary {
+      background-color: #3B82F6;
+    }
+    
+    &.chip-secondary {
+      background-color: #6c757d;
+    }
+    
+    &.chip-success {
+      background-color: #10b981;
+    }
+    
+    &.chip-info {
+      background-color: #0ea5e9;
+    }
+  }
+  
+  .p-datatable {
+    font-size: 14px;
+  }
+  
+  .p-editor-container {
+    .p-editor-content {
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      
+      .ql-editor {
+        min-height: 200px;
+      }
+    }
+  }
+  
+  .field {
+    margin-bottom: 1.5rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+  }
+}
+.draggable-text {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 5px;
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+  font-family: monospace;
+}
+
+.draggable-text:active {
+  cursor: grabbing;
+  background-color: #bbdefb;
+}
+
+/* Style for the dropped text in editor */
+:host ::ng-deep .ql-editor {
+  font-family: inherit;
+}

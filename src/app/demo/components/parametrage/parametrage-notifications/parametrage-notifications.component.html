@@ -1,80 +1,115 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 
-
 <div class="card">
-<p-toolbar class="mb-2">
-<div class="p-toolbar-group-start">
-<button pButton type="button" label="New" icon="pi pi-plus" (click)="openNew()"></button>
-</div>
-</p-toolbar>
+  <div class="header">
+    <i class="pi pi-cog header-icon"></i>
+    <h2>Paramétrage Notifications</h2>
+  </div>
 
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <button pButton type="button" icon="pi pi-plus" label="Nouveau" (click)="openDialog()" class="p-button-primary"></button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Rechercher..." (input)="applyFilterGlobal($event, 'contains', dt)" />
+      </span>
+    </div>
+  </p-toolbar>
 
-<p-table [value]="items" [paginator]="true" [rows]="10" [loading]="loading">
-<ng-template pTemplate="header">
-<tr>
-<th>Id</th>
-<th>Delai</th>
-<th>Email To</th>
-<th>Object</th>
-<th>Date Creation</th>
-<th>Actions</th>
-</tr>
-</ng-template>
-<ng-template pTemplate="body" let-item>
-<tr>
-<td>{{item.id}}</td>
-<td>{{item.delai}}</td>
-<td>{{item.emailTo}}</td>
-<td>{{item.object}}</td>
-<td>{{item.dateCreation | date:'short'}}</td>
-<td>
-<button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="edit(item)"></button>
-<button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-text" (click)="confirmDelete(item)"></button>
-</td>
-</tr>
-</ng-template>
-</p-table>
-</div>
+  <p-table #dt [value]="parametrageNotifications" [paginator]="true" [rows]="5" 
+           [rowsPerPageOptions]="[5,10,20]" styleClass="p-datatable-sm" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="notificationDeclencher.libelle">Notification Déclencher <p-sortIcon field="notificationDeclencher.libelle"></p-sortIcon></th>
+        <th pSortableColumn="delai">Délai <p-sortIcon field="delai"></p-sortIcon></th>
+        <th pSortableColumn="dateCreation">Date Création <p-sortIcon field="dateCreation"></p-sortIcon></th>
+        <th style="width: 120px">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-notification>
+      <tr>
+        <td>{{notification.notificationDeclencher?.libelle}}</td>
+        <td>{{notification.delai}}</td>
+        <td>
+          <p-chip label="{{notification.dateCreation | date: 'dd/MM/yyyy'}}" ></p-chip>
+        </td>
+        <td>
+          <div class="flex justify-content-end gap-2">
+            <button pButton type="button" icon="pi pi-pencil" class="p-button-outlined p-button-sm" 
+                    (click)="edit(notification)" pTooltip="Modifier" tooltipPosition="top"></button>
+            <button pButton type="button" icon="pi pi-trash" class="p-button-outlined p-button-danger p-button-sm" 
+                    (click)="delete(notification.id)" pTooltip="Supprimer" tooltipPosition="top"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4">Aucune notification paramétrée</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
+  <p-dialog [(visible)]="visible" [modal]="true" [style]="{width: '80vw'}" [maximizable]="true" 
+            [draggable]="false" [resizable]="false" [closable]="true">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center">
+        <i class="pi pi-list mr-2"></i>
+        <span class="font-bold text-xl">Formulaire</span>
+      </div>
+    </ng-template>
 
-<p-dialog header="Notification" [(visible)]="dialogVisible" [modal]="true" [style]="{width: '600px'}">
-<div class="card p-4">
-  <form [formGroup]="form" (ngSubmit)="save()">
     <div class="p-fluid grid">
-
-      <div class="field col-12 md:col-6">
-        <label for="delai">Delai (jours)</label>
-        <input id="delai" type="number" pInputText formControlName="delai" />
+      <div class="field col-6">
+        <label for="delai">Délai</label>
+        <p-inputNumber id="delai" [(ngModel)]="model.delai" mode="decimal" [min]="1" [showButtons]="true"></p-inputNumber>
       </div>
 
-      <div class="field col-12 md:col-6">
-        <label for="notificationDeclencherId">Notification Declencher</label>
-        <input id="notificationDeclencherId" type="number" pInputText formControlName="notificationDeclencherId" />
+      <div class="field col-6">
+        <label for="notificationDeclencherId">Déclencher</label>
+        <p-dropdown id="notificationDeclencherId" [(ngModel)]="model.notificationDeclencherId" [options]="notificationDeclenchers" 
+                    optionLabel="libelle" optionValue="id" [showClear]="true" placeholder="Fait votre choix">
+        </p-dropdown>
       </div>
 
+<div class="field col-12">
+  <label>Variables disponibles (cliquer pour copier et insérer)</label>
+  <div class="chip-container">
+    <div *ngFor="let chip of draggableChips" 
+         class="custom-chip" 
+         [ngClass]="'chip-' + chip.color"
+         (click)="onChipClick(chip.text)">
+      {{chip.label}}
+      <i class="pi pi-copy ml-2" style="font-size: 0.8rem"></i>
+    </div>
+  </div>
+</div>
       <div class="field col-12">
         <label for="emailTo">Email To</label>
-        <input id="emailTo" type="email" pInputText formControlName="emailTo" />
+        <input id="emailTo" type="text" pInputText [(ngModel)]="model.emailTo" />
       </div>
 
       <div class="field col-12">
         <label for="object">Object</label>
-        <input id="object" type="text" pInputText formControlName="object" />
+        <input id="object" type="text" pInputText [(ngModel)]="model.object" />
       </div>
 
-      <div class="field col-12">
-        <label for="body">Message Body</label>
-        <!-- 🔹 Rich Text Editor -->
-        <p-editor [innerHTML]=""  [style]="{height:'300px'}"></p-editor>
+      <div class="field col-12" #editorContainer>
+        <label for="body">Corps du message</label>
+        <p-editor #editor  
+            [(ngModel)]="model.body" contenteditable="true"
+                        [ngModelOptions]="{ standalone: true }"
+            [style]="{'height':'320px'}">
+  </p-editor>
       </div>
-
     </div>
 
-    <div class="mt-3">
-      <button pButton type="submit" label="Save" class="p-button-success"></button>
-    </div>
-  </form>
+    <ng-template pTemplate="footer">
+      <button pButton type="button" label="Annuler" (click)="cancel()" class="p-button-text"></button>
+      <button pButton type="button" label="Enregistrer" (click)="submit()" class="p-button-primary"></button>
+    </ng-template>
+  </p-dialog>
 </div>
-
-</p-dialog>

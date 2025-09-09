@@ -28,22 +28,18 @@ import { DialogModule } from 'primeng/dialog';
 import {ParametrageNotificationsComponent} from "./parametrage-notifications.component";
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {  InputTextareaModule } from 'primeng/inputtextarea';
 import { EditorModule } from 'primeng/editor';
+import { ChipsModule } from 'primeng/chips';
 
 @NgModule({
     imports: [
 
          CommonModule, // Use CommonModule for feature modules
                  FormsModule,
-                 ChartModule,
                  MenuModule,
                  TableModule,
                  StyleClassModule,
-                 PanelMenuModule,
-                 ButtonModule,
                  ParametrageNotificationsRoutingModule,
-                 ProgressBarModule,
                  ToastModule,
                  PanelModule,
                 TagModule,
@@ -57,15 +53,13 @@ import { EditorModule } from 'primeng/editor';
                 SelectButtonModule,
                  CalendarModule,
                  InputNumberModule,
-                 InputTextModule,
                  SkeletonModule,
-                  FormsModule,
            ReactiveFormsModule,
            DialogModule,
            ToolbarModule,
            ConfirmDialogModule,
-           InputTextareaModule,
-           EditorModule
+           EditorModule,
+               ChipsModule,
     ],
     declarations: [ParametrageNotificationsComponent]
 })

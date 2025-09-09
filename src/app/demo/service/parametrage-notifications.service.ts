@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ParametrageNotification } from '../api/parametrageNotification';
+import { NotificationDeclencher, ParametrageNotification } from '../api/parametrageNotification';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,9 @@ constructor(private http: HttpClient) {}
 getAll(): Observable<ParametrageNotification[]> {
 return this.http.get<ParametrageNotification[]>(`${environment.apiUrl}/api/ParametrageNotifications`);
 }
-
+getNotificationDeclencherForLookUp(): Observable<NotificationDeclencher[]> {
+return this.http.get<NotificationDeclencher[]>(`${environment.apiUrl}/api/ParametrageNotifications/GetNotificationDeclencherForLookUp`);
+}
 
 getById(id: number): Observable<ParametrageNotification> {
 return this.http.get<ParametrageNotification>(`${environment.apiUrl}/api/ParametrageNotifications/${id}`);
