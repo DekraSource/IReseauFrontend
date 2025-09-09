@@ -34,7 +34,8 @@
         <td>{{notification.notificationDeclencher?.libelle}}</td>
         <td>{{notification.delai}}</td>
         <td>
-          <p-chip label="{{notification.dateCreation | date: 'dd/MM/yyyy'}}" ></p-chip>
+            <p-tag [severity]="success"
+                 [value]="notification.dateCreation | date: 'dd/MM/yyyy'"></p-tag>
         </td>
         <td>
           <div class="flex justify-content-end gap-2">
