@@ -61,7 +61,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
            ReactiveFormsModule,
            DialogModule,
            ToolbarModule,
-           AutoCompleteModule,
+           AutoCompleteModule           
     ],
     declarations: [ListControlesComponent]
 })

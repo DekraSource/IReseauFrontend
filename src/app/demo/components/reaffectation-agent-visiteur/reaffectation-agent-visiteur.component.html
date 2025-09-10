@@ -1,24 +1,23 @@
 <!-- components/reaffectation-agent-visiteur-list.component.html -->
 <div class="card">
   <p-toast></p-toast>
-  
-  <div class="flex justify-content-between align-items-center mb-4">
-    <h2>Gestion des Réaffectations Agent Visiteur</h2>
-    <p-button *ngIf="generalService.canActivate('C-RAV')"
-      icon="pi pi-plus" 
-      label="Nouvelle Réaffectation" 
-      (onClick)="showDialog()">
-    </p-button>
-  </div>
 
-  <p-table 
-    [value]="reaffectations" 
-    [loading]="loading" 
-    [paginator]="true" 
-    [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]" 
-    styleClass="p-datatable-gridlines">
-    
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">Gestion des Réaffectations Agent Visiteur</span>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-button *ngIf="generalService.canActivate('C-RAV')" icon="pi pi-plus" label="Nouvelle Réaffectation"
+        (onClick)="showDialog()" severity="secondary" styleClass="p-button-outlined">
+      </p-button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="reaffectations" [loading]="loading" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [rowsPerPageOptions]="[10, 25, 50]"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
@@ -32,7 +31,7 @@
         <th>Actions</th>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="body" let-reaffectation>
       <tr>
         <td>{{reaffectation.id}}</td>
@@ -48,22 +47,18 @@
         <td>{{reaffectation.dateRetour | date:'dd/MM/yyyy'}}</td>
         <td>{{reaffectation.dateExecution | date:'dd/MM/yyyy'}}</td>
         <td>
-          <div class="flex gap-2">
-            <p-button *ngIf="generalService.canActivate('U-RAV')"
-              icon="pi pi-pencil" 
-              styleClass="p-button-rounded p-button-success p-button-text"
-              (onClick)="showDialog(reaffectation)">
-            </p-button>
-            <p-button 
-              icon="pi pi-trash" *ngIf="generalService.canActivate('D-RAV')"
-              styleClass="p-button-rounded p-button-danger p-button-text"
+         <div class="flex justify-content-end gap-2">
+           <button *ngIf="generalService.canActivate('U-RAV')" pButton type="button" icon="pi pi-pencil" class="p-button-outlined p-button-sm"
+              (click)="showDialog(reaffectation)" pTooltip="Modifier" tooltipPosition="top"></button>
+            <button *ngIf="generalService.canActivate('D-RAV')" pButton type="button" icon="pi pi-trash" 
+              class="p-button-outlined p-button-danger p-button-sm"
               (onClick)="deleteReaffectation(reaffectation.id)">
-            </p-button>
+            </button>
           </div>
         </td>
       </tr>
     </ng-template>
-    
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="9">Aucune réaffectation trouvée</td>
@@ -72,24 +67,14 @@
   </p-table>
 </div>
 
-<p-dialog 
-  [(visible)]="displayDialog" 
-  [style]="{width: '700px'}" 
-  header="Réaffectation Agent Visiteur"
-  [modal]="true" 
+<p-dialog [(visible)]="displayDialog" [style]="{width: '700px'}" header="Réaffectation Agent Visiteur" [modal]="true"
   styleClass="p-fluid">
-  
+
   <form [formGroup]="reaffectationForm" (ngSubmit)="save()">
     <div class="field">
       <label for="sourceCentreId">Centre Source *</label>
-      <p-dropdown 
-        formControlName="sourceCentreId"
-        [options]="centres" 
-        optionLabel="values" 
-        optionValue="key"
-        appendTo="body" [filter]="true"
-        placeholder="Sélectionner un centre source"
-        [showClear]="true"
+      <p-dropdown formControlName="sourceCentreId" [options]="centres" optionLabel="values" optionValue="key"
+        appendTo="body" [filter]="true" placeholder="Sélectionner un centre source" [showClear]="true"
         [class]="isFieldInvalid('sourceCentreId') ? 'p-invalid' : ''">
       </p-dropdown>
       <small *ngIf="isFieldInvalid('sourceCentreId')" class="p-error">
@@ -99,14 +84,8 @@
 
     <div class="field">
       <label for="agentId">Agent visiteur *</label>
-      <p-dropdown 
-        formControlName="agentVisiteurId"
-        [options]="filteredAgents" 
-        optionLabel="values" 
-        optionValue="key"
-        appendTo="body" [filter]="true"
-        placeholder="Sélectionner un agent"
-        [showClear]="true"
+      <p-dropdown formControlName="agentVisiteurId" [options]="filteredAgents" optionLabel="values" optionValue="key"
+        appendTo="body" [filter]="true" placeholder="Sélectionner un agent" [showClear]="true"
         [disabled]="!reaffectationForm.get('sourceCentreId')?.value || loadingAgents"
         [class]="isFieldInvalid('agentId') ? 'p-invalid' : ''">
         <ng-template pTemplate="header" *ngIf="loadingAgents">
@@ -126,14 +105,8 @@
 
     <div class="field">
       <label for="destinationCentreId">Centre Destination *</label>
-      <p-dropdown 
-        formControlName="destinationCentreId"
-        [options]="centres" 
-        optionLabel="values" 
-        optionValue="key"
-        appendTo="body" [filter]="true"
-        placeholder="Sélectionner un centre destination"
-        [showClear]="true"
+      <p-dropdown formControlName="destinationCentreId" [options]="centres" optionLabel="values" optionValue="key"
+        appendTo="body" [filter]="true" placeholder="Sélectionner un centre destination" [showClear]="true"
         [class]="isFieldInvalid('destinationCentreId') ? 'p-invalid' : ''">
       </p-dropdown>
       <small *ngIf="isFieldInvalid('destinationCentreId')" class="p-error">
@@ -143,26 +116,17 @@
 
     <div class="field">
       <label for="isImmediate">Type de transfert</label>
-      <p-selectButton 
-        formControlName="isImmediate"
-        [options]="[
+      <p-selectButton formControlName="isImmediate" [options]="[
           { label: 'Planifié', value: false, icon: 'pi pi-calendar' },
           { label: 'Immédiat', value: true, icon: 'pi pi-bolt' }
-        ]"
-        optionLabel="label"
-        optionValue="value">
+        ]" optionLabel="label" optionValue="value">
       </p-selectButton>
     </div>
 
     <div class="field" *ngIf="!reaffectationForm.get('isImmediate')?.value">
       <label for="dateAffectation">Date Affectation</label>
-      <p-calendar 
-        formControlName="dateAffectation"
-        [showIcon]="true" 
-        dateFormat="dd/mm/yy"
-        [showButtonBar]="true"
-          appendTo="body"
-        [class]="isFieldInvalid('dateAffectation') ? 'p-invalid' : ''">
+      <p-calendar formControlName="dateAffectation" [showIcon]="true" dateFormat="dd/mm/yy" [showButtonBar]="true"
+        appendTo="body" [class]="isFieldInvalid('dateAffectation') ? 'p-invalid' : ''">
       </p-calendar>
       <small *ngIf="isFieldInvalid('dateAffectation')" class="p-error">
         {{getFieldError('dateAffectation')}}
@@ -171,30 +135,18 @@
 
     <div class="field">
       <label for="dateRetour">Date Retour</label>
-      <p-calendar 
-        formControlName="dateRetour"
-        [showIcon]="true" 
-          appendTo="body"
-        dateFormat="dd/mm/yy"
+      <p-calendar formControlName="dateRetour" [showIcon]="true" appendTo="body" dateFormat="dd/mm/yy"
         [showButtonBar]="true">
       </p-calendar>
     </div>
 
-   
+
   </form>
 
   <ng-template pTemplate="footer">
-    <p-button 
-      label="Annuler" 
-      icon="pi pi-times" 
-      (onClick)="displayDialog = false" 
-      styleClass="p-button-text">
+    <p-button label="Annuler" icon="pi pi-times" (onClick)="displayDialog = false" styleClass="p-button-text w-full">
     </p-button>
-    <p-button 
-      label="Enregistrer" 
-      icon="pi pi-check" 
-      (onClick)="save()" 
-      styleClass="p-button-success"
+    <p-button label="Enregistrer" icon="pi pi-check" (onClick)="save()" styleClass="p-button-success w-full"
       [disabled]="reaffectationForm.invalid">
     </p-button>
   </ng-template>

@@ -32,6 +32,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -68,8 +69,8 @@ import { MessageModule } from 'primeng/message';
         ConfirmDialogModule,
         MessagesModule,
         MessageModule,
-        
-    ],
+        ToolbarModule
+        ],
     declarations: [GenreVehiculeComponent],
     providers: [MessageService]  // Added MessageService provider
 })

@@ -1,25 +1,29 @@
-<p-table 
-  [value]="formationTypes" 
-  [paginator]="true" 
-  [rows]="10"
-  [rowsPerPageOptions]="[5,10,25,50]"
- styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Code</th>
-      <th>Libellé</th>
-      <th>Nombre d'heures</th>
-      <th>Cible de formation</th>
-    </tr>
-  </ng-template>
+<div class="card">
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">Types formation</span>
+    </ng-template>
+  </p-toolbar>
+  <p-table [value]="formationTypes" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,25,50]"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Code</th>
+        <th>Libellé</th>
+        <th>Nombre d'heures</th>
+        <th>Cible de formation</th>
+      </tr>
+    </ng-template>
 
-  <ng-template pTemplate="body" let-item>
-    <tr>
-      <td>{{item.code}}</td>
-      <td>{{item.libelle || '-'}}</td>
-      <td>{{item.nombreHeures}}</td>
-      <td>{{item.cibleFormation || '-'}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{item.code}}</td>
+        <td>{{item.libelle || '-'}}</td>
+        <td>{{item.nombreHeures}}</td>
+        <td>{{item.cibleFormation || '-'}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

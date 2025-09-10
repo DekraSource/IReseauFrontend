@@ -4,82 +4,84 @@
   <p-confirmDialog></p-confirmDialog>
 
   <p-toolbar>
-    <div class="p-toolbar-group-start">
-      <h5>Agent Visiteur</h5>
-    </div>
-    <div class="p-toolbar-group-end">
-      <button *ngIf="generalService.canActivate('A-AV')" pButton pRipple icon="pi pi-plus" class="p-button-success mr-2"
-              (click)="openNew()" label="Affecter"></button>
-      <button *ngIf="generalService.canActivate('R-AV')" pButton pRipple icon="pi pi-download" class="p-button-help"
-              (click)="exportData()" label="Exporter"></button>
-    </div>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">Agent Visiteur</span>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-button *ngIf="generalService.canActivate('A-AV')" icon="pi pi-plus"
+        (click)="openNew()" severity="secondary" styleClass="p-button-outlined p-button mr-2" label="Affecter"></p-button>
+      <p-button *ngIf="generalService.canActivate('R-AV')" icon="pi pi-download"
+        (click)="exportData()" severity="secondary" styleClass="p-button-outlined p-button" label="Exporter"></p-button>
+    </ng-template>
   </p-toolbar>
 
-  <p-table *ngIf="generalService.canActivate('R-AV')" #dt [value]="agentVisiteurs" [loading]="loading" [paginator]="true" [rows]="10"
-           [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
-   <ng-template pTemplate="header">
-  <tr>
-    <th pSortableColumn="centre">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="centre"></p-sortIcon>
-        <span>Centre</span>
-        <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+  <p-table *ngIf="generalService.canActivate('R-AV')" #dt [value]="agentVisiteurs" [loading]="loading"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [rowsPerPageOptions]="[10,25,50]"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="centre">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="centre"></p-sortIcon>
+            <span>Centre</span>
+            <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="numeroCap">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="numeroCap"></p-sortIcon>
-        <span>Numero Cap</span>
-        <p-columnFilter type="text" field="numeroCap" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="numeroCap">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="numeroCap"></p-sortIcon>
+            <span>Numero Cap</span>
+            <p-columnFilter type="text" field="numeroCap" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="nom">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="nom"></p-sortIcon>
-        <span>Nom</span>
-        <p-columnFilter type="text" field="nom" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="nom">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="nom"></p-sortIcon>
+            <span>Nom</span>
+            <p-columnFilter type="text" field="nom" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="prenom">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="prenom"></p-sortIcon>
-        <span>Prenom</span>
-        <p-columnFilter type="text" field="prenom" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="prenom">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="prenom"></p-sortIcon>
+            <span>Prenom</span>
+            <p-columnFilter type="text" field="prenom" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="cin">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="cin"></p-sortIcon>
-        <span>Cin</span>
-        <p-columnFilter type="text" field="cin" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="cin">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="cin"></p-sortIcon>
+            <span>Cin</span>
+            <p-columnFilter type="text" field="cin" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="dateExpirationCap">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="dateExpirationCap"></p-sortIcon>
-        <span>Date Expiration</span>
-        <p-columnFilter type="date" field="dateExpirationCap" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="dateExpirationCap">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="dateExpirationCap"></p-sortIcon>
+            <span>Date Expiration</span>
+            <p-columnFilter type="date" field="dateExpirationCap" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th pSortableColumn="isActif">
-      <div class="flex align-items-center gap-2">
-        <p-sortIcon field="isActif"></p-sortIcon>
-        <span>Actif</span>
-        <p-columnFilter type="boolean" field="isActif" display="menu"
-                        trueLabel="Yes" falseLabel="No" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <th pSortableColumn="isActif">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="isActif"></p-sortIcon>
+            <span>Actif</span>
+            <p-columnFilter type="boolean" field="isActif" display="menu" trueLabel="Yes" falseLabel="No"
+              class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <th>Actions</th>
-  </tr>
-</ng-template>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
 
     <ng-template pTemplate="body" let-agent>
       <tr>
@@ -90,17 +92,18 @@
         <td>{{agent.cin}}</td>
         <td>
           <p-tag [severity]="getStatusSeverity(agent.dateExpirationCap)"
-                 [value]="agent.dateExpirationCap | date:'dd/MM/yyyy'"></p-tag>
+            [value]="agent.dateExpirationCap | date:'dd/MM/yyyy'"></p-tag>
         </td>
         <td>
-          <i [ngClass]="agent.isActif ? 'pi pi-check-circle text-green-500' : 'pi pi-times-circle text-red-500'"></i>
+          <i [ngClass]="agent.isActif ? 'pi pi-check-circle text-green-500' : 'pi pi-times-circle text-red-500'" style="font-size: 2rem"></i>
         </td>
         <td>
-          <button *ngIf="generalService.canActivate('U-AV')" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                  (click)="editAgent(agent)"></button>
+          <div class="flex justify-content-end gap-2">
+             <button *ngIf="generalService.canActivate('U-AV')" pButton pRipple icon="pi pi-pencil"
+            class="p-button-outlined p-button-sm mr-2" (click)="editAgent(agent)"></button>
           <button *ngIf="generalService.canActivate('D-AV')" pButton pRipple icon="pi pi-trash"
-                  class="p-button-rounded p-button-text p-button-danger"
-                  (click)="deleteAgent(agent.id)"></button>
+            class="p-button-outlined p-button-sm p-button-danger" (click)="deleteAgent(agent.id)"></button>
+          </div>         
         </td>
       </tr>
     </ng-template>

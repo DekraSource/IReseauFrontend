@@ -26,6 +26,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { CarburantVehiculeComponent } from './carburant-vehicule.component';
 import { CarburantVehiculeRoutingModule } from './carburant-vehicule-routing.module';
 import { DialogModule } from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { DialogModule } from 'primeng/dialog';
                  SkeletonModule,
                   FormsModule,
            ReactiveFormsModule,
-           DialogModule
+           DialogModule,
+           ToolbarModule
     ],
     declarations: [CarburantVehiculeComponent]
 })

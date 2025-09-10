@@ -1,76 +1,78 @@
 <div class="card">
     <p-toast></p-toast>
+
     <p-toolbar>
-        <div class="p-toolbar-group-start">
-            <h5>Lignes</h5>
-        </div>
+        <ng-template pTemplate="left">
+            <span class="text-xl font-bold">Lignes</span>
+        </ng-template>
+        <ng-template pTemplate="right">
+        </ng-template>
     </p-toolbar>
 
-    <p-table *ngIf="generalService.canActivate('R-Ligne')" #dt [value]="lignes" [loading]="loading" [paginator]="true" [rows]="10"
-             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-             [rowsPerPageOptions]="[10,25,50]">
+    <p-table *ngIf="generalService.canActivate('R-Ligne')" #dt [value]="lignes" [loading]="loading" [paginator]="true"
+        [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+        [rowsPerPageOptions]="[10,25,50]"
+        styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
-      <ng-template pTemplate="header">
-    <tr>
-        <!-- Numéro Ligne -->
-        <th pSortableColumn="numLigne">
-            <div class="flex align-items-center">
-                <p-sortIcon field="numLigne"></p-sortIcon>
-                <span class="ml-2">Numéro Ligne</span>
-                <p-columnFilter type="text" field="numLigne" display="menu" class="ml-auto"></p-columnFilter>
-            </div>
-        </th>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- Numéro Ligne -->
+                <th pSortableColumn="numLigne">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="numLigne"></p-sortIcon>
+                        <span class="ml-2">Numéro Ligne</span>
+                        <p-columnFilter type="text" field="numLigne" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
-        <!-- Type -->
-        <th pSortableColumn="type">
-            <div class="flex align-items-center">
-                <p-sortIcon field="type"></p-sortIcon>
-                <span class="ml-2">Type</span>
-                <p-columnFilter type="text" field="type" display="menu" class="ml-auto"></p-columnFilter>
-            </div>
-        </th>
+                <!-- Type -->
+                <th pSortableColumn="type">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="type"></p-sortIcon>
+                        <span class="ml-2">Type</span>
+                        <p-columnFilter type="text" field="type" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
-        <!-- Statut -->
-        <th pSortableColumn="statut">
-            <div class="flex align-items-center">
-                <p-sortIcon field="statut"></p-sortIcon>
-                <span class="ml-2">Statut</span>
-                <p-columnFilter type="text" field="statut" display="menu" class="ml-auto"></p-columnFilter>
-            </div>
-        </th>
+                <!-- Statut -->
+                <th pSortableColumn="statut">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="statut"></p-sortIcon>
+                        <span class="ml-2">Statut</span>
+                        <p-columnFilter type="text" field="statut" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
-        <!-- Centre -->
-        <th pSortableColumn="centre">
-            <div class="flex align-items-center">
-                <p-sortIcon field="centre"></p-sortIcon>
-                <span class="ml-2">Centre</span>
-                <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
-            </div>
-        </th>
+                <!-- Centre -->
+                <th pSortableColumn="centre">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="centre"></p-sortIcon>
+                        <span class="ml-2">Centre</span>
+                        <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
-        <!-- Date Statut -->
-        <th pSortableColumn="dateStatut">
-            <div class="flex align-items-center">
-                <p-sortIcon field="dateStatut"></p-sortIcon>
-                <span class="ml-2">Date Statut</span>
-                <p-columnFilter type="date" field="dateStatut" display="menu" class="ml-auto"></p-columnFilter>
-            </div>
-        </th>
+                <!-- Date Statut -->
+                <th pSortableColumn="dateStatut">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="dateStatut"></p-sortIcon>
+                        <span class="ml-2">Date Statut</span>
+                        <p-columnFilter type="date" field="dateStatut" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
 
-        <!-- Statut Actif -->
-        <th pSortableColumn="isActif">
-            <div class="flex align-items-center">
-                <p-sortIcon field="isActif"></p-sortIcon>
-                <span class="ml-2">Actif</span>
-                <p-columnFilter type="boolean" field="isActif" display="menu"
-                                [trueValue]="true" [falseValue]="false"
-                                trueLabel="Actif" falseLabel="Inactif"
-                                class="ml-auto">
-                </p-columnFilter>
-            </div>
-        </th>
-    </tr>
-</ng-template>
+                <!-- Statut Actif -->
+                <th pSortableColumn="isActif">
+                    <div class="flex align-items-center">
+                        <p-sortIcon field="isActif"></p-sortIcon>
+                        <span class="ml-2">Actif</span>
+                        <p-columnFilter type="boolean" field="isActif" display="menu" [trueValue]="true"
+                            [falseValue]="false" trueLabel="Actif" falseLabel="Inactif" class="ml-auto">
+                        </p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
 
 
         <ng-template pTemplate="body" let-ligne>
@@ -84,7 +86,7 @@
                 </td>
                 <td>
                     <p-tag [severity]="ligne.isActif ? 'success' : 'danger'"
-                           [value]="ligne.isActif ? 'Actif' : 'Inactif'"></p-tag>
+                        [value]="ligne.isActif ? 'Actif' : 'Inactif'"></p-tag>
                 </td>
             </tr>
         </ng-template>

@@ -71,7 +71,7 @@
           <div class="p-col-12 p-md-6 field">
           <label for="dateAffectaion">Date Affectation*</label>
           <p-calendar id="dateAffectaion" formControlName="dateAffectaion" 
-                      [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+                      [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
           <small *ngIf="form.get('dateAffectaion')?.invalid && form.get('dateAffectaion')?.touched" 
                 class="p-error">Date Affectation is required</small>
         </div>

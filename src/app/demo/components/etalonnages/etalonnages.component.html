@@ -1,19 +1,20 @@
-<div class="card surface-card border-round-xl shadow-3 p-3">
+<div class="card">
   <!-- Toolbar -->
-  <p-toolbar class="mb-3 border-round-md surface-100 p-2">
-    <div class="p-toolbar-group-start">
-      <h5 class="m-0 text-primary">Etalonnages</h5>
-    </div>
-    <div class="p-toolbar-group-end" *ngIf="!isCC">
-      <button pButton pRipple icon="pi pi-plus" label="New"
-              class="p-button-success p-button-sm"
-              (click)="openNew()"></button>
-    </div>
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold text-50">Etalonnages</span>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-button severity="secondary" styleClass="p-button-outlined" icon="pi pi-plus" label="Nouveau"
+        (click)="openNew()"></p-button>
+    </ng-template>
   </p-toolbar>
 
   <!-- Data Table -->
   <p-table [value]="etalonnages" [loading]="loading" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
-           styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines p-datatable-hover">
+    [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-gridlines p-datatable-hover">
 
     <!-- Table Header -->
     <ng-template pTemplate="header">
@@ -34,24 +35,22 @@
         <td>{{ etalonnage.constats }}</td>
         <td>
           <ng-container *ngIf="etalonnage.rapportIntervention; else uploadTemplate">
-            <button pButton pRipple icon="pi pi-download" label="Download"
-                    class="p-button-rounded p-button-text p-button-sm"
-                    (click)="downloadFile(etalonnage.id, etalonnage.rapportIntervention)">
+            <button pButton pRipple icon="pi pi-download" label="Télécharger"
+              class="p-button-rounded p-button-text p-button-sm"
+              (click)="downloadFile(etalonnage.id, etalonnage.rapportIntervention)">
             </button>
           </ng-container>
           <ng-template #uploadTemplate>
-            <input type="file" #fileInput style="display: none"
-                   (change)="uploadFile($event, etalonnage)" accept=".pdf">
-            <button pButton pRipple icon="pi pi-upload" label="Upload"
-                    class="p-button-rounded p-button-text p-button-sm"
-                    (click)="fileInput.click()">
+            <input type="file" #fileInput style="display: none" (change)="uploadFile($event, etalonnage)" accept=".pdf">
+            <button pButton pRipple icon="pi pi-upload" label="Importer"
+              class="p-button-rounded p-button-text p-button-sm" (click)="fileInput.click()">
             </button>
           </ng-template>
         </td>
         <td>
           <button *ngIf="isCC" pButton pRipple icon="pi pi-trash"
-                  class="p-button-rounded p-button-text p-button-danger p-button-sm"
-                  (click)="deleteEtalonnage(etalonnage.id)">
+            class="p-button-rounded p-button-text p-button-danger p-button-sm"
+            (click)="deleteEtalonnage(etalonnage.id)">
           </button>
         </td>
       </tr>

@@ -27,7 +27,7 @@ export class AgentVisiteurComponent implements OnInit {
     public dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-     public generalService: GeneralService
+    public generalService: GeneralService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,11 @@ export class AgentVisiteurComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load agents' });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Échec du chargement des agents'
+        });
         this.loading = false;
       }
     });
@@ -50,7 +54,7 @@ export class AgentVisiteurComponent implements OnInit {
 
   openNew(): void {
     this.ref = this.dialogService.open(AgentVisiteurFormComponent, {
-      header: 'New Agent Visiteur',
+      header: 'Ajouter un Agent Visiteur',
       width: '40%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -66,7 +70,7 @@ export class AgentVisiteurComponent implements OnInit {
 
   editAgent(agent: AgentVisiteurDtos): void {
     this.ref = this.dialogService.open(AgentVisiteurFormComponent, {
-      header: 'Edit Agent Visiteur',
+      header: 'Modifier un Agent Visiteur',
       width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -82,18 +86,28 @@ export class AgentVisiteurComponent implements OnInit {
 
   deleteAgent(id: number): void {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this agent?',
-      header: 'Confirm',
+      message: 'Êtes-vous sûr de vouloir supprimer cet agent ?',
+      header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.agentVisiteurService.delete(id).subscribe({
           next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Agent Deleted', life: 3000 });
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Succès',
+              detail: 'Agent supprimé avec succès',
+              life: 3000
+            });
             this.loadAgentVisiteurs();
           },
           error: (err) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete agent' });
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erreur',
+              detail: 'Échec de la suppression de l’agent'
+            });
           }
+
         });
       }
     });
@@ -118,11 +132,11 @@ export class AgentVisiteurComponent implements OnInit {
 
   getStatusSeverity(date: Date): string {
     if (!date) return 'info';
-    
+
     const now = new Date();
     const expirationDate = new Date(date);
     const diffDays = Math.floor((expirationDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     return diffDays > 10 ? 'success' : 'danger';
   }
 

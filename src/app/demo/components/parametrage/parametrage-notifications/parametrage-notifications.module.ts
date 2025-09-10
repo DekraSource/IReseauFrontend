@@ -25,7 +25,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ParametrageNotificationsRoutingModule } from './parametrage-notifications-routing.module';
 import { DialogModule } from 'primeng/dialog';
-import {ParametrageNotificationsComponent} from "./parametrage-notifications.component";
+import { ParametrageNotificationsComponent } from "./parametrage-notifications.component";
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { EditorModule } from 'primeng/editor';
@@ -34,32 +34,32 @@ import { ChipsModule } from 'primeng/chips';
 @NgModule({
     imports: [
 
-         CommonModule, // Use CommonModule for feature modules
-                 FormsModule,
-                 MenuModule,
-                 TableModule,
-                 StyleClassModule,
-                 ParametrageNotificationsRoutingModule,
-                 ToastModule,
-                 PanelModule,
-                TagModule,
-                TooltipModule ,
-                CheckboxModule,
-                 DropdownModule,
-                 OrderListModule,
-                 CardModule,
-                 TimelineModule,
-                 ScrollerModule,
-                SelectButtonModule,
-                 CalendarModule,
-                 InputNumberModule,
-                 SkeletonModule,
-           ReactiveFormsModule,
-           DialogModule,
-           ToolbarModule,
-           ConfirmDialogModule,
-           EditorModule,
-               ChipsModule,
+        CommonModule, // Use CommonModule for feature modules
+        FormsModule,
+        MenuModule,
+        TableModule,
+        StyleClassModule,
+        ParametrageNotificationsRoutingModule,
+        ToastModule,
+        PanelModule,
+        TagModule,
+        TooltipModule,
+        CheckboxModule,
+        DropdownModule,
+        OrderListModule,
+        CardModule,
+        TimelineModule,
+        ScrollerModule,
+        SelectButtonModule,
+        CalendarModule,
+        InputNumberModule,
+        SkeletonModule,
+        ReactiveFormsModule,
+        DialogModule,
+        ToolbarModule,
+        ConfirmDialogModule,
+        EditorModule,
+        ChipsModule      
     ],
     declarations: [ParametrageNotificationsComponent]
 })

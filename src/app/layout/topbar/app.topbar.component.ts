@@ -173,24 +173,24 @@ export class AppTopBarComponent implements OnInit {
                             this.generalService.get_DataSession('isConnectedAsUsed'))
                     }
                 },
-                {
-                    label: this.generalService.get_DataSession('connectedAs')?.fullName,
-                    visible: this.generalService.get_DataSession('hasSecondAccount') && !this.generalService.get_DataSession('isConnectedAsUsed'),
-                    icon: 'pi pi-sign-in',
-                    command: () => {
-                        this.onChangeSession(this.generalService.get_DataSession('mainUser')?.id,
-                            this.generalService.get_DataSession('connectedAs')?.id,
-                            this.generalService.get_DataSession('isConnectedAsUsed'))
-                    }
-                },
-                {
-                    label: 'Profil',
-                    visible: !this.generalService.get_DataSession('isConnectedAsUsed') && this.generalService.canActivate('R-ACC'),
-                    icon: 'pi pi-user',
-                    command: () => {
-                        this.onUpdateProfile();
-                    }
-                },
+                // {
+                //     label: this.generalService.get_DataSession('connectedAs')?.fullName,
+                //     visible: this.generalService.get_DataSession('hasSecondAccount') && !this.generalService.get_DataSession('isConnectedAsUsed'),
+                //     icon: 'pi pi-sign-in',
+                //     command: () => {
+                //         this.onChangeSession(this.generalService.get_DataSession('mainUser')?.id,
+                //             this.generalService.get_DataSession('connectedAs')?.id,
+                //             this.generalService.get_DataSession('isConnectedAsUsed'))
+                //     }
+                // },
+                // {
+                //     label: 'Profil',
+                //     visible: !this.generalService.get_DataSession('isConnectedAsUsed') && this.generalService.canActivate('R-ACC'),
+                //     icon: 'pi pi-user',
+                //     command: () => {
+                //         this.onUpdateProfile();
+                //     }
+                // },
                 {
                     label: 'Se déconnecter',
                     icon: 'pi pi-sign-out',

@@ -10,11 +10,11 @@
   --surface-d: #e5e7eb;
   --surface-e: #ffffff;
   --surface-f: #ffffff;
-  --text-color: #4b5563;
+  --text-color: #ffffff;
   --text-color-secondary: #6b7280;
-  --primary-color: #008244;
-  --primary-color-text: #ffffff;
-  --surface-0: #ffffff;
+  --primary-color: #64B32C;
+  --primary-color-text: #006b52;
+  --surface-0: #006b52;
   --surface-50: #f9fafb;
   --surface-100: #f3f4f6;
   --surface-200: #e5e7eb;
@@ -24,7 +24,7 @@
   --surface-600: #4b5563;
   --surface-700: #374151;
   --surface-800: #1f2937;
-  --surface-900: #111827;
+  --surface-900: #f9fafb;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -40,15 +40,15 @@
   --border-radius: 6px;
   --surface-ground: #f0f4f8;
   --surface-section: #ffffff;
-  --surface-card-topbar: #006b52;
+  --surface-card-topbar: #f9fafb;
   --surface-card: #ffffff;
-  --surface-overlay-topbar: #006b52;
-  --surface-overlay: #ffffff;
+  --surface-overlay-topbar: #4dad32;
+  --surface-overlay: #006b52;
   --surface-border: #dfe7ef;
-  --surface-hover: #f6f9fc;
-  --surface-hover-topbar: #01604a;
-  --focus-ring: 0 0 0 0.2rem #006b52;
-  --focus-ring-topbar: 0 0 0 0.2rem #01604a;
+  --surface-hover: #006b52;
+  --surface-hover-topbar: #002e54;
+  --focus-ring: 0 0 0 0.2rem #4dad32;
+  --focus-ring-topbar: 0 0 0 0.2rem #002e54;
   --maskbg: rgba(0, 0, 0, 0.4);
   --highlight-bg: #EEF2FF;
   --highlight-text-color: #4338CA;
@@ -3005,7 +3005,7 @@
     border-width: 0 0 1px 0;
     font-weight: 700;
     color: #FFFFFF;
-    background: #008143;
+    background: #002E55;
     transition: box-shadow 0.2s;
   }
   .p-datatable .p-datatable-tfoot > tr > td {
@@ -3031,21 +3031,21 @@
     margin-left: 0.5rem;
   }
   .p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #008143;
+    background: #002E55;
     color: #FFFFFF;
   }
   .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
     color: #ffffff;
   }
   .p-datatable .p-sortable-column.p-highlight {
-    background: #008143;
+    background: #002E55;
     color: #ffffff;
   }
   .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
     color: #ffffff;
   }
   .p-datatable .p-sortable-column.p-highlight:hover {
-    background: #008143;
+    background: #002E55;
     color: #ffffff;
   }
   .p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
@@ -4210,7 +4210,7 @@
   .p-panel .p-panel-header {
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
-    background: #006b52;
+    background: #4dad32;
     color: #ffffff;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
@@ -4366,7 +4366,7 @@
   }
 
   .p-toolbar {
-    background: #f9fafb;
+    background: #002e55;
     border: 1px solid #e5e7eb;
     padding: 1.25rem;
     border-radius: 6px;

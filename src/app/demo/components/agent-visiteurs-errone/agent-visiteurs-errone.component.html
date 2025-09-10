@@ -1,96 +1,87 @@
 <!-- agent-visiteurs-errone.component.html -->
 <div class="card">
   <p-toast></p-toast>
-              <p-confirmDialog></p-confirmDialog>
+  <p-confirmDialog></p-confirmDialog>
 
   <p-toolbar>
     <ng-template pTemplate="left">
       <span class="text-xl font-bold">Agent visiteur erroné</span>
     </ng-template>
-    
+
     <ng-template pTemplate="right">
-      <p-button *ngIf="generalService.canActivate('R-AVE')"
-        icon="pi pi-download" 
-        label="Exporter" 
-        severity="secondary"
-        styleClass="p-button-outlined"
-        (click)="exportToCsv()">
+      <p-button *ngIf="generalService.canActivate('R-AVE')" icon="pi pi-download" label="Exporter" severity="secondary" styleClass="p-button-outlined" (click)="exportToCsv()">
       </p-button>
     </ng-template>
   </p-toolbar>
 
-  <p-table *ngIf="generalService.canActivate('R-AVE')"
-    [value]="agentVisiteurs" 
-    [loading]="loading"
-    [paginator]="true" 
-    [rows]="10"
-    [rowsPerPageOptions]="[5,10,25,50]"
-    [globalFilterFields]="['centre','cin','cap','etat']" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
-    
- <ng-template pTemplate="header">
-  <tr>
-    <!-- Centre -->
-    <th pSortableColumn="centre">
-      <div class="flex align-items-center">
-        <p-sortIcon field="centre"></p-sortIcon>
-        <span class="ml-2">Centre</span>
-        <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+  <p-table *ngIf="generalService.canActivate('R-AVE')" [value]="agentVisiteurs" [loading]="loading" [paginator]="true"
+    [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [rowsPerPageOptions]="[5,10,25,50]"
+    [globalFilterFields]="['centre','cin','cap','etat']"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
-    <!-- CIN -->
-    <th pSortableColumn="cin">
-      <div class="flex align-items-center">
-        <p-sortIcon field="cin"></p-sortIcon>
-        <span class="ml-2">CIN</span>
-        <p-columnFilter type="text" field="cin" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+    <ng-template pTemplate="header">
+      <tr>
+        <!-- Centre -->
+        <th pSortableColumn="centre">
+          <div class="flex align-items-center">
+            <p-sortIcon field="centre"></p-sortIcon>
+            <span class="ml-2">Centre</span>
+            <p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <!-- Numero Cap -->
-    <th pSortableColumn="cap">
-      <div class="flex align-items-center">
-        <p-sortIcon field="cap"></p-sortIcon>
-        <span class="ml-2">Numero Cap</span>
-        <p-columnFilter type="text" field="cap" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <!-- CIN -->
+        <th pSortableColumn="cin">
+          <div class="flex align-items-center">
+            <p-sortIcon field="cin"></p-sortIcon>
+            <span class="ml-2">CIN</span>
+            <p-columnFilter type="text" field="cin" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <!-- Etat -->
-    <th pSortableColumn="etat">
-      <div class="flex align-items-center">
-        <p-sortIcon field="etat"></p-sortIcon>
-        <span class="ml-2">Etat</span>
-        <p-columnFilter type="text" field="etat" display="menu" class="ml-auto"></p-columnFilter>
-      </div>
-    </th>
+        <!-- Numero Cap -->
+        <th pSortableColumn="cap">
+          <div class="flex align-items-center">
+            <p-sortIcon field="cap"></p-sortIcon>
+            <span class="ml-2">Numero Cap</span>
+            <p-columnFilter type="text" field="cap" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <!-- Envoyé à CNEH -->
-    <th *ngIf="generalService.canActivate('U-AVE')" pSortableColumn="isSentToCneh">
-      <div class="flex align-items-center">
-        <p-sortIcon field="isSentToCneh"></p-sortIcon>
-        <span class="ml-2">Envoyé à CNEH</span>
-        <p-columnFilter type="boolean" field="isSentToCneh" display="menu"
-                        [trueValue]="true" [falseValue]="false"
-                        trueLabel="Oui" falseLabel="Non"
-                        class="ml-auto">
-        </p-columnFilter>
-      </div>
-    </th>
+        <!-- Etat -->
+        <th pSortableColumn="etat">
+          <div class="flex align-items-center">
+            <p-sortIcon field="etat"></p-sortIcon>
+            <span class="ml-2">Etat</span>
+            <p-columnFilter type="text" field="etat" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
 
-    <!-- CAP (PDF) -->
-    <th *ngIf="generalService.canActivate('U-AVE')">
-      <span>CAP (PDF)</span>
-    </th>
+        <!-- Envoyé à CNEH -->
+        <th *ngIf="generalService.canActivate('U-AVE')" pSortableColumn="isSentToCneh">
+          <div class="flex align-items-center">
+            <p-sortIcon field="isSentToCneh"></p-sortIcon>
+            <span class="ml-2">Envoyé à CNEH</span>
+            <p-columnFilter type="boolean" field="isSentToCneh" display="menu" [trueValue]="true" [falseValue]="false"
+              trueLabel="Oui" falseLabel="Non" class="ml-auto">
+            </p-columnFilter>
+          </div>
+        </th>
 
-    <!-- Actions -->
-    <th style="width: 8rem">
-      <span>Actions</span>
-    </th>
-  </tr>
-</ng-template>
+        <!-- CAP (PDF) -->
+        <th *ngIf="generalService.canActivate('U-AVE')">
+          <span>CAP (PDF)</span>
+        </th>
 
-    
+        <!-- Actions -->
+        <th style="width: 8rem">
+          <span>Actions</span>
+        </th>
+      </tr>
+    </ng-template>
+
+
     <ng-template pTemplate="body" let-agent>
       <tr>
         <td>{{agent.centre}}</td>
@@ -98,39 +89,25 @@
         <td>{{agent.cap}}</td>
         <td>{{agent.etat}}</td>
         <td *ngIf="generalService.canActivate('U-AVE')">
-          <p-inputSwitch 
-            [(ngModel)]="agent.isSentToCneh" 
-            (onChange)="updateSentStatus(agent)">
+          <p-inputSwitch [(ngModel)]="agent.isSentToCneh" (onChange)="updateSentStatus(agent)">
           </p-inputSwitch>
         </td>
-        <td  *ngIf="generalService.canActivate('I-AVE')">
+        <td *ngIf="generalService.canActivate('I-AVE')">
           <div class="flex gap-2">
-              <p-button 
-              *ngIf="agent.capPdfUrl"
-              icon="pi pi-download" 
-              severity="info" 
-              styleClass="p-button-sm p-button-outlined"
-              (click)="downloadCapPdf(agent.id, agent.agrement)"
+            <p-button *ngIf="agent.capPdfUrl" icon="pi pi-download" severity="info"
+              styleClass="p-button-sm p-button-outlined" (click)="downloadCapPdf(agent.id, agent.agrement)"
               pTooltip="Télécharger PDF" tooltipPosition="top">
             </p-button>
-            <p-fileUpload 
-              mode="basic" 
-              chooseLabel="Importer" 
-              accept="application/pdf" 
-              maxFileSize="1000000"
-              (onSelect)="onFileSelect($event, agent.id)"
-              styleClass="p-button-sm">
+            <p-fileUpload mode="basic" chooseLabel="Importer" accept="application/pdf" maxFileSize="1000000"
+              (onSelect)="onFileSelect($event, agent.id)" styleClass="p-button-sm">
             </p-fileUpload>
           </div>
         </td>
         <td>
           <div class="flex justify-content-end gap-2">
-            <p-button *ngIf="generalService.canActivate('D-AVE')"
-              icon="pi pi-trash" 
-              severity="danger" 
-              styleClass="p-button-outlined p-button-sm"
-              (click)="delete(agent.id)"
-              pTooltip="Supprimer" tooltipPosition="top">
+            <p-button *ngIf="generalService.canActivate('D-AVE')" icon="pi pi-trash" severity="danger"
+              styleClass="p-button-outlined p-button-sm" (click)="delete(agent.id)" pTooltip="Supprimer"
+              tooltipPosition="top">
             </p-button>
           </div>
         </td>

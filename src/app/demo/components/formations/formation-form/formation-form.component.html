@@ -11,7 +11,7 @@
       <div class="p-field p-col-12 p-md-6">
         <label for="dateValidation">Date Validation*</label>
         <p-calendar id="dateValidation" formControlName="dateValidation" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
         <small *ngIf="form.get('dateValidation')?.invalid && form.get('dateValidation')?.touched" 
                class="p-error">Date Validation is required</small>
       </div>
@@ -31,7 +31,7 @@
       <div class="p-field p-col-12 p-md-6">
         <label for="dateDebut">Date Debut*</label>
         <p-calendar id="dateDebut" formControlName="dateDebut" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
         <small *ngIf="form.get('dateDebut')?.invalid && form.get('dateDebut')?.touched" 
                class="p-error">Date Debut is required</small>
       </div>
@@ -39,7 +39,7 @@
       <div class="p-field p-col-12 p-md-6">
         <label for="dateFin">Date Fin*</label>
         <p-calendar id="dateFin" formControlName="dateFin" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full"></p-calendar>
+                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
         <small *ngIf="form.get('dateFin')?.invalid && form.get('dateFin')?.touched" 
                class="p-error">Date Fin is required</small>
       </div>

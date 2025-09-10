@@ -2,14 +2,8 @@
   <p-toast></p-toast>
 
   <!-- Carousel -->
-  <p-carousel 
-    [value]="[1, 2, 3]" 
-    [numVisible]="1" 
-    [numScroll]="1" 
-    [circular]="true" 
-    [autoplayInterval]="5000"
-    styleClass="custom-carousel"
-  >
+  <p-carousel [value]="[1, 2, 3]" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="5000"
+    styleClass="custom-carousel">
     <ng-template let-item pTemplate="item">
       <div class="grid text-center p-3">
 
@@ -25,8 +19,8 @@
               <ng-template pTemplate="header">
                 <div class="stat-card-header text-info font-bold">{{data.title}}</div>
               </ng-template>
-              <div class="stat-card-value text-2xl">
-                <p-tag severity="info">{{data.value}}</p-tag>
+              <div class="stat-card-value flex justify-content-center align-items-center">
+                <p-tag class="stat-tag" severity="info">{{data.value}}</p-tag>
               </div>
             </p-card>
           </div>
@@ -44,8 +38,8 @@
               <ng-template pTemplate="header">
                 <div class="stat-card-header text-info-600 font-bold">{{data.title}}</div>
               </ng-template>
-              <div class="stat-card-value text-2xl">
-                <p-tag severity="warning">{{data.value}}</p-tag>
+              <div class="stat-card-value flex justify-content-center align-items-center">
+                <p-tag class="stat-tag" severity="warning">{{data.value}}</p-tag>
               </div>
             </p-card>
           </div>
@@ -63,8 +57,8 @@
               <ng-template pTemplate="header">
                 <div class="stat-card-header text-info-700 font-bold">{{data.title}}</div>
               </ng-template>
-              <div class="stat-card-value text-2xl">
-                <p-tag severity="success">{{data.value}}</p-tag>
+              <div class="stat-card-value flex justify-content-center align-items-center">
+                <p-tag class="stat-tag" severity="success">{{data.value}}</p-tag>
               </div>
             </p-card>
           </div>
@@ -74,15 +68,15 @@
     </ng-template>
   </p-carousel>
 
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">Equipements</span>
+    </ng-template>
+  </p-toolbar>
   <!-- Table Équipements -->
-  <div class="mt-4">
-    <p-table 
-      [value]="equipements" 
-      [loading]="loadingEquipements"
-      [paginator]="true" 
-      [rows]="10"
-      styleClass="p-datatable-sm modern-table shadow-2 border-round-lg"
-    >
+  <div class="mb-4">
+    <p-table [value]="equipements" [loading]="loadingEquipements" [paginator]="true" [rows]="10"
+      styleClass="p-datatable-gridlines p-datatable-sm modern-table shadow-2 border-round-lg">
       <ng-template pTemplate="header">
         <tr>
           <th>Centre</th>
@@ -100,8 +94,7 @@
           <td>{{equipment.equipementType}}</td>
           <td>{{equipment.dateEtalonnage | date:'dd/MM/yyyy'}}</td>
           <td>
-            <p-tag 
-              [severity]="getExpirationStatus(equipment.dateExpirationEtalonnage)" 
+            <p-tag [severity]="getExpirationStatus(equipment.dateExpirationEtalonnage)"
               [value]="equipment.dateExpirationEtalonnage | date:'dd/MM/yyyy'">
             </p-tag>
           </td>
@@ -110,16 +103,19 @@
       </ng-template>
     </p-table>
   </div>
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">I-Réseau états</span>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <p-button icon="pi pi-download" label="Exporter" (click)="exportData()" severity="secondary" styleClass="p-button-outlined"></p-button>
+    </ng-template>
 
+  </p-toolbar>
   <!-- Table Contrôles -->
-  <div class="mt-4">
-    <p-table 
-      [value]="equipementControles" 
-      [loading]="loadingControls"
-      [scrollable]="true" 
-      scrollHeight="400px"
-      styleClass="p-datatable-sm modern-table shadow-2 border-round-lg"
-    >
+  <div class="mb-4">
+    <p-table [value]="equipementControles" [loading]="loadingControls" [scrollable]="true" scrollHeight="400px"
+      styleClass="p-datatable-gridlines p-datatable-sm modern-table shadow-2 border-round-lg">
       <ng-template pTemplate="header">
         <tr>
           <th rowspan="2">Centre</th>
@@ -156,18 +152,6 @@
           <td>{{control.reglopl}}</td>
           <td>{{control.bfrpl}}</td>
           <td>{{control.prippl}}</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <tr>
-          <td colspan="13" class="text-right">
-            <p-button 
-              icon="pi pi-download" 
-              label="Exporter" 
-              (click)="exportData()"
-              styleClass="p-button-success"
-            ></p-button>
-          </td>
         </tr>
       </ng-template>
     </p-table>

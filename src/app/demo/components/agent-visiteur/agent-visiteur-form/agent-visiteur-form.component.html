@@ -113,7 +113,7 @@
                 <div class="form-field">
                     <label for="dateAffectation">Date Affectation*</label>
                     <p-calendar id="dateAffectation" formControlName="dateAffectation"
-                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                                [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"></p-calendar>
                     <small *ngIf="form.get('dateAffectation')?.invalid && form.get('dateAffectation')?.touched"
                            class="p-error">Date Affectation is required</small>
                 </div>
@@ -121,7 +121,7 @@
                 <div class="form-field">
                     <label for="dateCap">Date Cap</label>
                     <p-calendar id="dateCap" formControlName="dateCap" [disabled]="true"
-                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                                [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"></p-calendar>
                 </div>
             </div>
 
@@ -129,7 +129,7 @@
                 <div class="form-field">
                     <label for="dateExpirationCap">Date Expiration Cap</label>
                     <p-calendar id="dateExpirationCap" formControlName="dateExpirationCap" [disabled]="true"
-                                [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                                [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"></p-calendar>
                 </div>
 
                 <div class="form-field">
@@ -147,9 +147,9 @@
         </div>
 
         <div class="form-actions">
-            <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text"
+            <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-text"
                     (click)="onCancel()"></button>
-            <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-primary"
+            <button pButton type="submit" label="Enregistrer" icon="pi pi-check" class="p-button-primary"
                     [disabled]="form.invalid || loading"></button>
         </div>
     </form>

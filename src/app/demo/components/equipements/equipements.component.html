@@ -1,27 +1,30 @@
-<div class="card surface-card border-round-xl shadow-3 p-3">
+<div class="card">
   <p-toast></p-toast>
-            <p-confirmDialog></p-confirmDialog>
+  <p-confirmDialog></p-confirmDialog>
 
   <!-- Toolbar -->
-  <p-toolbar class="mb-3 border-round-md surface-100 p-2">
-    <div class="p-toolbar-group-start">
-      <h5 class="m-0 text-primary">Equipements</h5>
-    </div>
-    <div class="p-toolbar-group-end">
-      <button *ngIf="generalService.canActivate('C-Eqp')"  pButton pRipple icon="pi pi-plus" label="New"
-              class="p-button-success p-button-sm mr-2"
-              (click)="openNew()"></button>
-      <button *ngIf="generalService.canActivate('R-Eqp')"  pButton pRipple icon="pi pi-download" label="Export"
-              class="p-button-help p-button-sm"
-              (click)="exportData()"></button>
-    </div>
+  <p-toolbar>
+    <ng-template pTemplate="left">
+      <span class="text-xl font-bold">Equipements</span>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-tabMenu [model]="tabItems" [(activeItem)]="activeItem"></p-tabMenu>
+      <div class="flex align-items-center gap-2">
+        <p-button *ngIf="generalService.canActivate('C-Eqp')" icon="pi pi-plus" label="New"
+          severity="secondary" styleClass="p-button-outlined mr-2" (click)="openNew()"></p-button>
+        <p-button *ngIf="generalService.canActivate('R-Eqp')" icon="pi pi-download" label="Export"
+          severity="secondary" styleClass="p-button-outlined" (click)="exportData()"></p-button>
+      </div>
+
+    </ng-template>
   </p-toolbar>
 
   <!-- Data Table -->
-  <p-table *ngIf="generalService.canActivate('R-Eqp')" #dt [value]="equipements" [loading]="loading"
-           [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
-           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+  <p-table *ngIf="generalService.canActivate('R-Eqp')" #dt [value]="equipements" [loading]="loading" [paginator]="true"
+    [rows]="10" [rowsPerPageOptions]="[10,25,50]" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+    styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
     <!-- Header -->
     <ng-template pTemplate="header">
@@ -58,17 +61,16 @@
           <div class="flex align-items-center gap-2">
             <p-sortIcon field="dateExpirationEtalonnage"></p-sortIcon>
             <span>Date Expiration</span>
-            <p-columnFilter type="date" field="dateExpirationEtalonnage" display="menu" class="ml-auto"></p-columnFilter>
+            <p-columnFilter type="date" field="dateExpirationEtalonnage" display="menu"
+              class="ml-auto"></p-columnFilter>
           </div>
         </th>
         <th pSortableColumn="isRemplacent">
           <div class="flex align-items-center gap-2">
             <p-sortIcon field="isRemplacent"></p-sortIcon>
             <span>Etat</span>
-            <p-columnFilter type="boolean" field="isRemplacent" display="menu"
-                            [trueValue]="true" [falseValue]="false"
-                            trueLabel="Remplacement" falseLabel="Principal"
-                            class="ml-auto"></p-columnFilter>
+            <p-columnFilter type="boolean" field="isRemplacent" display="menu" [trueValue]="true" [falseValue]="false"
+              trueLabel="Remplacement" falseLabel="Principal" class="ml-auto"></p-columnFilter>
           </div>
         </th>
         <th>Statut</th>
@@ -85,23 +87,21 @@
         <td>{{ equipement.equipementType }}</td>
         <td>
           <p-tag [severity]="getStatusSeverity(equipement.dateExpirationEtalonnage)"
-                 [value]="equipement.dateExpirationEtalonnage | date:'dd/MM/yyyy'"></p-tag>
+            [value]="equipement.dateExpirationEtalonnage | date:'dd/MM/yyyy'"></p-tag>
         </td>
         <td>
           <p-tag [severity]="getStatusSeverityForLabel(equipement.isRemplacent)"
-                 [value]="getStatusLabel(equipement.isRemplacent)"></p-tag>
+            [value]="getStatusLabel(equipement.isRemplacent)"></p-tag>
         </td>
         <td>
-          <p-tag [severity]="getSyncStatus(equipement).severity"
-                 [value]="getSyncStatus(equipement).label"></p-tag>
+          <p-tag [severity]="getSyncStatus(equipement).severity" [value]="getSyncStatus(equipement).label"></p-tag>
         </td>
         <td>
           <button *ngIf="generalService.canActivate('U-Eqp')" pButton pRipple icon="pi pi-pencil"
-                  class="p-button-rounded p-button-text p-button-sm"
-                  (click)="editEquipement(equipement)"></button>
+            class="p-button-rounded p-button-text p-button-sm" (click)="editEquipement(equipement)"></button>
           <button *ngIf="generalService.canActivate('D-Eqp')" pButton pRipple icon="pi pi-trash"
-                  class="p-button-rounded p-button-text p-button-danger p-button-sm"
-                  (click)="deleteEquipement(equipement.id)"></button>
+            class="p-button-rounded p-button-text p-button-danger p-button-sm"
+            (click)="deleteEquipement(equipement.id)"></button>
         </td>
       </tr>
     </ng-template>

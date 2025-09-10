@@ -1,24 +1,40 @@
-::ng-deep .p-tabmenu .tab-active .p-menuitem-link {
-  background: #22c55e !important; /* Green 500 */
-  color: white !important;
-  border-radius: 0.5rem;
+/* Reset base styles */
+::ng-deep .p-tabmenu {
+  border: none;
+  background: transparent;
 }
-/* Active tab style */
-::ng-deep .p-tabmenu .p-menuitem-link.p-highlight {
-  background-color: #2563eb !important; /* Blue 600 */
-  color: #fff !important;
+
+::ng-deep .p-tabmenu-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border: none; /* remove underline */
+}
+
+/* Default tab style */
+::ng-deep .p-tabmenuitem .p-menuitem-link {
+  padding: 10px 18px;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover */
+::ng-deep .p-tabmenuitem .p-menuitem-link:hover {
+  background-color: #e0e7ff !important; /* light indigo */
+  color: var(--primary-color);
+}
+
+/* Active tab */
+::ng-deep .p-tabmenuitem.p-highlight .p-menuitem-link {
+  background: var(--primary-color) !important; /* your app’s primary color */
+  color: var(--primary-color-text) !important;
   font-weight: 600;
-  border-radius: 0.75rem; /* Rounded look */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* Hover effect */
-::ng-deep .p-tabmenu .p-menuitem-link:hover {
-  background-color: #e0e7ff !important; /* Light indigo */
-  border-radius: 0.75rem;
-}
-
-/* Icon spacing */
-::ng-deep .p-tabmenu .p-menuitem-link .pi {
-  margin-right: 0.5rem;
+/* Icon styling */
+::ng-deep .p-menuitem-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
 }

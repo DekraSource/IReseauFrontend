@@ -29,38 +29,39 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-     imports: [
-   
-            CommonModule, // Use CommonModule for feature modules
-                    FormsModule,
-                    ChartModule,
-                    MenuModule,
-                    TableModule,
-                    StyleClassModule,
-                    PanelMenuModule,
-                    ButtonModule,
-                    UtilisationVehiculeRoutingModule,
-                    ProgressBarModule,
-                    ToastModule,
-                    PanelModule,
-                   TagModule,
-                   TooltipModule ,
-                   CheckboxModule,
-                    DropdownModule,
-                    OrderListModule,
-                    CardModule,
-                    TimelineModule,
-                    ScrollerModule,
-                   SelectButtonModule,
-                    CalendarModule,
-                    InputNumberModule,
-                    InputTextModule,
-                    SkeletonModule,
-                     FormsModule,
+       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+       imports: [
+
+              CommonModule, // Use CommonModule for feature modules
+              FormsModule,
+              ChartModule,
+              MenuModule,
+              TableModule,
+              StyleClassModule,
+              PanelMenuModule,
+              ButtonModule,
+              UtilisationVehiculeRoutingModule,
+              ProgressBarModule,
+              ToastModule,
+              PanelModule,
+              TagModule,
+              TooltipModule,
+              CheckboxModule,
+              DropdownModule,
+              OrderListModule,
+              CardModule,
+              TimelineModule,
+              ScrollerModule,
+              SelectButtonModule,
+              CalendarModule,
+              InputNumberModule,
+              InputTextModule,
+              SkeletonModule,
+              FormsModule,
               ReactiveFormsModule,
-              DialogModule
+              DialogModule,
+              ToolbarModule
        ],
-    declarations: [UtilisationVehiculeComponent]
+       declarations: [UtilisationVehiculeComponent]
 })
 export class UtilisationVehiculeModule { }

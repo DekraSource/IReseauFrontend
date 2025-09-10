@@ -1,14 +1,15 @@
 <div class="card">
     <p-toast></p-toast>
     <p-toolbar>
-        <div class="p-toolbar-group-start">
-            <h5>Types d'Équipements</h5>
-        </div>
+        <ng-template pTemplate="left">
+            <span class="text-xl font-bold">Types d'Équipements</span>
+        </ng-template>
     </p-toolbar>
 
     <p-table #dt [value]="equipementTypes" [loading]="loading" [paginator]="true" [rows]="10"
-             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-             [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
+        [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+        [rowsPerPageOptions]="[10,25,50]"
+        styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
         <ng-template pTemplate="header">
             <tr>
@@ -36,8 +37,7 @@
                         <p-sortIcon field="etalonnable"></p-sortIcon>
                         <span>Étalonnable</span>
                         <p-columnFilter type="boolean" field="etalonnable" display="menu" class="ml-auto"
-                                        [trueValue]="'True'" [falseValue]="'False'"
-                                        trueLabel="Oui" falseLabel="Non">
+                            [trueValue]="'True'" [falseValue]="'False'" trueLabel="Oui" falseLabel="Non">
                         </p-columnFilter>
                     </div>
                 </th>
@@ -50,7 +50,7 @@
                 <td>{{equipementType.libelle}}</td>
                 <td>
                     <p-tag [severity]="equipementType.etalonnable === 'True' ? 'success' : 'danger'"
-                           [value]="equipementType.etalonnable === 'True' ? 'Oui' : 'Non'"></p-tag>
+                        [value]="equipementType.etalonnable === 'True' ? 'Oui' : 'Non'"></p-tag>
                 </td>
             </tr>
         </ng-template>

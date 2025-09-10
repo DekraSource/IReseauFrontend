@@ -15,7 +15,7 @@
 }
 
 .stat-card-header {
-  background-color: #008143;
+  background-color: #64B32C;
   color: white;
   padding: 0.5rem;
   font-weight: bold;
@@ -29,3 +29,28 @@
 .modern-table .p-datatable-tbody > tr:hover {
   background-color: #f3f4f6 !important;
 }
+
+/* increase size of the value inside p-tag */
+.stat-tag .p-tag {
+  font-size: 2rem !important;       /* text size */
+  font-weight: bold !important;
+  padding: 1rem 2rem !important;    /* bigger badge */
+  border-radius: 1rem !important;
+}
+
+/* optional: make sure the inner span also inherits */
+.stat-tag .p-tag-value {
+  font-size: 2rem !important;
+}
+::ng-deep .stat-tag .p-tag {
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  padding: 1rem 2rem !important;
+  border-radius: 1rem !important;
+}
+
+::ng-deep .stat-tag .p-tag-value {
+  font-size: 2rem !important;
+}
+
+

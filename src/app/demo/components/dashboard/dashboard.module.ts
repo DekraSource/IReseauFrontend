@@ -26,6 +26,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CarouselModule } from 'primeng/carousel';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { CarouselModule } from 'primeng/carousel';
         InputNumberModule,
         InputTextModule,
         SkeletonModule,
-        CarouselModule
+        CarouselModule,
+        ToolbarModule
     ],
     declarations: [DashboardComponent]
 })

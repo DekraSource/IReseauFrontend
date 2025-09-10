@@ -26,6 +26,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { MarqueVehiculeComponent } from './marque-vehicule.component';
 import { MarqueVehiculeRoutingModule } from './marque-vehicule-routing.module';
 import { DialogModule } from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -58,7 +59,8 @@ import { DialogModule } from 'primeng/dialog';
                  SkeletonModule,
                   FormsModule,
            ReactiveFormsModule,
-           DialogModule
+           DialogModule,
+           ToolbarModule
     ],
     declarations: [MarqueVehiculeComponent]
 })
