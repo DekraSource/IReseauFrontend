@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { KeyValuesDtos } from 'src/app/demo/api/keyValues';
 import { EquipementDtos, LigneDtos } from 'src/app/demo/api/equipement';
 import { EquipementService } from 'src/app/demo/service/equipement.service';
+import { GeneralService } from 'src/app/demo/service/general/general.service';
 @Component({
   selector: 'app-equipement-form',
   templateUrl: './equipement-form.component.html',
@@ -26,7 +27,9 @@ export class EquipementFormComponent implements OnInit {
     public config: DynamicDialogConfig,
     private fb: FormBuilder,
     private equipementService: EquipementService,
-    private messageService: MessageService
+    private messageService: MessageService,
+         public generalService: GeneralService
+
   ) {
     this.equipement = this.config.data.equipement || {
       id: 0,
@@ -71,7 +74,7 @@ export class EquipementFormComponent implements OnInit {
       telSocieteEtalonnage: [this.equipement.telSocieteEtalonnage]
     });
 
-    if (this.isEdit) {
+    if (this.isEdit &&  !this.generalService.canActivate('U-Id')) {
       this.form.get('identifiant')?.disable();
     }
      this.form.get('ligneCentreId')?.valueChanges.subscribe(s => {

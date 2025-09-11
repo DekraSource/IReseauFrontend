@@ -48,7 +48,7 @@
           </ng-template>
         </td>
         <td>
-          <button *ngIf="isCC" pButton pRipple icon="pi pi-trash"
+          <button *ngIf="generalService.canActivate('D-Etl')" pButton pRipple icon="pi pi-trash"
             class="p-button-rounded p-button-text p-button-danger p-button-sm"
             (click)="deleteEtalonnage(etalonnage.id)">
           </button>
