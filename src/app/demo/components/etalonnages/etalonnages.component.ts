@@ -5,6 +5,7 @@ import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import { EtalonnageService } from '../../service/etalonnage.Service';
 import { EtalonnageDtos } from '../../api/equipement';
 import { EtalonnageFormComponent } from './etalonnages-form/etalonnage-form.component';
+import { GeneralService } from '../../service/general/general.service';
 
 @Component({
   selector: 'app-etalonnages',
@@ -24,7 +25,9 @@ export class EtalonnagesComponent implements OnInit {
     private etalonnageService: EtalonnageService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+             public generalService: GeneralService
+    
   ) { }
 
   ngOnInit(): void {

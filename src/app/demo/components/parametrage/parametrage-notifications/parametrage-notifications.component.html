@@ -13,7 +13,7 @@
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [value]="parametrageNotifications" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]"
+  <p-table #dt [value]="parametrageNotifications" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50]"
   [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows" responsiveLayout="scroll">
     <ng-template pTemplate="header">
@@ -61,7 +61,7 @@
     <div class="p-fluid grid">
       <div class="field col-6">
         <label for="delai">Délai</label>
-        <p-inputNumber id="delai" [(ngModel)]="model.delai" mode="decimal" [min]="1"
+        <p-inputNumber id="delai" [(ngModel)]="model.delai" mode="decimal" 
           [showButtons]="true"></p-inputNumber>
       </div>
 

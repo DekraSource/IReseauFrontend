@@ -9,11 +9,11 @@
     <div class="grid form-grid">
       <!-- Identifiant -->
       <div class="col-12 md:col-6 field">
-        <label for="identifiant" class="block mb-2 font-medium text-800">Identifiant*</label>
-        <input id="identifiant" type="text" pInputText formControlName="identifiant" [disabled]="isEdit && !isCC" class="w-full">
-        <small *ngIf="form.get('identifiant')?.invalid && form.get('identifiant')?.touched" class="p-error block mt-1">
-          Identifiant requis
-        </small>
+        <label for="identifiant" class="block mb-2 font-medium text-900">Identifiant*</label>
+        <input id="identifiant" type="text" pInputText formControlName="identifiant"
+                class="w-full">
+        <small *ngIf="form.get('identifiant')?.invalid && form.get('identifiant')?.touched"
+               class="p-error block mt-1">Identifiant is required</small>
       </div>
 
       <!-- Type -->
