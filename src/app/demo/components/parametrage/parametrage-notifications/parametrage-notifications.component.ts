@@ -96,11 +96,6 @@ edit(notification: ParametrageNotification): void {
 }
 
   submit(): void {
-    // Basic validation
-    if (!this.model.delai || this.model.delai < 1) {
-      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Délai est requis et doit être supérieur à 0' });
-      return;
-    }
     
     if (!this.model.notificationDeclencherId || this.model.notificationDeclencherId === -1) {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Déclencher est requis' });
