@@ -36,20 +36,20 @@
         <td>
           <ng-container *ngIf="etalonnage.rapportIntervention; else uploadTemplate">
             <button pButton pRipple icon="pi pi-download" label="Télécharger"
-              class="p-button-rounded p-button-text p-button-sm"
+              class="p-button-outlined p-button-sm"
               (click)="downloadFile(etalonnage.id, etalonnage.rapportIntervention)">
             </button>
           </ng-container>
           <ng-template #uploadTemplate>
             <input type="file" #fileInput style="display: none" (change)="uploadFile($event, etalonnage)" accept=".pdf">
             <button pButton pRipple icon="pi pi-upload" label="Importer"
-              class="p-button-rounded p-button-text p-button-sm" (click)="fileInput.click()">
+              class="p-button-outlined p-button-sm" (click)="fileInput.click()">
             </button>
           </ng-template>
         </td>
         <td>
           <button *ngIf="isCC" pButton pRipple icon="pi pi-trash"
-            class="p-button-rounded p-button-text p-button-danger p-button-sm"
+            class="p-button-outlined p-button-danger p-button-sm"
             (click)="deleteEtalonnage(etalonnage.id)">
           </button>
         </td>

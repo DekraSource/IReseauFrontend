@@ -47,7 +47,7 @@ export class EtalonnagesComponent implements OnInit {
 
   openNew(): void {
     this.ref = this.dialogService.open(EtalonnageFormComponent, {
-      header: 'New Etalonnage',
+      header: 'Nouvel étalonnage',
       width: '50%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

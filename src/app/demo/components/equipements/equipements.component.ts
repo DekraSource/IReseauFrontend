@@ -71,7 +71,7 @@ export class EquipementsComponent implements OnInit {
 
   openNew(): void {
     this.ref = this.dialogService.open(EquipementFormComponent, {
-      header: 'New Equipement',
+      header: 'Nouvel équipement',
       width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
@@ -87,7 +87,7 @@ export class EquipementsComponent implements OnInit {
 
   editEquipement(equipement: EquipementDtos): void {
     this.ref = this.dialogService.open(EquipementFormComponent, {
-      header: 'Edit Equipement',
+      header: 'Modifier un équipement',
       width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,

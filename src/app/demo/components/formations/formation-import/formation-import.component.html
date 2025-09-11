@@ -1,81 +1,85 @@
 <div class="p-fluid surface-card p-4 border-round-xl shadow-3">
   <!-- Section Header -->
   <div class="mb-4 border-bottom-1 surface-border pb-2">
-    <h2 class="m-0 text-primary text-lg font-semibold">Import Formations</h2>
-    <p class="text-500 text-sm m-0">Upload and validate your Excel records before importing.</p>
+    <h2 class="m-0 text-primary text-lg font-semibold">Importer des Formations</h2>
+    <p class="text-500 text-sm m-0">Téléversez et validez votre fichier Excel avant l’importation.</p>
   </div>
 
-  <!-- Import Type -->
-  <div class="p-field p-grid align-items-center mb-3">
-    <label class="p-col-12 p-md-3 font-medium">Import Type</label>
-    <div class="p-col-12 p-md-9 flex gap-3">
+  <!-- Type d'import -->
+  <div class="p-field grid align-items-center mb-3">
+    <label class="col-12 md:col-3 font-medium">Type d'import</label>
+    <div class="col-12 md:col-9 flex gap-4">
       <p-radioButton name="importType" [value]="true" [(ngModel)]="requiredChefCentre"
-                     label="Chef Centre" inputId="type1"></p-radioButton>
+                     label="Chef de centre" inputId="type1"></p-radioButton>
       <p-radioButton name="importType" [value]="false" [(ngModel)]="requiredChefCentre"
-                     label="Agent Visiteur" inputId="type2"></p-radioButton>
+                     label="Agent visiteur" inputId="type2"></p-radioButton>
     </div>
   </div>
 
-  <!-- File Upload -->
-  <div class="mb-4 flex align-items-center gap-3">
+  <!-- Upload fichier -->
+  <div class="mb-4 flex flex-wrap align-items-center gap-3">
     <p-fileUpload mode="basic" name="file" accept=".xlsx,.xls"
-                  [maxFileSize]="1000000" chooseLabel="Browse Excel File"
+                  [maxFileSize]="1000000" chooseLabel="Parcourir un fichier Excel"
                   (onSelect)="onFileSelect($event)" [showUploadButton]="false"
-                  chooseIcon="pi pi-file-excel" class="w-full md:w-20rem">
+                  chooseIcon="pi pi-file-excel" appendTo="body"
+                  class="w-full md:w-20rem">
     </p-fileUpload>
     <p-progressSpinner *ngIf="loading" styleClass="w-2rem h-2rem" strokeWidth="4"></p-progressSpinner>
   </div>
 
-  <!-- Data Table -->
+  <!-- Tableau de données -->
   <div *ngIf="formationExcelData.length > 0">
-    <p-table #dt [value]="formationExcelData" [scrollable]="true" scrollHeight="flex"
+    <p-table #dt [value]="formationExcelData" [scrollable]="true" scrollHeight="400px"
              [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
              [globalFilterFields]="['centre','nomComplete','cin','animateur1','animateur2']"
              styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
-             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+             currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} enregistrements">
 
+      <!-- Caption -->
       <ng-template pTemplate="caption">
-        <div class="flex justify-content-between align-items-center">
-          <span class="text-sm text-500">Total records: {{formationExcelData.length}}</span>
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-500">Total : {{formationExcelData.length}} enregistrements</span>
         </div>
       </ng-template>
 
+      <!-- Header -->
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="centre">Centre <p-sortIcon field="centre"></p-sortIcon></th>
-          <th pSortableColumn="nomComplete">Nom Complet <p-sortIcon field="nomComplete"></p-sortIcon></th>
+          <th pSortableColumn="nomComplete">Nom complet <p-sortIcon field="nomComplete"></p-sortIcon></th>
           <th pSortableColumn="cin">CIN <p-sortIcon field="cin"></p-sortIcon></th>
-          <th pSortableColumn="dateDebut">Date Début <p-sortIcon field="dateDebut"></p-sortIcon></th>
-          <th pSortableColumn="dateFin">Date Fin <p-sortIcon field="dateFin"></p-sortIcon></th>
-          <th pSortableColumn="resultat">Result <p-sortIcon field="resultat"></p-sortIcon></th>
-          <th pSortableColumn="error">Error <p-sortIcon field="error"></p-sortIcon></th>
+          <th pSortableColumn="dateDebut">Date début <p-sortIcon field="dateDebut"></p-sortIcon></th>
+          <th pSortableColumn="dateFin">Date fin <p-sortIcon field="dateFin"></p-sortIcon></th>
+          <th pSortableColumn="resultat">Résultat <p-sortIcon field="resultat"></p-sortIcon></th>
+          <th pSortableColumn="error">Erreur <p-sortIcon field="error"></p-sortIcon></th>
         </tr>
         <tr>
           <th>
             <span class="p-input-icon-left w-full">
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'centre', 'contains')"
-                     placeholder="Filter by Centre" class="w-full p-inputtext-sm">
+                     placeholder="Filtrer par centre" class="w-full p-inputtext-sm">
             </span>
           </th>
           <th>
             <span class="p-input-icon-left w-full">
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'nomComplete', 'contains')"
-                     placeholder="Filter by Name" class="w-full p-inputtext-sm">
+                     placeholder="Filtrer par nom" class="w-full p-inputtext-sm">
             </span>
           </th>
           <th>
             <span class="p-input-icon-left w-full">
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="dt.filter($event.target.value, 'cin', 'contains')"
-                     placeholder="Filter by CIN" class="w-full p-inputtext-sm">
+                     placeholder="Filtrer par CIN" class="w-full p-inputtext-sm">
             </span>
           </th>
           <th colspan="4"></th>
         </tr>
       </ng-template>
 
+      <!-- Body -->
       <ng-template pTemplate="body" let-item>
         <tr [ngClass]="{'bg-red-50': item.error}">
           <td>{{item.centre}}</td>
@@ -85,8 +89,8 @@
           <td>{{item.dateFin | date:'dd/MM/yyyy'}}</td>
           <td>
             <p-tag [severity]="item.resultat ? 'success' : 'danger'"
-                   [value]="item.resultat ? 'Valid' : 'Invalid'"
-                   styleClass="text-xs"></p-tag>
+                   [value]="item.resultat ? 'Valide' : 'Invalide'"
+                   styleClass="px-2 py-1 text-xs"></p-tag>
           </td>
           <td>
             <small *ngIf="item.error" class="text-red-500 text-xs">{{item.error}}</small>
@@ -94,21 +98,22 @@
         </tr>
       </ng-template>
 
+      <!-- Empty -->
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="7" class="text-center py-5 text-500">
-            No records found
+            Aucun enregistrement trouvé
           </td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="flex justify-content-end gap-2 mt-4 pt-3 border-top-1 surface-border">
-    <button pButton type="button" label="Cancel" icon="pi pi-times"
+  <!-- Boutons d'action -->
+  <div class="flex justify-end gap-2 mt-4 pt-3 border-top-1 surface-border">
+    <button pButton type="button" label="Annuler" icon="pi pi-times"
             (click)="onCancel()" class="p-button-text p-button-sm"></button>
-    <button pButton type="button" label="Import Valid Records" icon="pi pi-check"
+    <button pButton type="button" label="Importer les enregistrements valides" icon="pi pi-check"
             (click)="submitImport()" [disabled]="!formationExcelData.length || loading"
             class="p-button-success p-button-sm" [loading]="loading"></button>
   </div>

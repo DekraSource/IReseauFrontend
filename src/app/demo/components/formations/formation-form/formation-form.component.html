@@ -1,101 +1,99 @@
 <!-- formation-form.component.html -->
 <div class="p-fluid">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="p-grid p-formgrid">
+    <div class="grid">
       <!-- First Row -->
-      <div class="p-field p-col-12 p-md-6">
-        <label for="numValidation">Num Validation</label>
-        <input id="numValidation" type="text" pInputText formControlName="numValidation" class="w-full">
+      <div class="col-12 md:col-6">
+        <label for="numValidation">N° Validation</label>
+        <input id="numValidation" type="text" pInputText formControlName="numValidation" class="w-full" />
       </div>
 
-      <div class="p-field p-col-12 p-md-6">
-        <label for="dateValidation">Date Validation*</label>
-        <p-calendar id="dateValidation" formControlName="dateValidation" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
-        <small *ngIf="form.get('dateValidation')?.invalid && form.get('dateValidation')?.touched" 
-               class="p-error">Date Validation is required</small>
+      <div class="col-12 md:col-6">
+        <label for="dateValidation">Date de validation*</label>
+        <p-calendar id="dateValidation" formControlName="dateValidation"
+                    [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" class="w-full"></p-calendar>
+        <small *ngIf="form.get('dateValidation')?.invalid && form.get('dateValidation')?.touched"
+               class="p-error">La date de validation est obligatoire</small>
       </div>
 
       <!-- Second Row -->
-      <div class="p-field p-col-12 p-md-6">
+      <div class="col-12 md:col-6">
         <label for="animateur1">Animateur 1</label>
-        <input id="animateur1" type="text" pInputText formControlName="animateur1" class="w-full">
+        <input id="animateur1" type="text" pInputText formControlName="animateur1" class="w-full" />
       </div>
 
-      <div class="p-field p-col-12 p-md-6">
+      <div class="col-12 md:col-6">
         <label for="animateur2">Animateur 2</label>
-        <input id="animateur2" type="text" pInputText formControlName="animateur2" class="w-full">
+        <input id="animateur2" type="text" pInputText formControlName="animateur2" class="w-full" />
       </div>
 
       <!-- Third Row -->
-      <div class="p-field p-col-12 p-md-6">
-        <label for="dateDebut">Date Debut*</label>
-        <p-calendar id="dateDebut" formControlName="dateDebut" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
-        <small *ngIf="form.get('dateDebut')?.invalid && form.get('dateDebut')?.touched" 
-               class="p-error">Date Debut is required</small>
+      <div class="col-12 md:col-6">
+        <label for="dateDebut">Date de début*</label>
+        <p-calendar id="dateDebut" formControlName="dateDebut"
+                    [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" class="w-full"></p-calendar>
+        <small *ngIf="form.get('dateDebut')?.invalid && form.get('dateDebut')?.touched"
+               class="p-error">La date de début est obligatoire</small>
       </div>
 
-      <div class="p-field p-col-12 p-md-6">
-        <label for="dateFin">Date Fin*</label>
-        <p-calendar id="dateFin" formControlName="dateFin" 
-                   [showIcon]="true" dateFormat="dd/mm/yy" class="w-full" appendTo="body"></p-calendar>
-        <small *ngIf="form.get('dateFin')?.invalid && form.get('dateFin')?.touched" 
-               class="p-error">Date Fin is required</small>
+      <div class="col-12 md:col-6">
+        <label for="dateFin">Date de fin*</label>
+        <p-calendar id="dateFin" formControlName="dateFin"
+                    [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" class="w-full"></p-calendar>
+        <small *ngIf="form.get('dateFin')?.invalid && form.get('dateFin')?.touched"
+               class="p-error">La date de fin est obligatoire</small>
       </div>
 
       <!-- Fourth Row - Radio Group -->
-      <div class="p-field p-col-12 p-md-6">
+      <div class="col-12 md:col-6">
         <label>Type*</label>
-        <div class="p-d-flex p-ai-center">
-          <p-radioButton name="formationType" [value]="true" [(ngModel)]="isChefCentre" 
-                        (onClick)="toggleFormationType()" label="Chef centre"></p-radioButton>
-          <p-radioButton name="formationType" [value]="false" [(ngModel)]="isChefCentre" 
-                        (onClick)="toggleFormationType()" label="Agent Visiteur" class="p-ml-3"></p-radioButton>
+        <div class="flex align-items-center gap-3 mt-2">
+          <p-radioButton inputId="chefCentre" formControlName="isChefCentre" [value]="true" label="Chef centre"></p-radioButton>
+          <p-radioButton inputId="agentVisiteur" formControlName="isChefCentre" [value]="false" label="Agent visiteur"></p-radioButton>
         </div>
       </div>
 
       <!-- Fifth Row - Conditional Select -->
-      <div class="p-field p-col-12 p-md-6" *ngIf="isChefCentre">
+      <div class="col-12 md:col-6" *ngIf="form.get('isChefCentre')?.value">
         <label for="chefCentreId">Chef centre*</label>
         <p-dropdown id="chefCentreId" [options]="chefCentres" formControlName="chefCentreId"
-                   optionLabel="values" optionValue="key" placeholder="Select Chef centre" class="w-full">
+                appendTo="body" optionLabel="values" optionValue="key" placeholder="Sélectionner un chef centre" class="w-full">
         </p-dropdown>
-        <small *ngIf="form.get('chefCentreId')?.invalid && form.get('chefCentreId')?.touched" 
-               class="p-error">Chef centre is required</small>
+        <small *ngIf="form.get('chefCentreId')?.invalid && form.get('chefCentreId')?.touched"
+               class="p-error">Le chef centre est obligatoire</small>
       </div>
 
-      <div class="p-field p-col-12 p-md-6" *ngIf="!isChefCentre">
-        <label for="agentVisiteurId">Agent Visiteur*</label>
+      <div class="col-12 md:col-6" *ngIf="!form.get('isChefCentre')?.value">
+        <label for="agentVisiteurId">Agent visiteur*</label>
         <p-dropdown id="agentVisiteurId" [options]="agentVisiteurs" formControlName="agentVisiteurId"
-                   optionLabel="values" optionValue="key" placeholder="Select Agent Visiteur" class="w-full">
+                 appendTo="body" optionLabel="values" optionValue="key" placeholder="Sélectionner un agent visiteur" class="w-full">
         </p-dropdown>
-        <small *ngIf="form.get('agentVisiteurId')?.invalid && form.get('agentVisiteurId')?.touched" 
-               class="p-error">Agent Visiteur is required</small>
+        <small *ngIf="form.get('agentVisiteurId')?.invalid && form.get('agentVisiteurId')?.touched"
+               class="p-error">L’agent visiteur est obligatoire</small>
       </div>
 
       <!-- Sixth Row -->
-      <div class="p-field p-col-12 p-md-6">
-        <label for="formationTypeId">Type Formation*</label>
+      <div class="col-12 md:col-6">
+        <label for="formationTypeId">Type de formation*</label>
         <p-dropdown id="formationTypeId" [options]="formationTypes" formControlName="formationTypeId"
-                   optionLabel="values" optionValue="key" placeholder="Select Formation Type" class="w-full">
+                   appendTo="body" optionLabel="values" optionValue="key" placeholder="Sélectionner un type" class="w-full">
         </p-dropdown>
-        <small *ngIf="form.get('formationTypeId')?.invalid && form.get('formationTypeId')?.touched" 
-               class="p-error">Formation Type is required</small>
+        <small *ngIf="form.get('formationTypeId')?.invalid && form.get('formationTypeId')?.touched"
+               class="p-error">Le type de formation est obligatoire</small>
       </div>
 
       <!-- Seventh Row - Checkbox -->
-      <div class="p-field p-col-12 p-md-6">
-        <label for="resultat">Est valide</label>
+      <div class="col-12 md:col-6 flex align-items-center gap-2 mt-3">
+        <label for="resultat" class="mb-0">Est valide</label>
         <p-checkbox id="resultat" [binary]="true" formControlName="resultat"></p-checkbox>
       </div>
     </div>
 
     <!-- Form Actions -->
-    <div class="p-d-flex p-jc-end p-mt-4">
-      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text" 
+    <div class="flex justify-content-end gap-2 mt-4">
+      <button pButton type="button" label="Annuler" icon="pi pi-times" class="p-button-text"
               (click)="onCancel()"></button>
-      <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-primary p-ml-2" 
+      <button pButton type="submit" label="Enregistrer" icon="pi pi-check" class="p-button-primary"
               [disabled]="form.invalid || loading"></button>
     </div>
   </form>

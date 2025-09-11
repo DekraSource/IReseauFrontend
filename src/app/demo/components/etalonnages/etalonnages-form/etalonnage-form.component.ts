@@ -123,7 +123,7 @@ onFileSelect(event: any): void {
     }
   }
   onCancel(): void {
-    // this.ref.close(false);
+     this.ref.close(false);
   }
 
   get isEtalonnage(): boolean {

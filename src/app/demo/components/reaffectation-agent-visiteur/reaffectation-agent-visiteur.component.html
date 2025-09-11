@@ -67,7 +67,7 @@
   </p-table>
 </div>
 
-<p-dialog [(visible)]="displayDialog" [style]="{width: '700px'}" header="Réaffectation Agent Visiteur" [modal]="true"
+<p-dialog [(visible)]="displayDialog" [style]="{width: '700px'}" [dismissableMask]="true" header="Réaffectation Agent Visiteur" [modal]="true"
   styleClass="p-fluid">
 
   <form [formGroup]="reaffectationForm" (ngSubmit)="save()">

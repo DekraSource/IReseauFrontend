@@ -34,7 +34,7 @@
   --gray-600: #4b5563;
   --gray-700: #374151;
   --gray-800: #1f2937;
-  --gray-900: #111827;
+  --gray-900: #f3f4f6;
   --content-padding: 1.25rem;
   --inline-spacing: 0.5rem;
   --border-radius: 6px;
@@ -2166,14 +2166,14 @@
 .p-splitbutton.p-button-secondary > .p-button {
     color: #ffffff;
     background: #64748b;
-    border: 1px solid #64748b;
+    border: 1px solid #ffffff;
   }
   .p-button.p-button-secondary:not(:disabled):hover,
 .p-buttonset.p-button-secondary > .p-button:not(:disabled):hover,
 .p-splitbutton.p-button-secondary > .p-button:not(:disabled):hover {
     background: #475569;
     color: #ffffff;
-    border-color: #475569;
+    border-color: #ffffff;
   }
   .p-button.p-button-secondary:not(:disabled):focus,
 .p-buttonset.p-button-secondary > .p-button:not(:disabled):focus,
@@ -2190,9 +2190,10 @@
   .p-button.p-button-secondary.p-button-outlined,
 .p-buttonset.p-button-secondary > .p-button.p-button-outlined,
 .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
-    background-color: transparent;
-    color: #64748b;
+    background-color: #002e55;
+    color: #ffffff;
     border: 1px solid;
+    border-color: #ffffff;
   }
   .p-button.p-button-secondary.p-button-outlined:not(:disabled):hover,
 .p-buttonset.p-button-secondary > .p-button.p-button-outlined:not(:disabled):hover,

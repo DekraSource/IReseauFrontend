@@ -44,7 +44,7 @@
 </div>
 
 
-<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{ width: '400px' }" header="Formulaire">
+<p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{ width: '400px' }" header="Formulaire">
   <form [formGroup]="carburantForm">
     <div class="p-fluid">
       <div class="p-field">

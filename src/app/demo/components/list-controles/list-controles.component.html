@@ -116,7 +116,7 @@
     </ng-template>
   </p-table>
   <!-- Détails -->
-  <p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{width: '75vw'}" header="Détails du contrôle"
+  <p-dialog [(visible)]="displayDialog" [dismissableMask]="true" [modal]="true" [style]="{width: '75vw'}" header="Détails du contrôle"
     [draggable]="false" [resizable]="false">
 
     <div class="grid p-fluid">

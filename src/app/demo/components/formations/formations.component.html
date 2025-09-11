@@ -110,10 +110,12 @@
             [style]="{'background-color':'#ef4444'}"></p-avatar>
         </td>
         <td class="flex gap-1">
-          <button *ngIf="generalService.canActivate('U-Frm')" pButton pRipple icon="pi pi-pencil"
-            class="p-button-rounded p-button-text" (click)="editFormation(formation)"></button>
+           <div class="flex justify-content-end gap-2">
+              <button *ngIf="generalService.canActivate('U-Frm')" pButton pRipple icon="pi pi-pencil"
+            class="p-button-outlined mr-2" (click)="editFormation(formation)"></button>
           <button *ngIf="generalService.canActivate('D-Frm')" pButton pRipple icon="pi pi-trash"
-            class="p-button-rounded p-button-text p-button-danger" (click)="confirmDelete(formation.id)"></button>
+            class="p-button-outlined p-button-danger" (click)="confirmDelete(formation.id)"></button>
+           </div>        
         </td>
       </tr>
     </ng-template>

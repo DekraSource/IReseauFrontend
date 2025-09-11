@@ -173,7 +173,7 @@
 
     <p-toast key="tst"></p-toast>
 
-    <p-dialog header="Nouveau utilisateur" [(visible)]="display" [dismissableMask]="true" [modal]="true" showEffect="fade"
+    <p-dialog header="Nouveau utilisateur" [dismissableMask]="true" [(visible)]="display" [dismissableMask]="true" [modal]="true" showEffect="fade"
         [style]="{ width: '50vw' }" [breakpoints]="{ '960px': '75vw' }" [closable]="false">
         <div class="col-12 md:col-12">
             <div class="card p-fluid">
@@ -255,7 +255,7 @@
         </ng-template>
     </p-dialog>
 
-    <p-dialog header="Moidification utilisateur" [(visible)]="displayUpdate" [dismissableMask]="true" [modal]="true" showEffect="fade"
+    <p-dialog header="Moidification utilisateur" [dismissableMask]="true" [(visible)]="displayUpdate" [dismissableMask]="true" [modal]="true" showEffect="fade"
         [style]="{ width: '50vw' }" [breakpoints]="{ '960px': '75vw' }" [closable]="false">
         <div class="col-12 md:col-12">
             <div class="card p-fluid">
@@ -314,7 +314,7 @@
 
 
 
-    <p-dialog  header="Réinitialisation du mot de passe" [(visible)]="displayResetPassword" [dismissableMask]="true" [modal]="true" showEffect="fade" [style]="{ width: '50vw' }"
+    <p-dialog  header="Réinitialisation du mot de passe" [dismissableMask]="true" [(visible)]="displayResetPassword" [dismissableMask]="true" [modal]="true" showEffect="fade" [style]="{ width: '50vw' }"
         [breakpoints]="{ '960px': '75vw' }" [closable]="false">
         <div class="col-12 md:col-12">
             <div class="card card-flex">

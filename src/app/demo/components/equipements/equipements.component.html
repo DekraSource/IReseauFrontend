@@ -11,10 +11,10 @@
     <ng-template pTemplate="right">
       <p-tabMenu [model]="tabItems" [(activeItem)]="activeItem"></p-tabMenu>
       <div class="flex align-items-center gap-2">
-        <p-button *ngIf="generalService.canActivate('C-Eqp')" icon="pi pi-plus" label="New"
-          severity="secondary" styleClass="p-button-outlined mr-2" (click)="openNew()"></p-button>
-        <p-button *ngIf="generalService.canActivate('R-Eqp')" icon="pi pi-download" label="Export"
-          severity="secondary" styleClass="p-button-outlined" (click)="exportData()"></p-button>
+        <p-button *ngIf="generalService.canActivate('C-Eqp')" icon="pi pi-plus" label="Nouveau" severity="secondary"
+          styleClass="p-button-outlined mr-2" (click)="openNew()"></p-button>
+        <p-button *ngIf="generalService.canActivate('R-Eqp')" icon="pi pi-download" label="Export" severity="secondary"
+          styleClass="p-button-outlined" (click)="exportData()"></p-button>
       </div>
 
     </ng-template>
@@ -97,11 +97,13 @@
           <p-tag [severity]="getSyncStatus(equipement).severity" [value]="getSyncStatus(equipement).label"></p-tag>
         </td>
         <td>
-          <button *ngIf="generalService.canActivate('U-Eqp')" pButton pRipple icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-sm" (click)="editEquipement(equipement)"></button>
-          <button *ngIf="generalService.canActivate('D-Eqp')" pButton pRipple icon="pi pi-trash"
-            class="p-button-rounded p-button-text p-button-danger p-button-sm"
-            (click)="deleteEquipement(equipement.id)"></button>
+          <div class="flex justify-content-end gap-2">
+            <button *ngIf="generalService.canActivate('U-Eqp')" pButton pRipple icon="pi pi-pencil"
+              class="p-button-outlined p-button-sm mr-2" (click)="editEquipement(equipement)"></button>
+            <button *ngIf="generalService.canActivate('D-Eqp')" pButton pRipple icon="pi pi-trash"
+              class="p-button-outlined p-button-danger p-button-sm"
+              (click)="deleteEquipement(equipement.id)"></button>
+          </div>
         </td>
       </tr>
     </ng-template>

@@ -1,72 +1,129 @@
 <!-- etalonnage-form.component.html -->
-<div class="p-fluid">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="p-grid">
-      <div class="p-col-12">
+<div class="p-4">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-fluid">
+    <div class="grid form-grid">
+
+      <!-- Type d’intervention -->
+      <div class="col-12 md:col-6 field">
         <div class="p-field">
-          <label for="interventionTypeId">Intervention Type</label>
-          <p-dropdown id="interventionTypeId" [options]="interventionTypes" formControlName="interventionTypeId" 
-            optionLabel="values" optionValue="key" [disabled]="isEdit && etalonnage.interventionTypeId === 1"
-            placeholder="Select Intervention Type">
+          <label for="interventionTypeId">Type d’intervention</label>
+          <p-dropdown 
+            id="interventionTypeId" 
+            [options]="interventionTypes" 
+            formControlName="interventionTypeId" 
+            optionLabel="values" 
+            optionValue="key" 
+            [disabled]="isEdit && etalonnage.interventionTypeId === 1"
+            placeholder="Sélectionner le type d’intervention"
+            appendTo="body"
+            styleClass="w-full">
           </p-dropdown>
           <small *ngIf="form.get('interventionTypeId')?.invalid && form.get('interventionTypeId')?.touched" class="p-error">
-            Intervention Type is required
+            Le type d’intervention est requis
           </small>
         </div>
       </div>
 
-      <div class="p-col-12">
+      <!-- Date intervention / étalonnage -->
+      <div class="col-12 md:col-6 field">
         <div class="p-field">
-          <label for="dateIntervention">{{isEtalonnage ? 'Date Etalonnage' : 'Date Intervention'}}</label>
-          <p-calendar id="dateIntervention" formControlName="dateIntervention" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body"></p-calendar>
+          <label for="dateIntervention">{{isEtalonnage ? 'Date d’étalonnage' : 'Date d’intervention'}}</label>
+          <p-calendar 
+            id="dateIntervention" 
+            formControlName="dateIntervention" 
+            [showIcon]="true" 
+            dateFormat="dd/mm/yy" 
+            appendTo="body"
+            styleClass="w-full">
+          </p-calendar>
           <small *ngIf="form.get('dateIntervention')?.invalid && form.get('dateIntervention')?.touched" class="p-error">
-            Date is required
+            La date est requise
           </small>
         </div>
       </div>
 
-      <div class="p-col-12" *ngIf="isEtalonnage">
+      <!-- Expiration mois -->
+      <div class="col-12 md:col-6 field" *ngIf="isEtalonnage">
         <div class="p-field">
           <label for="moisExpiration">Expire après</label>
-          <p-dropdown id="moisExpiration" [options]="[6, 24]" formControlName="moisExpiration" 
-            placeholder="Select Months">
+          <p-dropdown 
+            id="moisExpiration" 
+            [options]="[6, 24]" 
+            formControlName="moisExpiration" 
+            placeholder="Sélectionner la durée"
+            appendTo="body"
+            styleClass="w-full">
             <ng-template let-item pTemplate="item">
-              {{item}} Mois
+              {{item}} mois
             </ng-template>
           </p-dropdown>
         </div>
       </div>
 
-      <div class="p-col-12" *ngIf="isEtalonnage && expirationDate">
+      <!-- Date expiration -->
+      <div class="col-12 md:col-6 field" *ngIf="isEtalonnage && expirationDate">
         <div class="p-field">
-          <label>Date Expiration Etalonnage</label>
-                <input pInputText [value]="expirationDate" readonly />
+          <label>Date d’expiration de l’étalonnage</label>
+          <input pInputText [value]="expirationDate" readonly class="w-full" />
         </div>
       </div>
 
-      <div class="p-col-12">
+      <!-- Constats -->
+      <div class="col-12 md:col-6 field">
         <div class="p-field">
           <label for="constats">Constats</label>
-          <textarea id="constats" pInputTextarea formControlName="constats" rows="3"></textarea>
+          <textarea 
+            id="constats" 
+            pInputTextarea 
+            formControlName="constats" 
+            rows="3" 
+            placeholder="Saisir vos constats"
+            class="w-full">
+          </textarea>
         </div>
       </div>
 
-      <div class="p-col-12">
+      <!-- Fichier PDF -->
+      <div class="col-12 md:col-6 field">
         <div class="p-field">
-          <label for="file">Rapport Intervention (.pdf)</label>
-          <p-fileUpload id="file" mode="basic" chooseLabel="Browse" [showUploadButton]="false" [showCancelButton]="false"
-            accept=".pdf" (onSelect)="onFileSelect($event)" [maxFileSize]="2000000">
+          <label for="file">Rapport d’intervention (.pdf)</label>
+          <p-fileUpload 
+            id="file" 
+            mode="basic" 
+            chooseLabel="Parcourir" 
+            [showUploadButton]="false" 
+            [showCancelButton]="false"
+            accept=".pdf" 
+            (onSelect)="onFileSelect($event)" 
+            [maxFileSize]="2000000"
+            appendTo="body"
+            styleClass="w-full">
           </p-fileUpload>
-          <small *ngIf="!isEdit && files.length===0" class="p-error">
-            Please attach a file
+          <small *ngIf="!isEdit && files.length === 0" class="p-error">
+            Veuillez joindre un fichier
           </small>
         </div>
       </div>
     </div>
 
-    <div class="p-dialog-footer">
-      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-text" (click)="onCancel()"></button>
-      <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-text" [disabled]="loading"></button>
+    <!-- Boutons -->
+    <div class="p-dialog-footer p-d-flex p-flex-column md:p-flex-row md:p-jc-end p-mt-3 gap-2">
+      <button 
+        pButton 
+        type="button" 
+        label="Annuler" 
+        icon="pi pi-times" 
+        class="p-button-text p-button-secondary w-full md:w-auto" 
+        (click)="onCancel()">
+      </button>
+      <button 
+        pButton 
+        type="submit" 
+        label="Enregistrer" 
+        icon="pi pi-check" 
+        class="p-button-success w-full md:w-auto" 
+        [disabled]="loading">
+      </button>
     </div>
   </form>
 </div>

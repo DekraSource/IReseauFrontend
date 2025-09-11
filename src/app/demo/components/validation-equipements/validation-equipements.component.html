@@ -106,12 +106,14 @@
             [value]="equipement.isRemplacent ? 'Remplacement' : 'Principal'"></p-tag>
         </td>
         <td>
-          <button *ngIf="generalService.canActivate('U-VEqp')" pButton pRipple icon="pi pi-eye"
-            class="p-button-rounded p-button-secondary p-button-text" (click)="editEquipement(equipement)"
+           <div class="flex justify-content-end gap-2">
+             <button *ngIf="generalService.canActivate('U-VEqp')" pButton pRipple icon="pi pi-eye"
+            class="p-button-outlined p-button-info mr-2" (click)="editEquipement(equipement)"
             pTooltip="Détail" tooltipPosition="top"></button>
           <button *ngIf="generalService.canActivate('C-VEqp')" pButton pRipple icon="pi pi-check"
-            class="p-button-rounded p-button-text p-ml-1" (click)="validateEquipement(equipement)" pTooltip="Valider"
+            class="p-button-outlined p-ml-1" (click)="validateEquipement(equipement)" pTooltip="Valider"
             tooltipPosition="top"></button>
+           </div>         
         </td>
       </tr>
     </ng-template>
