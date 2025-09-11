@@ -9,16 +9,17 @@
     </ng-template>
 
     <ng-template pTemplate="right">
-      <p-button *ngIf="generalService.canActivate('C-CC')" icon="pi pi-plus" severity="secondary" styleClass="p-button-outlined mr-2"
-        (click)="openNewForm()" label="Nouveau"></p-button>
-      <p-button *ngIf="generalService.canActivate('R-CC')" icon="pi pi-download" severity="secondary" styleClass="p-button-outlined"
-        (click)="exportData()" label="Export"></p-button>
+      <p-button *ngIf="generalService.canActivate('C-CC')" icon="pi pi-plus" severity="secondary"
+        styleClass="p-button-outlined mr-2" (click)="openNewForm()" label="Nouveau"></p-button>
+      <p-button *ngIf="generalService.canActivate('R-CC')" icon="pi pi-download" severity="secondary"
+        styleClass="p-button-outlined" (click)="exportData()" label="Export"></p-button>
     </ng-template>
   </p-toolbar>
 
   <p-table *ngIf="generalService.canActivate('R-CC')" #dt [value]="chefCentres" [loading]="loading" [paginator]="true"
     [rows]="10" [showCurrentPageReport]="true"
-    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [rowsPerPageOptions]="[10,25,50]"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+    [rowsPerPageOptions]="[10,25,50]"
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
     <ng-template pTemplate="header">
       <tr>
@@ -103,10 +104,12 @@
           </p-tag>
         </td>
         <td>
-          <button *ngIf="generalService.canActivate('U-CC')" pButton pRipple icon="pi pi-pencil"
-            class="p-button-rounded p-button-text" (click)="editChef(chef)"></button>
-          <button *ngIf="generalService.canActivate('D-CC')" pButton pRipple icon="pi pi-trash"
-            class="p-button-rounded p-button-text p-button-danger" (click)="confirmDelete(chef.id)"></button>
+          <div class="flex justify-content-end gap-2">
+            <button *ngIf="generalService.canActivate('U-CC')" pButton pRipple icon="pi pi-pencil"
+              class="p-button-outlined p-button-primary mr-2" (click)="editChef(chef)"></button>
+            <button *ngIf="generalService.canActivate('D-CC')" pButton pRipple icon="pi pi-trash"
+              class="p-button-outlined p-button-danger" (click)="confirmDelete(chef.id)"></button>
+          </div>
         </td>
       </tr>
     </ng-template>

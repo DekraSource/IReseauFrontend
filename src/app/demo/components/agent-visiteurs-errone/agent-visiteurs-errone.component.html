@@ -94,21 +94,21 @@
         </td>
         <td *ngIf="generalService.canActivate('I-AVE')">
           <div class="flex gap-2">
-            <p-button *ngIf="agent.capPdfUrl" icon="pi pi-download" severity="info"
-              styleClass="p-button-sm p-button-outlined" (click)="downloadCapPdf(agent.id, agent.agrement)"
+            <button *ngIf="agent.capPdfUrl" pButton type="button" icon="pi pi-download" severity="info"
+              class="p-button-outlined" (click)="downloadCapPdf(agent.id, agent.agrement)"
               pTooltip="Télécharger PDF" tooltipPosition="top">
-            </p-button>
-            <p-fileUpload mode="basic" chooseLabel="Importer" accept="application/pdf" maxFileSize="1000000"
-              (onSelect)="onFileSelect($event, agent.id)" styleClass="p-button-sm">
+            </button>
+            <p-fileUpload class="p-button-outlined" mode="basic" chooseLabel="Importer" accept="application/pdf" maxFileSize="1000000"
+              (onSelect)="onFileSelect($event, agent.id)" class="p-button-sm">
             </p-fileUpload>
           </div>
         </td>
         <td>
           <div class="flex justify-content-end gap-2">
-            <p-button *ngIf="generalService.canActivate('D-AVE')" icon="pi pi-trash" severity="danger"
-              styleClass="p-button-outlined p-button-sm" (click)="delete(agent.id)" pTooltip="Supprimer"
+            <button *ngIf="generalService.canActivate('D-AVE')" pButton type="button" icon="pi pi-trash" severity="danger"
+              class="p-button-outlined p-button-danger" (click)="delete(agent.id)" pTooltip="Supprimer"
               tooltipPosition="top">
-            </p-button>
+            </button>
           </div>
         </td>
       </tr>

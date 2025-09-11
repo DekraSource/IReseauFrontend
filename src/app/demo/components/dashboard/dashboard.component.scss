@@ -21,7 +21,15 @@
   font-weight: bold;
   text-align: center;
 }
-
+.stat-card-header-warning {
+  background-color: #f97316;
+}
+.stat-card-header-info {
+  background-color: #0ea5e9;
+}
+.stat-card-header-success {
+  background-color: #22c55e;
+}
 .stat-card-value {
   padding: 1rem;
 }

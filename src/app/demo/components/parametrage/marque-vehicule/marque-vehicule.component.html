@@ -24,8 +24,8 @@
         <td [ngStyle]="cellStyleFunc(item)">{{item.libelle}}</td>
         <td>
           <div class="flex justify-content-end gap-2">
-            <p-button *ngIf="!item.codeEos" icon="pi pi-plus" (click)="edit(item)" styleClass="p-button-outlined p-button-sm"
-            pTooltip="Ajouter To EOS" tooltipPosition="top"></p-button>
+            <button *ngIf="!item.codeEos" pButton type="button" icon="pi pi-plus" (click)="edit(item)" styleClass="p-button-outlined"
+            pTooltip="Ajouter To EOS" tooltipPosition="top"></button>
           </div>
         </td>
       </tr>
