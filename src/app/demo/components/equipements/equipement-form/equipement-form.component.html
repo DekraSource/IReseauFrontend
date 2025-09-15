@@ -147,8 +147,8 @@
     <!-- Boutons Annuler / Enregistrer -->
     <div class="flex justify-content-end gap-3 mt-5 pt-4 border-top-1 surface-border">
       <button pButton type="button" label="Annuler" icon="pi pi-times"
-        class="p-button-sm p-button-outlined p-button-secondary" (click)="onCancel()"></button>
-      <button pButton type="button" label="Enregistrer" icon="pi pi-check" class="p-button-sm p-button-success"
+        class="p-button-outlined" (click)="onCancel()"></button>
+      <button pButton type="button" label="Enregistrer" icon="pi pi-check" class="p-button-success"
         [disabled]="loading || form.invalid" (click)="equipementForm.ngSubmit.emit()">
         <span *ngIf="loading" class="pi pi-spinner pi-spin mr-2"></span>
       </button>

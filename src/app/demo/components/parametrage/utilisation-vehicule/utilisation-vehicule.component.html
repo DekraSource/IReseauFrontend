@@ -39,29 +39,41 @@
   </p-table>
 </div>
 
-<p-dialog header="Formulaire" [(visible)]="visible" [dismissableMask]="true" [modal]="true" [style]="{width: '50vw'}">
-  <p-card>
-    <form>
-      <div class="p-fluid">
-        <div class="p-field">
-          <label for="libelle">Libelle</label>
-          <input pInputText id="libelle" [(ngModel)]="model.libelle" name="libelle" disabled />
-        </div>
-        <div class="p-field">
-          <label for="eosLibelle">New Libelle</label>
-          <p-dropdown [options]="filterUtilisationVehicules" [(ngModel)]="model.eosLibelle" name="eosLibelle"
-            optionLabel="eosLibelle" optionValue="eosLibelle" [appendTo]="'body'">
-            <ng-template pTemplate="item" let-item>
-              {{item.eosLibelle}}
-            </ng-template>
-          </p-dropdown>
-        </div>
-      </div>
-    </form>
-  </p-card>
+<p-dialog header="Formulaire" [(visible)]="visible" [dismissableMask]="true" [modal]="true" [style]="{width: '40vw'}">
+  <form class="p-fluid p-mt-2 p-mb-2">
+    <!-- Libellé actuel -->
+    <div class="p-field">
+      <label for="libelle">Libellé actuel</label>
+      <input pInputText id="libelle" [(ngModel)]="model.libelle" name="libelle" disabled class="w-full" />
+    </div>
 
+    <!-- Nouveau libellé -->
+    <div class="p-field mt-4">
+      <label for="eosLibelle">Nouveau libellé</label>
+      <p-dropdown
+        id="eosLibelle"
+        [options]="filterUtilisationVehicules"
+        [(ngModel)]="model.eosLibelle"
+        name="eosLibelle"
+        optionLabel="eosLibelle"
+        optionValue="eosLibelle"
+        [appendTo]="'body'"
+        class="w-full"
+        [filter]="true"
+        placeholder="Sélectionner un libellé">
+        <ng-template pTemplate="item" let-item>
+          {{ item.eosLibelle }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </form>
+
+  <!-- Footer -->
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-times" label="Annuler" (click)="cancel()" styleClass="p-button-text"></p-button>
-    <p-button icon="pi pi-check" label="Enregistrer" (click)="submit()" [disabled]="!model.eosLibelle"></p-button>
+    <div class="flex justify-content-end gap-3">
+      <p-button icon="pi pi-times" label="Annuler" (click)="cancel()" styleClass="p-button-text"></p-button>
+      <p-button icon="pi pi-check" label="Enregistrer" (click)="submit()" [disabled]="!model.eosLibelle"></p-button>
+    </div>
   </ng-template>
 </p-dialog>
+
