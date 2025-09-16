@@ -13,10 +13,10 @@
   
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="libelle">Libelle <p-sortIcon field="libelle"></p-sortIcon></th>
-        <th pSortableColumn="eosLibelle">EosLibelle <p-sortIcon field="eosLibelle"></p-sortIcon></th>
-        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
-        <th pSortableColumn="eosCode">EosCode <p-sortIcon field="eosCode"></p-sortIcon></th>
+        <th pSortableColumn="libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="libelle"></p-sortIcon>Libelle<p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="eosLibelle"><div class="flex align-items-center gap-2"><p-sortIcon field="eosLibelle"></p-sortIcon>EosLibelle<p-columnFilter type="text" field="eosLibelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="code"><div class="flex align-items-center gap-2"><p-sortIcon field="code"></p-sortIcon>Code<p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="eosCode"><div class="flex align-items-center gap-2"><p-sortIcon field="eosCode"></p-sortIcon>EosCode<p-columnFilter type="text" field="eosCode" display="menu" class="ml-auto"></p-columnFilter></div></th>
         <th>Action</th>
       </tr>
     </ng-template>

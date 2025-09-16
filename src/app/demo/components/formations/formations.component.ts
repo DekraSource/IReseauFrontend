@@ -27,8 +27,10 @@ export class FormationsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private formationService: FormationService,
-     public generalService: GeneralService
-  ) {}
+    public generalService: GeneralService
+  ) { }
+agentField: string;
+
 
   ngOnInit(): void {
     this.tabItems = [
@@ -39,7 +41,7 @@ export class FormationsComponent implements OnInit {
         command: () => {
           this.isChefCentre = true;
           this.loadFormations();
-          
+
           this.activeItem = this.tabItems[0];
           this.updateTabClasses();
         }
@@ -51,7 +53,7 @@ export class FormationsComponent implements OnInit {
         command: () => {
           this.isChefCentre = false;
           this.loadFormations();
-          
+
           this.activeItem = this.tabItems[1];
           this.updateTabClasses();
         }
@@ -59,40 +61,39 @@ export class FormationsComponent implements OnInit {
     ];
     // Default selection
     this.activeItem = this.tabItems[0];
-              this.updateTabClasses();
+    this.updateTabClasses();
 
     this.loadFormations();
   }
-updateTabClasses() {
-  this.tabItems[0].styleClass = this.isChefCentre ? 'tab-active' : '';
-  this.tabItems[1].styleClass = !this.isChefCentre ? 'tab-active' : '';
-}
+  updateTabClasses() {
+    this.tabItems[0].styleClass = this.isChefCentre ? 'tab-active' : '';
+    this.tabItems[1].styleClass = !this.isChefCentre ? 'tab-active' : '';
+  }
   loadFormations(): void {
     this.loading = true;
-   if (this.isChefCentre==true) {
-     this.formationService.getAllForChefCentre().subscribe({
-      next: (data) => {
-        this.formations = data;
-        this.loading = false;
-      },
-      error: () => {
-        this.showError('Failed to load formations');
-        this.loading = false;
-      }
-    });
-   }else
-   {
-this.formationService.getAllForAgentVisiteur().subscribe({
-      next: (data) => {
-        this.formations = data;
-        this.loading = false;
-      },
-      error: () => {
-        this.showError('Failed to load formations');
-        this.loading = false;
-      }
-    });
-   }
+    if (this.isChefCentre == true) {
+      this.formationService.getAllForChefCentre().subscribe({
+        next: (data) => {
+          this.formations = data;
+          this.loading = false;
+        },
+        error: () => {
+          this.showError('Failed to load formations');
+          this.loading = false;
+        }
+      });
+    } else {
+      this.formationService.getAllForAgentVisiteur().subscribe({
+        next: (data) => {
+          this.formations = data;
+          this.loading = false;
+        },
+        error: () => {
+          this.showError('Failed to load formations');
+          this.loading = false;
+        }
+      });
+    }
   }
 
 
@@ -112,7 +113,7 @@ this.formationService.getAllForAgentVisiteur().subscribe({
       }
     });
   }
-openImportDialog(): void {
+  openImportDialog(): void {
     const ref = this.dialogService.open(FormationImportComponent, {
       header: 'Import Formations',
       width: '100%',
@@ -163,11 +164,11 @@ openImportDialog(): void {
 
 
   canImport(): boolean {
-return true;
+    return true;
   }
 
   canEdit(): boolean {
-return true;
+    return true;
   }
 
   private showSuccess(message: string): void {

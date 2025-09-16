@@ -79,12 +79,12 @@
       styleClass="p-datatable-gridlines p-datatable-sm modern-table shadow-2 border-round-lg">
       <ng-template pTemplate="header">
         <tr>
-          <th>Centre</th>
-          <th>Ligne</th>
-          <th>Type d'équipement</th>
-          <th>Date étalonnage</th>
-          <th>Date d’expiration</th>
-          <th>Statut</th>
+          <th pSortableColumn="centre"><div class="flex align-items-center gap-2"><p-sortIcon field="centre"></p-sortIcon>Centre<p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter></div></th>
+          <th pSortableColumn="ligne"><div class="flex align-items-center gap-2"><p-sortIcon field="ligne"></p-sortIcon>Ligne<p-columnFilter type="text" field="ligne" display="menu" class="ml-auto"></p-columnFilter></div></th>
+          <th pSortableColumn="equipementType"><div class="flex align-items-center gap-2"><p-sortIcon field="equipementType"></p-sortIcon>Type d'équipement<p-columnFilter type="text" field="equipementType" display="menu" class="ml-auto"></p-columnFilter></div></th>
+          <th pSortableColumn="dateEtalonnage"><div class="flex align-items-center gap-2"><p-sortIcon field="dateEtalonnage"></p-sortIcon>Date étalonnage<p-columnFilter type="text" field="dateEtalonnage" display="menu" class="ml-auto"></p-columnFilter></div></th>
+          <th pSortableColumn="dateExpirationEtalonnage"><div class="flex align-items-center gap-2"><p-sortIcon field="dateExpirationEtalonnage"></p-sortIcon>Date d’expiration<p-columnFilter type="text" field="dateExpirationEtalonnage" display="menu" class="ml-auto"></p-columnFilter></div></th>
+          <th pSortableColumn="">Statut</th>                  
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-equipment>
@@ -118,7 +118,7 @@
       styleClass="p-datatable-gridlines p-datatable-sm modern-table shadow-2 border-round-lg">
       <ng-template pTemplate="header">
         <tr>
-          <th rowspan="2">Centre</th>
+          <th rowspan="2" pSortableColumn="centre"><div class="flex align-items-center gap-2"><p-sortIcon field="centre"></p-sortIcon>Centre<p-columnFilter type="text" field="centre" display="menu" class="ml-auto"></p-columnFilter></div></th>
           <th colspan="7" class="text-center">Véhicules légers</th>
           <th colspan="5" class="text-center">Poids lourds</th>
         </tr>

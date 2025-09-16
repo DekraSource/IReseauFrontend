@@ -33,6 +33,7 @@ import { FormationImportComponent } from './formation-import/formation-import.co
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -60,6 +61,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
                  ScrollerModule,
                 SelectButtonModule,
                  CalendarModule,
+                 AvatarModule,
                  InputNumberModule,
                  InputTextModule,
                  SkeletonModule,

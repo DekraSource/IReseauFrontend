@@ -18,11 +18,11 @@
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
     <ng-template pTemplate="header" styleClass="p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
       <tr>
-        <th>Code</th>
-        <th>Libelle</th>
-        <th>Date Modification</th>
-        <th>Crée</th>
-        <th>Uniquement Freinage</th>
+        <th pSortableColumn="code"><div class="flex align-items-center gap-2"><p-sortIcon field="code"></p-sortIcon>Code<p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="libelle"></p-sortIcon>Libelle<p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="dateModification"><div class="flex align-items-center gap-2"><p-sortIcon field="dateModification"></p-sortIcon>Date Modification<p-columnFilter type="text" field="dateModification" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="codeEos"><div class="flex align-items-center gap-2"><p-sortIcon field="codeEos"></p-sortIcon>Crée<p-columnFilter type="boolean" field="codeEos" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="sansMesure"><div class="flex align-items-center gap-2"><p-sortIcon field="sansMesure"></p-sortIcon>Uniquement Freinage<p-columnFilter type="boolean" field="sansMesure" display="menu" class="ml-auto"></p-columnFilter></div></th>
         <th>Actions</th>
       </tr>
     </ng-template>

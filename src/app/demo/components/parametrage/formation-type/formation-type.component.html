@@ -10,10 +10,10 @@
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
     <ng-template pTemplate="header">
       <tr>
-        <th>Code</th>
-        <th>Libellé</th>
-        <th>Nombre d'heures</th>
-        <th>Cible de formation</th>
+        <th pSortableColumn="code"><div class="flex align-items-center gap-2"><p-sortIcon field="code"></p-sortIcon>Code<p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="libelle"></p-sortIcon>Libellé<p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="nombreHeures"><div class="flex align-items-center gap-2"><p-sortIcon field="nombreHeures"></p-sortIcon>Nombre d'heures<p-columnFilter type="text" field="nombreHeures" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="cibleFormation"><div class="flex align-items-center gap-2"><p-sortIcon field="cibleFormation"></p-sortIcon>Cible de formation<p-columnFilter type="text" field="cibleFormation" display="menu" class="ml-auto"></p-columnFilter></div></th>
       </tr>
     </ng-template>
 

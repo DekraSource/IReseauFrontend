@@ -18,10 +18,9 @@
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows" responsiveLayout="scroll">
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="notificationDeclencher.libelle">Notification Déclencher <p-sortIcon
-            field="notificationDeclencher.libelle"></p-sortIcon></th>
-        <th pSortableColumn="delai">Délai <p-sortIcon field="delai"></p-sortIcon></th>
-        <th pSortableColumn="dateCreation">Date Création <p-sortIcon field="dateCreation"></p-sortIcon></th>
+        <th pSortableColumn="notificationDeclencher.libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="notificationDeclencher.libelle"></p-sortIcon>Notification Déclencher<p-columnFilter type="text" field="notificationDeclencher.libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="delai"><div class="flex align-items-center gap-2"><p-sortIcon field="delai"></p-sortIcon>Délai<p-columnFilter type="text" field="delai" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="dateCreation"><div class="flex align-items-center gap-2"><p-sortIcon field="dateCreation"></p-sortIcon>Date Création<p-columnFilter type="text" field="dateCreation" display="menu" class="ml-auto"></p-columnFilter></div></th>
         <th style="width: 120px">Actions</th>
       </tr>
     </ng-template>

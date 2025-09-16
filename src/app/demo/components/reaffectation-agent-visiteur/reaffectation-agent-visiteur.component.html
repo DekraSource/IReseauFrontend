@@ -15,19 +15,76 @@
   </p-toolbar>
 
   <p-table [value]="reaffectations" [loading]="loading" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [rowsPerPageOptions]="[10, 25, 50]"
+    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="['id','agentVisiteur.nom','agentVisiteur.prenom','sourceCentreId','destinationCentreId','type']"
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
-        <th>Agent Visiteur</th>
-        <th>Centre Source</th>
-        <th>Centre Destination</th>
-        <th>Type</th>
-        <th>Date Affectation</th>
-        <th>Date Retour</th>
-        <th>Date Execution</th>
+        <th pSortableColumn="id">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="id"></p-sortIcon>
+            ID
+            <p-columnFilter field="id" display="menu" type="numeric"></p-columnFilter>
+          </div>
+
+        </th>
+
+        <th pSortableColumn="agentVisiteur.nom">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="agentVisiteur.nom"></p-sortIcon>
+            Agent Visiteur
+            <p-columnFilter field="agentVisiteur.nom" display="menu" type="text"></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="sourceCentreId">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="sourceCentreId"></p-sortIcon>
+            Centre Source
+            <p-columnFilter field="sourceCentreId" display="menu" type="text"></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="destinationCentreId">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="destinationCentreId"></p-sortIcon>
+            Centre Destination
+            <p-columnFilter field="destinationCentreId" display="menu" type="text"></p-columnFilter>
+          </div>
+
+        </th>
+
+        <th>
+          Type
+        </th>
+
+        <th pSortableColumn="dateAffectation">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="dateAffectation"></p-sortIcon>
+            Date Affectation
+            <p-columnFilter field="dateAffectation" display="menu" type="text"></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="dateRetour">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="dateRetour"></p-sortIcon>
+            Date Retour
+            <p-columnFilter field="dateRetour" display="menu" type="text"></p-columnFilter>
+          </div>
+
+        </th>
+
+        <th pSortableColumn="dateExecution">
+          <div class="flex align-items-center gap-2">
+            <p-sortIcon field="dateExecution"></p-sortIcon>
+            Date Execution
+            <p-columnFilter field="dateExecution" display="menu" type="text"></p-columnFilter>
+          </div>
+        </th>
+
         <th>Actions</th>
       </tr>
     </ng-template>
@@ -47,12 +104,12 @@
         <td>{{reaffectation.dateRetour | date:'dd/MM/yyyy'}}</td>
         <td>{{reaffectation.dateExecution | date:'dd/MM/yyyy'}}</td>
         <td>
-         <div class="flex justify-content-end gap-2">
-           <button *ngIf="generalService.canActivate('U-RAV')" pButton type="button" icon="pi pi-pencil" class="p-button-outlined p-button-sm"
-              (click)="showDialog(reaffectation)" pTooltip="Modifier" tooltipPosition="top"></button>
-            <button *ngIf="generalService.canActivate('D-RAV')" pButton type="button" icon="pi pi-trash" 
-              class="p-button-outlined p-button-danger p-button-sm"
-              (onClick)="deleteReaffectation(reaffectation.id)">
+          <div class="flex justify-content-end gap-2">
+            <button *ngIf="generalService.canActivate('U-RAV')" pButton type="button" icon="pi pi-pencil"
+              class="p-button-outlined p-button-sm" (click)="showDialog(reaffectation)" pTooltip="Modifier"
+              tooltipPosition="top"></button>
+            <button *ngIf="generalService.canActivate('D-RAV')" pButton type="button" icon="pi pi-trash"
+              class="p-button-outlined p-button-danger p-button-sm" (onClick)="deleteReaffectation(reaffectation.id)">
             </button>
           </div>
         </td>
@@ -67,8 +124,8 @@
   </p-table>
 </div>
 
-<p-dialog [(visible)]="displayDialog" [style]="{width: '700px'}" [dismissableMask]="true" header="Réaffectation Agent Visiteur" [modal]="true"
-  styleClass="p-fluid">
+<p-dialog [(visible)]="displayDialog" [style]="{width: '700px'}" [dismissableMask]="true"
+  header="Réaffectation Agent Visiteur" [modal]="true" styleClass="p-fluid">
 
   <form [formGroup]="reaffectationForm" (ngSubmit)="save()">
     <div class="field">

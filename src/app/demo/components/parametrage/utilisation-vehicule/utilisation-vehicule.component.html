@@ -17,9 +17,9 @@
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
     <ng-template pTemplate="header">
       <tr>
-        <th>Libelle</th>
-        <th>Eos Libelle</th>
-        <th>Périodicité</th>
+        <th pSortableColumn="libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="libelle"></p-sortIcon>Libelle<p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="eosLibelle"><div class="flex align-items-center gap-2"><p-sortIcon field="eosLibelle"></p-sortIcon>Eos Libelle<p-columnFilter type="text" field="eosLibelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="periodicite"><div class="flex align-items-center gap-2"><p-sortIcon field="periodicite"></p-sortIcon>Périodicité<p-columnFilter type="text" field="periodicite" display="menu" class="ml-auto"></p-columnFilter></div></th>
         <th>{{utilisationVehicules.length}}</th>
       </tr>
     </ng-template>

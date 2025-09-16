@@ -2,13 +2,10 @@
   <p-toast></p-toast>
   <p-confirmDialog></p-confirmDialog>
 
-<div class="flex justify-center my-4 border-b border-green-500 pb-2">
-  <p-tabMenu
-    [model]="tabItems"
-    [(activeItem)]="activeItem"
-    styleClass="bg-white rounded-lg shadow-sm px-4 py-2"
-  ></p-tabMenu>
-</div>
+  <div class="flex justify-center my-4 border-b border-green-500 pb-2">
+    <p-tabMenu [model]="tabItems" [(activeItem)]="activeItem"
+      styleClass="bg-white rounded-lg shadow-sm px-4 py-2"></p-tabMenu>
+  </div>
 
   <!-- Toolbar -->
   <p-toolbar>
@@ -19,8 +16,8 @@
     <ng-template pTemplate="right">
 
       <div class="flex align-items-center gap-2">
-        <p-button *ngIf="generalService.canActivate('I-Frm')"  icon="pi pi-upload" label="Import"
-          severity="secondary" styleClass="p-button-outlined" (click)="openImportDialog()"></p-button>
+        <p-button *ngIf="generalService.canActivate('I-Frm')" icon="pi pi-upload" label="Import" severity="secondary"
+          styleClass="p-button-outlined" (click)="openImportDialog()"></p-button>
         <!-- <p-button *ngIf="canEdit()"  icon="pi pi-plus" label="New"
                 severity="secondary" styleClass="p-button-outlined"
                 (click)="openNewForm()"></p-button> -->
@@ -32,18 +29,18 @@
   <p-table *ngIf="generalService.canActivate('R-Frm')" [value]="formations" [loading]="loading" [paginator]="true"
     [rows]="10" [showCurrentPageReport]="true"
     currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [globalFilterFields]="['numValidation','chefCentre','agentVisiteur','formationType']"
+    [rowsPerPageOptions]="[10, 25, 50]" [globalFilterFields]="['chefCentre','agentField','formationType','resultat']"
     styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows">
 
     <!-- Table Header -->
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="name">
+        <th [pSortableColumn]="isChefCentre ? 'chefCentre' : 'agentVisiteur'">
           <div class="flex align-items-center gap-2">
-            <p-sortIcon field="name"></p-sortIcon>
-            <span>Name</span>
-            <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+            <p-sortIcon [field]="isChefCentre ? 'chefCentre' : 'agentVisiteur'"></p-sortIcon>
+            <span>Nom</span>
+            <p-columnFilter type="text" [field]="isChefCentre ? 'chefCentre' : 'agentVisiteur'" display="menu"
+              class="ml-auto"></p-columnFilter>
           </div>
         </th>
 
@@ -110,12 +107,12 @@
             [style]="{'background-color':'#ef4444'}"></p-avatar>
         </td>
         <td class="flex gap-1">
-           <div class="flex justify-content-end gap-2">
-              <button *ngIf="generalService.canActivate('U-Frm')" pButton pRipple icon="pi pi-pencil"
-            class="p-button-outlined mr-2" (click)="editFormation(formation)"></button>
-          <button *ngIf="generalService.canActivate('D-Frm')" pButton pRipple icon="pi pi-trash"
-            class="p-button-outlined p-button-danger" (click)="confirmDelete(formation.id)"></button>
-           </div>        
+          <div class="flex justify-content-end gap-2">
+            <button *ngIf="generalService.canActivate('U-Frm')" pButton pRipple icon="pi pi-pencil"
+              class="p-button-outlined mr-2" (click)="editFormation(formation)"></button>
+            <button *ngIf="generalService.canActivate('D-Frm')" pButton pRipple icon="pi pi-trash"
+              class="p-button-outlined p-button-danger" (click)="confirmDelete(formation.id)"></button>
+          </div>
         </td>
       </tr>
     </ng-template>

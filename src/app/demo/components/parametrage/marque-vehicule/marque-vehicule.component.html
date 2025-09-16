@@ -13,8 +13,8 @@
  styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped p-datatable-hoverable-rows" >
     <ng-template pTemplate="header">
       <tr>
-        <th>Code</th>
-        <th>Libelle</th>
+        <th pSortableColumn="code"><div class="flex align-items-center gap-2"><p-sortIcon field="code"></p-sortIcon>Code<p-columnFilter type="text" field="code" display="menu" class="ml-auto"></p-columnFilter></div></th>
+        <th pSortableColumn="libelle"><div class="flex align-items-center gap-2"><p-sortIcon field="libelle"></p-sortIcon>Libelle<p-columnFilter type="text" field="libelle" display="menu" class="ml-auto"></p-columnFilter></div></th>
         <th>Actions</th>
       </tr>
     </ng-template>
